@@ -2,14 +2,24 @@ const express = require('express');
 
 const app = express();
 
-app.get('/api/customers', (req, res) => {
-  const customers = [
-    {id: 1, firstName: 'John', lastName: 'Doe'},
-    {id: 2, firstName: 'Brad', lastName: 'Traversy'},
-    {id: 3, firstName: 'Mary', lastName: 'Swanson'},
-  ];
+app.get('/api/:userId/projects', (req, res) => {
+	var projects;
+	if(req.params.userId=="medina2"){
+		projects = [
+		    {id: 1, title: 'SDD', user: 'medina2'},
+		    {id: 2, title: 'OpSys', user: 'medina2'},
+		    {id: 3, title: 'RCOS', user: 'medina2'},
+		  ];
+	}else{
+		projects = [
+		    {id: 1, title: 'comm', userId: 'other'},
+		    {id: 2, title: 'psyc', userId: 'other'},
+		    {id: 3, title: 'RCOS', userId: 'other'},
+		  ];
+	}
+  
 
-  res.json(customers);
+  res.json(projects);
 });
 
 const port = 5000;

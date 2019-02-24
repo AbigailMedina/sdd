@@ -1,17 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { HashRouter, Route } from 'react-router-dom';
+
 import './App.css';
-import Customers from './components/customers';
+import HomePage from './components/homepage';
+import LoginPage from './components/loginpage';
+import Navbar from './components/navbar';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">React Express Starter</h1>
-        </header>
-        <Customers />
+       <HashRouter>
+
+        <div>
+          <Navbar/>
+
+          <Route 
+            exact path="/" 
+            component={HomePage} 
+            />
+          <Route 
+            exact path="/login" 
+            component={LoginPage} 
+            />
+          </div>
+      </HashRouter>
+
       </div>
     );
   }

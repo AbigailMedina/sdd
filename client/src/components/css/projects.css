@@ -1,8 +1,11 @@
+div.sidebar{
+	max-width: 30%;
+	margin-right:0px;
+	height: 100%;
+}
 ul {
   padding:0;
   list-style:none;
-  width: 30%;
-  margin:auto;
 }
 
 li{
