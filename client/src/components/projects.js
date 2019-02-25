@@ -9,6 +9,7 @@ class Projects extends Component {
       projects: []
     };
   }
+  
 
   componentDidMount(props) {
     const {userId} = this.props;

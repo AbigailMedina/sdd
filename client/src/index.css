@@ -1,5 +1,8 @@
+/*@import 'bulma/bulma';
+@import 'bulma-extensions/extensions';*/
+import 'bulma/css/bulma.css'
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
 }
