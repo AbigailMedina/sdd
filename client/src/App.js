@@ -4,6 +4,7 @@ import { HashRouter, Route } from 'react-router-dom';
 import './App.css';
 import HomePage from './components/homepage';
 import LoginPage from './components/loginpage';
+import AboutUs from './components/aboutus';
 import Navbar from './components/navbar';
 
 class App extends Component {
@@ -22,6 +23,10 @@ class App extends Component {
           <Route 
             exact path="/login" 
             component={LoginPage} 
+            />
+          <Route 
+            exact path="/AboutUs" 
+            component={AboutUs} 
             />
           </div>
       </HashRouter>

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 // import Footer from './Footer'
 import './style.css'
 import MetisMenu from 'react-metismenu';
-import 'bulma/css/bulma.css'
+//import 'bulma/css/bulma.css'
 class HomePage extends Component {
 	constructor(props) {
 	    super(props);

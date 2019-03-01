@@ -14,6 +14,13 @@
 	padding: 2px !important;
 	margin-right: 50px
 }
+.navbar div .aboutus{
+	float: right;
+	right:50px;
+	text-align: right;
+	padding: 2px !important;
+	margin-right: 50px
+}
 .navbar a{
 	padding:15px;
 	/*text-align: center;*/
@@ -21,7 +28,7 @@
 	color:#8E1812;
 }
 .navbar a:hover{
-	color: red;
+	color: blue;
 }
 #nb{
 	position: fixed;

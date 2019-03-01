@@ -15,6 +15,7 @@ class Navbar extends Component {
 					<div class = 'pages'>
 						<Link class="name"to={'/'}>Home</Link>
 						<Link class="settings" to={'/usersettings'}>Settings</Link>
+						<Link class="aboutus" to={'/AboutUs'}>About Us</Link>
 				    </div>
 
 				</div>
