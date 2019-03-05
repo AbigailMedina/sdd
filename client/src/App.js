@@ -6,6 +6,7 @@ import HomePage from './components/homepage';
 import LoginPage from './components/loginpage';
 import AboutUs from './components/aboutus';
 import Navbar from './components/navbar';
+import CreateProject from './components/createProject';
 
 class App extends Component {
   render() {
@@ -27,6 +28,10 @@ class App extends Component {
           <Route 
             exact path="/AboutUs" 
             component={AboutUs} 
+            />
+            <Route 
+            exact path="/add" 
+            component={CreateProject} 
             />
           </div>
       </HashRouter>

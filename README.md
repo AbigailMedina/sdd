@@ -25,6 +25,13 @@ npm run server
 npm run client
 
 # Server runs on http://localhost:5000 and client on http://localhost:3000
+
+
+-to run be, run nodemon server.js
+-start mongo in separate terminal by running mongod in bash
+-- if you see "waiting for connections on port 27017" its gucci
+-open third terminal and run mongo to start up db by typing in mongo
+--in mongo client that pops up, write use sdd
 ```
 
 ## App Info

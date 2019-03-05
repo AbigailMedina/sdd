@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 // import Footer from './Footer'
 import './style.css'
 import MetisMenu from 'react-metismenu';
-//import 'bulma/css/bulma.css'
+import axios from 'axios';
+import 'bulma/css/bulma.css'
 class HomePage extends Component {
 	constructor(props) {
 	    super(props);
@@ -14,16 +15,20 @@ class HomePage extends Component {
 	}
 
   	componentDidMount(props) {
-  		const userId = this.state.userId;
-	    fetch('/api/'+userId+'/projects')
-	      .then(res => res.json())
-	      .then(projects => this.setState({projects}, () => console.log('Projects fetched...', projects)));
-	}
+  		axios.get('http://localhost:5000/api/')
+            .then(response => {
+                this.setState({projects: response.data});
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 	content(){
-		const content = this.state.projects.map((project) => 
+		const content = this.state.projects
+		.map((project) => 
 			({
 		        icon: 'icon-class-name',
-		        label: project.title,
+		        label: project.name,
 		        content: [
 		            {
 		                icon: 'icon-class-name',
@@ -43,6 +48,11 @@ class HomePage extends Component {
 		        ],
 		    })
 	    )
+	    content.unshift(
+	    {
+            label: 'Create New Project',
+            to: '#/add',
+        });
 	    console.log("content: ",content);
 	    return content;
 	}
