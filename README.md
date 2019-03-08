@@ -9,37 +9,26 @@ This version does not include Redux
 ## Quick Start
 
 ``` bash
-# Install dependencies for server
+# Install dependencies
 npm install
 
-# Install dependencies for client
-npm run client-install
-
-# Run the client & server with concurrently
-npm run dev
-
-# Run the Express server only
-npm run server
+# Server runs on http://localhost:5000 and client on http://localhost:3000
+#To run Backend, run "nodemon server.js"
+#start mongo in separate terminal by running "mongod" in bash
+## if you see "waiting for connections on port 27017" its gucci
+## if you see "Failed to set up listener: SocketException: Address already in use", run "sudo lsof -iTCP -sTCP:LISTEN -n -P | grep mongo" then "kill <the pid id for mongo>"
+#open third terminal and run mongo to start up db by typing in "mongo"
+## in mongo client that pops up, write "use sdd"
 
 # Run the React client only
 npm run client
-
-# Server runs on http://localhost:5000 and client on http://localhost:3000
-
-
--to run be, run nodemon server.js
--start mongo in separate terminal by running mongod in bash
--- if you see "waiting for connections on port 27017" its gucci
--open third terminal and run mongo to start up db by typing in mongo
---in mongo client that pops up, write use sdd
 ```
 
 ## App Info
 
 ### Author
 
-Brad Traversy
-[Traversy Media](http://www.traversymedia.com)
+PEAKE
 
 ### Version
 
