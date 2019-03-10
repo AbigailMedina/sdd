@@ -20,7 +20,7 @@ export default class CreateProject extends Component {
 		const newProject = { name: this.state.name}
 		//axios call here sends the newProject object to the server
 		// console.log("new project",newProject);
-		axios.post('http:\//localhost:5000/api/add',
+		axios.post('http://localhost:5000/api/projects/add',
 			newProject).then(res => console.log("res.data:",res.data));
 
 		this.setState({name:' '})//to reset to original state

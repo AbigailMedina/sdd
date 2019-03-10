@@ -15,7 +15,7 @@ class HomePage extends Component {
 	}
 
   	componentDidMount(props) {
-  		axios.get('http://localhost:5000/api/')
+  		axios.get('http://localhost:5000/api/projects ')
             .then(response => {
                 this.setState({projects: response.data});
             })

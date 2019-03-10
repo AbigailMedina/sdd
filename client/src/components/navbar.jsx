@@ -17,6 +17,7 @@ class Navbar extends Component {
 						<Link class="settings" to={'/usersettings'}>Settings</Link>
 						<Link class="aboutus" to={'/AboutUs'}>About Us</Link>
 						<Link class="add" to={'/add'}>New Project</Link>
+						<Link class="signup" to={'/signup'}>Sign Up</Link>
 
 				    </div>
 
