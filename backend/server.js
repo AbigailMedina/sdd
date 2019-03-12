@@ -3,15 +3,31 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const router = express.Router();
-const PORT = 5000;
+const path = require('path');
 
+const router = express.Router();
+const PORT = process.env.PORT || 5000;
 let Project = require('./model.project');
 
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/api', { useNewUrlParser: true });
+// const uri = "mongodb+srv://medina2:Puckmann11!@sdd-a0qmx.azure.mongodb.net/test?retryWrites=true"
+// TODO: sign up for mongo db site (maybe AWS) and change this url to the site url
+
+const uri = "mongodb+srv://medina2:<password>@sdd-a0qmx.azure.mongodb.net/test?retryWrites=true";
+
+// const MongoClient = require(‘mongodb’).MongoClient;
+// const client = new MongoClient(uri, { useNewUrlParser: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
+
+//const uri = "mongodb://127.0.0.1:27017/api";
+mongoose.connect(process.env.MONGODB_URI || uri, { useNewUrlParser: true });
+
 const connection = mongoose.connection;
 
 connection.once('open', function() {
@@ -89,6 +105,14 @@ router.route('/:userId/projects').get(function (req, res){
 });
 
 app.use('/api', router);
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static( '../client/build' ));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); // relative path
+    });
+}
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
