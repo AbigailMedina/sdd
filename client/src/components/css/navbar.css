@@ -16,11 +16,20 @@
 }
 .navbar div .aboutus{
 	float: right;
-	right:50px;
+	right:0px;
 	text-align: right;
 	padding: 2px !important;
-	margin-right: 50px
+	margin-left: 500px;
 }
+
+.navbar div .login{
+	float: right;
+
+	text-align: right;
+	padding: 2px !important;
+	
+}
+
 .navbar a{
 	padding:15px;
 	/*text-align: center;*/

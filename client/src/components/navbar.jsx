@@ -5,22 +5,42 @@ import { Link } from 'react-router-dom'
 import './css/navbar.css'
 
 class Navbar extends Component {
+	constructor(props) {
+    super(props);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    this.state = {LoggedIn: false};
+  	}
+
+  	handleLoginClick() {
+    	this.setState({LoggedIn: true});
+  	}
+
+  	handleLogoutClick() {
+    	this.setState({LoggedIn: false});
+  	}
+
 
   	render() {
-  		
+  		const LoggedIn=this.state.LoggedIn;
 	    return (
-			<div class = 'navbar' id = "nb">
-				
-				<div>					
-					<div class = 'pages'>
+			<div class = 'navbar' id = "nb">				
+					<div class = 'pages level'>
+
 						<Link class="name"to={'/'}>Home</Link>
-						<Link class="settings" to={'/usersettings'}>Settings</Link>
 						<Link class="aboutus" to={'/AboutUs'}>About Us</Link>
-						<Link class="add" to={'/add'}>New Project</Link>
+						{ LoggedIn ? 
+							<div>
+								<Link class="settings" to={'/usersettings'}>Settings</Link>
+								<Link class="settings" to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
+							</div>
+						 :
+							<Link class="login" to={'/login'} onClick={this.handleLoginClick} >Login</Link>
+						}
+						
+						
 
 				    </div>
-
-				</div>
 			</div>
 		)
 	}
