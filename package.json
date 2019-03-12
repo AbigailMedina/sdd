@@ -6,11 +6,11 @@
   "scripts": {
     "client-install": "cd client && npm install",
     "start": "node ./backend/server.js",
-    "build": "cp ./src/config.js ./src/config.bak.js && cp ./src/config-prod.js ./src/config.js && node ./scripts/build.js && mv ./src/config.bak.js ./src/config.js",
-    "deploy": "aws s3 cp --recursive ./build s3://sdd-shutup",
+    // "build": "cp ./src/config.js ./src/config.bak.js && cp ./src/config-prod.js ./src/config.js && node ./scripts/build.js && mv ./src/config.bak.js ./src/config.js",
+    // "deploy": "aws s3 cp --recursive ./build s3://sdd-shutup",
     "heroku-postbuild": "cd client && npm install && npm run build",
 
-    "server": "nodemon server.js",
+    "server": "nodemon ./backend/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
