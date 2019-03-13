@@ -7,19 +7,23 @@ import LoginPage from './components/loginpage';
 import AboutUs from './components/aboutus';
 import Navbar from './components/navbar';
 import CreateProject from './components/createProject';
+import Timer from './components/timer';
+import StartButton from './components/timer';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-       <HashRouter>
-
+      <HashRouter>
         <div>
           <Navbar/>
-
           <Route 
             exact path="/" 
             component={HomePage} 
+            />
+          <Route 
+            exact path="/timer"     //need to move this later
+            component={Timer} 
             />
           <Route 
             exact path="/login" 
@@ -33,6 +37,7 @@ class App extends Component {
             exact path="/add" 
             component={CreateProject} 
             />
+
           </div>
       </HashRouter>
 

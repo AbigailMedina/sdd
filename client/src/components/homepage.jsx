@@ -75,6 +75,13 @@ class HomePage extends Component {
 					<p class=" column is-three-quarters">hi, this is homepage</p>
 
 				</div>
+
+				
+
+
+				
+
+				
 	    	</div>
 	    )
   }
