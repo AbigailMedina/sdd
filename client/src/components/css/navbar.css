@@ -7,7 +7,7 @@
 	text-align: left;
 	padding: 2px !important;
 }
-.navbar div .settings{
+.navbar div .loggedin{
 	float: right;
 	right:0px;
 	text-align: right;
@@ -16,15 +16,14 @@
 }
 .navbar div .aboutus{
 	float: right;
-	right:0px;
+	margin-right: 0px;
 	text-align: right;
 	padding: 2px !important;
-	margin-left: 500px;
 }
 
 .navbar div .login{
 	float: right;
-
+	margin-right: 50px;
 	text-align: right;
 	padding: 2px !important;
 	

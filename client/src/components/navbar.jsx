@@ -21,18 +21,22 @@ class Navbar extends Component {
   	}
 
 
+
   	render() {
   		const LoggedIn=this.state.LoggedIn;
 	    return (
 			<div class = 'navbar' id = "nb">				
 					<div class = 'pages level'>
-
-						<Link class="name"to={'/'}>Home</Link>
-						<Link class="aboutus" to={'/AboutUs'}>About Us</Link>
+						<div>
+							<Link class="name"to={'/'}>Home</Link>
+						</div>
+						<div class="aboutus">
+							<Link  to={'/AboutUs'}>About Us</Link>
+						</div>
 						{ LoggedIn ? 
-							<div>
-								<Link class="settings" to={'/usersettings'}>Settings</Link>
-								<Link class="settings" to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
+							<div class="loggedin">
+								<Link to={'/usersettings'}>Settings</Link>
+								<Link to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
 							</div>
 						 :
 							<Link class="login" to={'/login'} onClick={this.handleLoginClick} >Login</Link>
