@@ -7,7 +7,7 @@ import LoginPage from './components/loginpage';
 import AboutUs from './components/aboutus';
 import Navbar from './components/navbar';
 import CreateProject from './components/createProject';
-import Timer from './components/timer';
+import TimerComponent from './components/timer';
 import StartButton from './components/timer';
 
 class App extends Component {
@@ -23,7 +23,7 @@ class App extends Component {
             />
           <Route 
             exact path="/timer"     //need to move this later
-            component={Timer} 
+            component={TimerComponent} 
             />
           <Route 
             exact path="/login" 
