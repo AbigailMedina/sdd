@@ -7,7 +7,6 @@
     "client-install": "cd client && npm install",
     "start": "node ./backend/server.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
-
     "server": "nodemon ./backend/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -18,15 +17,18 @@
     "nodemon": "^1.14.6"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bulma": "^0.7.4",
     "bulma-extensions": "^6.2.0",
     "concurrently": "^3.5.1",
     "express": "^4.16.2",
     "moment": "^2.24.0",
     "react-bulma-components": "^2.3.0",
+    "react-compound-timer": "^1.0.12",
     "react-helmet": "^5.2.0",
     "react-metismenu": "^1.4.0",
     "react-router-dom": "^4.3.1",
+    "react-time-input": "0.0.19",
     "styled-components": "^4.1.3"
   }
 }
