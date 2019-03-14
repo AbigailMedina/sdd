@@ -12,10 +12,9 @@ let Project = require('./model.project');
 app.use(cors());
 app.use(bodyParser.json());
 
-// const uri = "mongodb+srv://medina2:Puckmann11!@sdd-a0qmx.azure.mongodb.net/test?retryWrites=true"
 // TODO: sign up for mongo db site (maybe AWS) and change this url to the site url
 
-const uri = "mongodb+srv://medina2:<password>@sdd-a0qmx.azure.mongodb.net/test?retryWrites=true";
+const uri = "mongodb://PEAKE:mongoDB1!@ds017175.mlab.com:17175/heroku_ht20w3xq";
 
 // const MongoClient = require(‘mongodb’).MongoClient;
 // const client = new MongoClient(uri, { useNewUrlParser: true });
