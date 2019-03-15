@@ -17,8 +17,8 @@ class HomePage extends Component {
   	componentDidMount(props) {
   		// TODO: change from localhost to general variable: google it
   		// axios.get('http://localhost:5000/api/')
-  		// const uri = "mongodb+srv://medina2:<password>@sdd-a0qmx.azure.mongodb.net/test?retryWrites=true"
-  		const uri = "http://localhost:5000"
+  		const uri = "mongodb://PEAKE:mongoDB1!@ds017175.mlab.com:17175/heroku_ht20w3xq"
+  		// const uri = "http://localhost:5000"
   		axios.get(uri+"/api/")
             .then(response => {
                 this.setState({projects: response.data});

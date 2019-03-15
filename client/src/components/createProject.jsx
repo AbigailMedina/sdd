@@ -56,7 +56,8 @@ export default class CreateProject extends Component {
 		const newProject = { name: this.state.name }
 		//axios call here sends the newProject object to the server
 		// console.log("new project",newProject);
-		axios.post('http:\//localhost:5000/api/add',
+		const uri = "mongodb://<dbuser>:<dbpassword>@ds017175.mlab.com:17175/heroku_ht20w3xq"
+		axios.post(uri+'/api/add',
 			newProject).then(res => console.log("res.data:",res.data));
 
 		this.setState({name:"",email:""})//to reset to original state
