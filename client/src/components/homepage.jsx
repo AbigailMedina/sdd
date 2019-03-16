@@ -15,10 +15,7 @@ class HomePage extends Component {
 	}
 
   	componentDidMount(props) {
-  		// TODO: change from localhost to general variable: google it
-  		// axios.get('http://localhost:5000/api/')
-  		const uri = "mongodb://PEAKE:mongoDB1!@ds017175.mlab.com:17175/heroku_ht20w3xq"
-  		// const uri = "http://localhost:5000"
+  		const uri = "https://sdd-shutup.herokuapp.com"
   		axios.get(uri+"/api/")
             .then(response => {
                 this.setState({projects: response.data});
@@ -74,14 +71,7 @@ class HomePage extends Component {
 					</div>
 					<p class=" column is-three-quarters">hi, this is homepage</p>
 
-				</div>
-
-				
-
-
-				
-
-				
+				</div>				
 	    	</div>
 	    )
   }
