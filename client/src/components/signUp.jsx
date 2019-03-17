@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import { throwStatement } from 'babel-types';
 
 class SignUp extends Component{
     
@@ -60,7 +61,11 @@ class SignUp extends Component{
             password: this.state.password
         }
 
-        axios.post('http://localhost:5000/api/users')
+        axios.post('http://localhost:5000/api/users', newUser).then(
+            function(res){
+                console.log("res:data", res.data)
+            }
+        )
         this.setState({
             name: '',
             userId: '',
