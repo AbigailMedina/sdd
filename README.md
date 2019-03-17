@@ -9,12 +9,11 @@ This version does not include Redux
 ## Installing Dependencies
 
 ``` bash
+# Install dependencies
+npm install
 
 # Install dependencies for client
 npm run-script client-install
-
-# Install dependencies for backend
-npm run-script backend-install
 ```
 
 ## Running Server

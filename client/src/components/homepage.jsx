@@ -15,9 +15,10 @@ class HomePage extends Component {
 	}
 
   	componentDidMount(props) {
-  		axios.get('http://localhost:5000/api/projects ')
+  		const uri = "https://sdd-shutup.herokuapp.com"
+  		axios.get(uri+'/projects')
             .then(response => {
-                this.setState({projects: response.data});
+                this.setState({projects: Array.isArray(response.data) ? response.data : [response.data]});
             })
             .catch(function (error) {
                 console.log(error);
@@ -70,7 +71,7 @@ class HomePage extends Component {
 					</div>
 					<p class=" column is-three-quarters">hi, this is homepage</p>
 
-				</div>
+				</div>				
 	    	</div>
 	    )
   }
