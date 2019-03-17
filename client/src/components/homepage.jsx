@@ -18,7 +18,7 @@ class HomePage extends Component {
   		const uri = "https://sdd-shutup.herokuapp.com"
   		axios.get(uri)
             .then(response => {
-                this.setState({projects: response.data});
+                this.setState({projects: Array.isArray(response.data) ? response.data : [response.data]});
             })
             .catch(function (error) {
                 console.log(error);
