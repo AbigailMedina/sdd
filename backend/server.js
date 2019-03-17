@@ -4,8 +4,10 @@ const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 5000;
 const app = express();
 const router = express.Router();
+const PORT = 5000;
+const user = require('./routes/User');
+const project = require('./routes/Project');
 const path = require('path');
-let Project = require('./model.project');
 
 // this is our MongoDB database
 const uri = "mongodb://PEAKE:mongoDB1!@ds017175.mlab.com:17175/heroku_ht20w3xq";
@@ -34,50 +36,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/', function(req, res, next) {
-   Project.find(function(err, projects) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(projects);
-        }
-    });
-});
-
-app.get('/:id', function(req, res, next) {
-    let id = req.params.id;
-    Project.findById(id, function(err, project) {
-        res.json(project);
-    });
-});
-
-app.post('/add', function(req, res) {
-    let project = new Project(req.body);
-    project.save()
-        .then(project => {
-            res.status(200).send({'project': project});
-        })
-        .catch(err => {
-            res.status(400).send('adding new project failed');
-        });
-});
-
-app.post('/update/:id', function(req, res) {
-    Project.findById(req.params.id, function(err, project) {
-        if (!project)
-            res.status(404).send('data is not found');
-        else
-            project.name = req.body.name;
-
-            project.save().then(project => {
-                res.json('project updated');
-            })
-            .catch(err => {
-                res.status(400).send("Update not possible");
-            });
-    });
-});
-
-app.use("/api", router);
+app.use('/api/projects', project);
+app.use('/api/users', user);
 // launch our backend into a port
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`));

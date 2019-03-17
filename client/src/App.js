@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { HashRouter, Route } from 'react-router-dom';
+import 'bulma/css/bulma.css'
 
 import './App.css';
 import HomePage from './components/homepage';
@@ -7,6 +8,7 @@ import LoginPage from './components/loginpage';
 import AboutUs from './components/aboutus';
 import Navbar from './components/navbar';
 import CreateProject from './components/createProject';
+import SignUp from './components/signUp';
 import TimerComponent from './components/timer';
 import StartButton from './components/timer';
 
@@ -33,11 +35,14 @@ class App extends Component {
             exact path="/AboutUs" 
             component={AboutUs} 
             />
-            <Route 
+          <Route 
             exact path="/add" 
             component={CreateProject} 
             />
-
+          <Route
+            exact path = "/SignUp"
+            component = {SignUp}
+            />
           </div>
       </HashRouter>
 

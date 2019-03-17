@@ -16,7 +16,7 @@ class HomePage extends Component {
 
   	componentDidMount(props) {
   		const uri = "https://sdd-shutup.herokuapp.com"
-  		axios.get(uri)
+  		axios.get(uri+'/projects')
             .then(response => {
                 this.setState({projects: Array.isArray(response.data) ? response.data : [response.data]});
             })
