@@ -25,6 +25,7 @@
     "moment": "^2.24.0",
     "react": "^16.8.4",
     "react-bulma-components": "^2.3.0",
+    "react-component-countdown-timer": "^0.1.1",
     "react-compound-timer": "^1.0.12",
     "react-helmet": "^5.2.0",
     "react-metismenu": "^1.4.0",

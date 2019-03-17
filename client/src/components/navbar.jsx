@@ -40,10 +40,8 @@ class Navbar extends Component {
 							</div>
 						 :
 							<Link class="login" to={'/login'} onClick={this.handleLoginClick} >Login</Link>
-						}</div>
-            <div>
-              <Link class="signup" to={'/signup'}>Sign Up</Link>
-            </div>
+						}
+						</div>
 			</div>
 		)
 	}

@@ -76,7 +76,7 @@ class SignUp extends Component{
 
     render(){
         return (
-            <div style={{marginTop: 80}}>
+            <div style={{marginTop: 100}}>
                 <form onSubmit = {this.onSubmit}>
                     <div className="field">
                         <label className="label">Name</label>

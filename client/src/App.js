@@ -11,6 +11,7 @@ import CreateProject from './components/createProject';
 import SignUp from './components/signUp';
 import TimerComponent from './components/timer';
 import StartButton from './components/timer';
+import "react-component-countdown-timer/lib/styles.css";
 
 class App extends Component {
   render() {
