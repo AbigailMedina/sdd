@@ -6,6 +6,7 @@ import HomePage from './components/homepage';
 import LoginPage from './components/loginpage';
 import AboutUs from './components/aboutus';
 import Navbar from './components/navbar';
+import Footer from './components/footer';
 import CreateProject from './components/createProject';
 import TimerComponent from './components/timer';
 import StartButton from './components/timer';
@@ -37,6 +38,7 @@ class App extends Component {
             exact path="/add" 
             component={CreateProject} 
             />
+            <Footer/>
 
           </div>
       </HashRouter>
