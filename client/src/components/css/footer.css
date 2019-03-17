@@ -1,10 +1,25 @@
 
+.aboutus{
+	text-align: center;
+	padding: 2px !important;
+}
 
-#footer {
+.footer a{
+	padding:5px;
+	/*text-align: center;*/
+	text-decoration: none;
+	color:#8E1812;
+}
+.footer a:hover{
+	color: blue;
+}
+
+.footer {
    position:fixed;
    left:0px;
    bottom:0px;
-   height:30px;
+   height:15px;
    width:100%;
+   paddding:0px;
    background-color:black;
 }
