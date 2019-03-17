@@ -82,7 +82,7 @@ class AboutUs extends Component {
             					</figure>
           					</div>
           					<h4>Eric Xu</h4>
-          					<p>Hi! I'm Eric!</p>
+          					<p>Hi! I'm Eric! As a third year computer science student at RPI, most of my experience comes from projects for my undergraduate course curriculum. Working on the ShutUp! web application has been very exciting as I have had the opportunity to work with other CS students with various backgrounds. Also, I have gotten to explore and learn to use many new technologies for developing ShutUp! All in all, this project has been great to work on and I hope you all find it useful.</p>
         				</div>
       				</div>
      			</div>
