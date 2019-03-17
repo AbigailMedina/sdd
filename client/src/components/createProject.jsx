@@ -57,7 +57,7 @@ export default class CreateProject extends Component {
 		//axios call here sends the newProject object to the server
 		// console.log("new project",newProject);
 		const uri = "https://sdd-shutup.herokuapp.com"
-		axios.post(uri+'/api/add',
+		axios.post(uri+'/add',
 			newProject).then(res => console.log("res.data:",res.data));
 
 		this.setState({name:"",email:""})//to reset to original state

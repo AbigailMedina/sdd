@@ -78,14 +78,6 @@ app.post('/update/:id', function(req, res) {
     });
 });
 
-app.get('/projects', function (req, res){
-    var projects= [
-            { title: 'Test Class 1'},
-            { title: 'Test Class 2'},
-            { title: 'Test Class 3'},
-          ]; 
-});
-
 app.use("/api", router);
 // launch our backend into a port
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`));
