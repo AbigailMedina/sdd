@@ -8,9 +8,11 @@ import AboutUs from './components/aboutus';
 import Navbar from './components/navbar';
 import CreateProject from './components/createProject';
 import TimerComponent from './components/timer';
-import StartButton from './components/timer';
 import "react-component-countdown-timer/lib/styles.css";
 import MeetingPage from './components/meetingpage';
+import UserSettings from './components/usersettings';
+import GroupSettings from './components/groupsettings';
+import Chat from './components/chat';
 
 class App extends Component {
   render() {
@@ -42,6 +44,18 @@ class App extends Component {
           <Route
             exact path="/meeting"
             component={MeetingPage}
+          />
+          <Route
+            exact path="/settings"
+            component={UserSettings}
+          />
+          <Route
+            exact path="/groupsettings"
+            component={GroupSettings}
+          />
+          <Route
+            exact path="/chat"
+            component={Chat}
           />
         </div>
       </HashRouter>

@@ -91,7 +91,7 @@ export default class CreateProject extends Component {
 							    <button className="button is-danger" onClick={() =>
 							    	this.setState({
 							    		collaborators: this.state.collaborators.filter(
-							    			(c) => c!=collaborator)})
+							    			(c) => c !== collaborator)})
 							    }>Remove collaborator</button>
 							</div>
 						</li> 

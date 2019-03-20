@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-// import Navbar from './Navbar'
-// import Footer from './Footer'
+
 import './style.css'
 import MetisMenu from 'react-metismenu';
 import axios from 'axios';
 import 'bulma/css/bulma.css'
+
 class Sidebar extends Component {
 	constructor(props) {
 	    super(props);
@@ -34,7 +34,7 @@ class Sidebar extends Component {
 		            {
 		                icon: 'icon-class-name',
 		                label: 'group settings',
-		                to: '#',
+		                to: '#/groupsettings',
 		            },
 		            {
 		                icon: 'icon-class-name',
@@ -44,7 +44,7 @@ class Sidebar extends Component {
 		            {
 		                icon: 'icon-class-name',
 		                label: 'group chat',
-		                to: '#',
+		                to: '#/chat',
 		            },
 		        ],
 		    })
@@ -62,16 +62,18 @@ class Sidebar extends Component {
   		const content = this.content();
 	  	
 	    return (
-	    	<div class="content">
-	    	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/alpertuna/react-metismenu/master/dist/react-metismenu-standart.min.css" />
-	    		<div class="columns">
+	    	<div className="sidebar">
+		    	<div class="content">
+		    	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/alpertuna/react-metismenu/master/dist/react-metismenu-standart.min.css" />
+		    		<div class="columns">
 
-					<div class="sidebar column is-one-quarter">
-						<MetisMenu content={content} activeLinkFromLocation/>
-					</div>
+						<div class="sidebar column is-one-quarter">
+							<MetisMenu content={content} activeLinkFromLocation/>
+						</div>
 
-				</div>				
-	    	</div>
+					</div>				
+		    	</div>
+		    </div>
 	    )
   }
 }
