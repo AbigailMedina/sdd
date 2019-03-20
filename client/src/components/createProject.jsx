@@ -84,14 +84,14 @@ export default class CreateProject extends Component {
 				</div>
 
 				<label className="label">Collaborator Emails</label>
-				{this.state.collaborators.map((collaborator)=>{
+				{this.state.collaborators.map((collaborator) => {
 					return( 
 						<li className = "level" key={collaborator}>{collaborator}
 							<div className="control">
-							    <button className="button is-danger" onClick={()=>
+							    <button className="button is-danger" onClick={() =>
 							    	this.setState({
 							    		collaborators: this.state.collaborators.filter(
-							    			(c)=>c!=collaborator)})
+							    			(c) => c!=collaborator)})
 							    }>Remove collaborator</button>
 							</div>
 						</li> 

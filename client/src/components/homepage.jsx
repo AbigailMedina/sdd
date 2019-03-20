@@ -39,7 +39,7 @@ class HomePage extends Component {
 		            {
 		                icon: 'icon-class-name',
 		                label: 'group meeting',
-		                to: '#',
+		                to: '#/meeting',
 		            },
 		            {
 		                icon: 'icon-class-name',
