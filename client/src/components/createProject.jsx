@@ -11,6 +11,8 @@ export default class CreateProject extends Component {
 
 		this.onSubmit = this.onSubmit.bind(this);
 
+		this.submit = this.submit.bind(this);
+
 		this.state = {
 			name: "",
 			email: "",
@@ -57,10 +59,15 @@ export default class CreateProject extends Component {
 		//axios call here sends the newProject object to the server
 		// console.log("new project",newProject);
 		const uri = "https://sdd-shutup.herokuapp.com"
-		axios.post(uri+'/api/add',
+		axios.post(uri+'/add',
 			newProject).then(res => console.log("res.data:",res.data));
 
 		this.setState({name:"",email:""})//to reset to original state
+	}
+
+	submit(e){
+		this.onSubmit(e);
+		window.location.href = "#/";
 	}
 	
 	render(){
@@ -103,7 +110,7 @@ export default class CreateProject extends Component {
 
 				<div className="field is-grouped">
 				  <div className="control">
-				    <button type="submit" disabled={!this.state.name} onClick = {this.onSubmit} className="button is-link">Submit</button>
+				    <button type="reset" disabled={!this.state.name} onClick = {this.submit} className="button is-link">Submit</button>
 				  </div>
 				  <div className="control">
 				    <button className="button is-text">Cancel</button>

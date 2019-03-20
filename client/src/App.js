@@ -10,6 +10,7 @@ import Footer from './components/footer';
 import CreateProject from './components/createProject';
 import TimerComponent from './components/timer';
 import StartButton from './components/timer';
+import "react-component-countdown-timer/lib/styles.css";
 
 class App extends Component {
   render() {
