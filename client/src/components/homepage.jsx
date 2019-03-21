@@ -72,6 +72,7 @@ class HomePage extends Component {
 					<div class="sidebar column is-one-quarter">
 						<MetisMenu content={content} activeLinkFromLocation/>
 					</div>
+			
 					<p class=" column is-three-quarters">hi, this is homepage</p>
 
 				</div>

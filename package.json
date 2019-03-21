@@ -23,6 +23,8 @@
     "concurrently": "^3.5.1",
     "express": "^4.16.2",
     "moment": "^2.24.0",
+    "pretty-ms": "^4.0.0",
+    "prop-types": "^15.7.2",
     "react-bulma-components": "^2.3.0",
     "react-compound-timer": "^1.0.12",
     "react-helmet": "^5.2.0",
