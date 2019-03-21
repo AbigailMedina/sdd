@@ -60,7 +60,7 @@ class AboutUs extends Component {
             					</figure>
           					</div>
           					<h4>Eric Lawson</h4>
-          					<p>Hi! I'm Eric!</p>
+          					<p>Lorem ipsum fuck this shit.</p>
         				</div>
       				</div>
       				<div class="column">
