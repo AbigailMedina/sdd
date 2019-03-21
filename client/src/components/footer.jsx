@@ -16,11 +16,18 @@ class Footer extends Component {
 	    return (
 			<div class = 'footer'>	
 			
-				<div class="aboutus">
-					<Link  to={'/AboutUs'}>About Us</Link>
+				<div class="git">
+					<a href='https://github.com/AbigailMedina/sdd'>Git</a>
+				</div>
+
+				<div class="about">
+					<Link  to={'/AboutUs'}>About Us </Link>
 				</div>
 			
-			
+				<div class="shutup">
+					<p>ShutUp!</p>
+				</div>
+
 			</div>
 		)
 	}
