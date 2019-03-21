@@ -5,7 +5,9 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 const router = express.Router();
 const path = require('path');
+
 let Project = require('./model.project');
+let User = require('./model.user');
 
 // this is our MongoDB database
 const uri = "mongodb://PEAKE:mongoDB1!@ds017175.mlab.com:17175/heroku_ht20w3xq";
@@ -77,6 +79,66 @@ app.post('/update/:id', function(req, res) {
             });
     });
 });
+
+// POST TO /api/users/login
+app.post('/users/login', function(req,res){
+    const{userId,password} = req.body;
+    User.findOne({userId})
+        .then(user =>{
+            if(user){
+                res.status(200).send({'user':user});
+            }
+        }).catch(err => {
+            res.status(400).send("login failed");
+        })
+});
+
+//@route    POST api/users
+//@desc     Register new user
+//@access   Public 
+router.route('/users').post(function(req, res){
+    const{name,userId,email,password} = req.body;
+    
+    //Validation
+    if(!name || !userId || !email || !password){
+        return res.status(400).json({msg: 'Please enter all fields'});
+    }
+
+    User.findOne({email})
+        .then(user =>{
+            if(user){
+                return res.status(400).json({msg: 'Email already exits'});
+            }else{
+                const newUser = new User({
+                    name,
+                    userId,
+                    email,
+                    password
+                });
+                
+                //Don't want to store actual password in db, so hash
+                //Create salt & hash
+                bcrypt.genSalt(10, function(err, salt){
+                    bcrypt.hash(newUser.password, salt, function(err, hash){
+                        if(err){
+                            throw err;
+                        }newUser.password = hash;
+                        newUser.save()
+                            .then(function(user){
+                                res.json({
+                                    user:{
+                                       name: user.name,
+                                       userId: user.userId,
+                                       email: user.email,
+                                       id: user.id
+                                    }
+                                })
+                            })
+                    })
+                })
+            }
+        })
+})
 
 app.use("/api", router);
 // launch our backend into a port

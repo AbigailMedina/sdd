@@ -69,6 +69,10 @@ export default class CreateProject extends Component {
 		this.onSubmit(e);
 		window.location.href = "#/";
 	}
+
+	cancel(e){
+		window.location.href = "#/";
+	}
 	
 	render(){
 		return(
@@ -113,7 +117,7 @@ export default class CreateProject extends Component {
 				    <button type="reset" disabled={!this.state.name} onClick = {this.submit} className="button is-link">Submit</button>
 				  </div>
 				  <div className="control">
-				    <button className="button is-text">Cancel</button>
+				    <button className="button is-text" onClick={this.cancel.bind(this)} >Cancel</button>
 				  </div>
 				</div>
 				
