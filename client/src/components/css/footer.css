@@ -32,24 +32,13 @@
    height:50px;
    text-align: center;
 
-   padding-bottom: 60px;
+   padding-bottom: 20px;
    padding-top: 20px;
    background-color:#911840;
    
 
 }
 
-
-.git {
-	float: left;
-}
-
-.about {
-	float: right;
-}
-
 .shutup {
-	float: center;
 	color:grey;
-	padding-top: 10px;
 }
