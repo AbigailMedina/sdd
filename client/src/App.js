@@ -7,6 +7,7 @@ import LoginPage from './components/loginpage';
 import SignUpPage from './components/signupPage';
 import AboutUs from './components/aboutus';
 import Navbar from './components/navbar';
+import Footer from './components/footer';
 import CreateProject from './components/createProject';
 import TimerComponent from './components/timer';
 import "react-component-countdown-timer/lib/styles.css";
@@ -62,6 +63,7 @@ class App extends Component {
             exact path="/chat"
             component={Chat}
           />
+         <Footer/>
         </div>
       </HashRouter>
 

@@ -30,9 +30,6 @@ class Navbar extends Component {
 					<div>
 						<Link class="name"to={'/'}>Home</Link>
 					</div>
-					<div class="aboutus">
-						<Link  to={'/AboutUs'}>About Us</Link>
-					</div>
 					{ LoggedIn ? 
 						<div class="loggedin">
 							<Link to={'/settings'}>Settings</Link>
