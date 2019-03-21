@@ -140,6 +140,6 @@ router.route('/users').post(function(req, res){
         })
 })
 
-app.use("/api", router);
+// app.use("/api", router);
 // launch our backend into a port
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`));

@@ -27,7 +27,7 @@ class LoginPage extends Component {
     }
 
     onSubmit(e){
-      const uri = "https://sdd-shutup.herokuapp.com/"
+      const uri = "https://sdd-shutup.herokuapp.com"
 
       e.preventDefault();
 
@@ -36,7 +36,7 @@ class LoginPage extends Component {
       console.log("User Info", this.state.password);
       
       const user = {
-        email: this.state.email,
+        userId: this.state.userId,
         password: this.state.password
       }
 
