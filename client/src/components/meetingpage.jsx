@@ -40,7 +40,10 @@ class MeetingPage extends Component {
 	    			<div class="shutup">
 						<button type="button" onClick = {this.doShutUp} className="button-is-text">Shut Up!</button>	
 					</div>
+				</div>
+				<div class="column" margin-top="100px" margin-bottom="100px">
 					<TimerComponent/>	
+			
 	    		</div>
 	    	</div>
 	    )
