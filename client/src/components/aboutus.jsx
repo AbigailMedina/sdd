@@ -61,7 +61,7 @@ class AboutUs extends Component {
             					</figure>
           					</div>
           					<h4>Eric Lawson</h4>
-          					<p>Lorem ipsum fuck this shit.</p>
+          					<p>Hi! I am a senior CS major at RPI, and starting in May 2019 I will be a full-time software engineer at X-Ray Optical Systems. I enjoy mountain climbing and watching baseball in my free time.</p>
         				</div>
       				</div>
       				<div class="column">
