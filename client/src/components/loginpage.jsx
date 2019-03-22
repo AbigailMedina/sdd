@@ -10,24 +10,26 @@ class LoginPage extends Component {
       this.onChangeUserPassword = this.onChangeUserPassword.bind(this);
       this.state = {
         userId: '',
-        password: ''
+        password: '',
+        loginError: false
       }
     }
 
     onChangeUserId(e){
       this.setState({
-        userId:e.target.value
+        userId:e.target.value,
+        loginError:false
       })
     }
 
     onChangeUserPassword(e){
       this.setState({
-        password:e.target.value
+        password:e.target.value,
+        loginError:false
       })
     }
 
     onSubmit(e){
-      const uri = "https://sdd-shutup.herokuapp.com"
 
       e.preventDefault();
 
@@ -39,23 +41,23 @@ class LoginPage extends Component {
         userId: this.state.userId,
         password: this.state.password
       }
+      const uri = "https://sdd-shutup.herokuapp.com"
+      const uri2 = "http://localhost:5000"
 
-      axios.post(uri+'/login', {
+      axios.post(uri2+'/login', {
         userId: this.state.userId,
         password: this.state.password
-      }).then(function (response) {
-       console.log(response);
-       if(response.data.code == 200){
+      }).then( response=> {
+       console.log(response, "response.status:",response.status);
+       if(response.status == 200){
          console.log("Login successfull", response.data.user);
+       }else{
+          this.setState({loginError:true})
+          console.log(response.data);
        }
-       else if(response.data.code == 400){
-         console.log(response.data);
-       }
-       else{
-         console.log("Username does not exist");
-       }
-     }).catch(function (error) {
-         console.log(error);
+     }).catch(error => {
+         
+         this.setState({loginError:true},()=>console.log(error))
        });
       this.setState({
         userId: '',
@@ -72,7 +74,9 @@ class LoginPage extends Component {
         <div className="columns is-centered" style={{marginTop: 80 }}>
           <form className="column is-half "onSubmit = {this.onSubmit.bind(this)}>
               <h2 class="title is-2">Log In</h2>
+              {this.state.loginError? <div class="help is-danger">Incorrect Username or Password</div>:<div></div>}
               <div className="field">
+
                   <label className="label">Username</label>
                   <div className="control">
                       <input  type="text" 

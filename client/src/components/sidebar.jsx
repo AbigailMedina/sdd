@@ -16,8 +16,9 @@ class Sidebar extends Component {
 
   	componentDidMount(props) {
   		const uri = "https://sdd-shutup.herokuapp.com"
+  		const uri2 = "http://localhost:5000"
 
-  		axios.get(uri+'/projects').then(response => {
+  		axios.get(uri2+'/projects').then(response => {
                 this.setState({projects: Array.isArray(response.data) ? response.data : [response.data]});
             })
             .catch(function (error) {

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
+const bcrypt = require('bcryptjs');
 const PORT = process.env.PORT || 5000;
 const app = express();
 const router = express.Router();
@@ -18,26 +19,32 @@ connection.once('open', function() {
 })
 connection.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-// enable cors
-const cors = require('cors');
-app.use(cors({
-    'origin': '*',
-    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    'preflightContinue': false,
-    'optionsSuccessStatus': 204}));
 
-// bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  next();
-});
+
+// enable cors
+const cors = require('cors');
+app.use(cors());
+
+// {
+//     'origin': '*',
+//     'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     'preflightContinue': false,
+//     'optionsSuccessStatus': 204}
+
+// bodyParser, parses the request body to be a readable json format
+
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+//   next();
+// });
 
 
 app.get('/projects', function(req, res, next) {
+    console.log("nooooo")
    Project.find(function(err, projects) {
         if (err) {
             console.log(err);
@@ -57,14 +64,30 @@ app.get('/projects/:id', function(req, res, next) {
 });
 
 app.post('/add', function(req, res) {
+    console.log("post")
     let project = new Project(req.body);
     project.save()
         .then(project => {
+            console.log(project)
             res.status(200).send({'project': project});
         })
         .catch(err => {
             res.status(400).send('adding new project failed');
         });
+});
+
+app.post('/login', function(req, res) {
+    console.log("login")
+    const{userId,password} = req.body;
+    User.findOne({userId}, function (err, user) {
+        if(user){
+            console.log(user)
+            res.status(200).send({"user" : user})
+        }else{
+            res.status(400).send({message : "invalid login"})
+        }
+
+    });    
 });
 
 app.post('/update/:id', function(req, res) {
@@ -97,9 +120,9 @@ app.get('/users', function(req,res){
 //@route    POST api/users
 //@desc     Register new user
 //@access   Public 
-app.post('/users', (function(req, res){
+app.post('/users', function(req, res){
     const{name,userId,email,password} = req.body;
-    
+    console.log("in server /users")
     //Validation
     if(!name || !userId || !email || !password){
         return res.status(400).json({msg: 'Please enter all fields'});
@@ -139,21 +162,8 @@ app.post('/users', (function(req, res){
                 })
             }
         })
-}));
-
-// POST TO /api/users/login
-app.post('/login', function(req,res){
-    const{userId,password} = req.body;
-    User.findOne({userId})
-        .then(user =>{
-            if(user){
-                res.status(200).send({'user':user});
-            }
-        }).catch(err => {
-            res.status(400).send("login failed");
-        })
 });
 
-app.use("/api", router);
+// app.use("/api", router);
 // launch our backend into a port
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`));
