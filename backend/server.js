@@ -44,7 +44,6 @@ app.use(cors());
 
 
 app.get('/projects', function(req, res, next) {
-    console.log("nooooo")
    Project.find(function(err, projects) {
         if (err) {
             console.log(err);
@@ -59,7 +58,7 @@ app.get('/projects', function(req, res, next) {
 app.get('/projects/:id', function(req, res, next) {
     let id = req.params.id;
     Project.findById(id, function(err, project) {
-        res.json(project);
+        res.status(200).send({'project':project});
     });
 });
 

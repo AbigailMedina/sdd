@@ -48,21 +48,21 @@ class App extends Component {
             component={CreateProject} 
           />
           <Route
-            exact path="/meeting"
+            exact path="/meeting/:id"
             component={MeetingPage}
+          />
+          <Route
+            exact path="/chat/:id"
+            component={Chat}
+          />
+          <Route
+            path="/groupsettings/:id"
+            component={GroupSettings}
           />
           <Route
             exact path="/settings"
             component={UserSettings}
-          />
-          <Route
-            exact path="/groupsettings"
-            component={GroupSettings}
-          />
-          <Route
-            exact path="/chat"
-            component={Chat}
-          />
+          />          
          <Footer/>
         </div>
       </HashRouter>
