@@ -26,7 +26,7 @@ class TimerComponent extends Component {
   		console.log((1000*(minutes*60)+seconds))
   		return 1000*(minutes*60)+seconds
   	}
-
+/*
   	render() {
 	    return (
 			<div style={{marginTop: '100px'}}>
