@@ -4,6 +4,7 @@ import { HashRouter, Route } from 'react-router-dom';
 import './App.css';
 import HomePage from './components/homepage';
 import LoginPage from './components/loginpage';
+import SignUpPage from './components/signupPage';
 import AboutUs from './components/aboutus';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
@@ -33,6 +34,10 @@ class App extends Component {
           <Route 
             exact path="/login" 
             component={LoginPage} 
+          />
+          <Route 
+            exact path="/signUp" 
+            component={SignUpPage} 
           />
           <Route 
             exact path="/AboutUs" 
