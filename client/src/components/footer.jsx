@@ -14,19 +14,21 @@ class Footer extends Component {
 
 
 	    return (
-			<div class = 'footer'>	
+			<div className = 'footer level'>	
 			
-				<div class="git">
-					<a href='https://github.com/AbigailMedina/sdd'>Git</a>
+				<div className="git level-item">
+					<a href='https://github.com/AbigailMedina/sdd'>Github</a>
 				</div>
 
-				<div class="about">
+				<div className="shutup level-item">
+					<p>ShutUp!</p>
+				</div>
+
+				<div className="about level-item">
 					<Link  to={'/AboutUs'}>About Us </Link>
 				</div>
 			
-				<div class="shutup">
-					<p>ShutUp!</p>
-				</div>
+				
 
 			</div>
 		)

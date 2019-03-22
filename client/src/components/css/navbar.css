@@ -40,15 +40,15 @@
 	padding:15px;
 	/*text-align: center;*/
 	text-decoration: none;
-	color:#8E1812;
+	color:white;
 }
 .navbar a:hover{
-	color: blue;
+	color: #911840;
 }
 #nb{
 	position: fixed;
 	left:0;
 	top:0;
 	right:0;
-	background-color: black;
+	background-color: grey;
 }
