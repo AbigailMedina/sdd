@@ -20,6 +20,7 @@ class Sidebar extends Component {
 
   		axios.get(uri2+'/projects').then(response => {
                 this.setState({projects: Array.isArray(response.data) ? response.data : [response.data]});
+                console.log(this.state.projects)
             })
             .catch(function (error) {
                 console.log(error);
@@ -35,17 +36,17 @@ class Sidebar extends Component {
 		            {
 		                icon: 'icon-class-name',
 		                label: 'group settings',
-		                to: '#/groupsettings',
+		                to: '#/groupsettings/'+project._id,
 		            },
 		            {
 		                icon: 'icon-class-name',
 		                label: 'group meeting',
-		                to: '#/meeting',
+		                to: '#/meeting/'+project._id,
 		            },
 		            {
 		                icon: 'icon-class-name',
 		                label: 'group chat',
-		                to: '#/chat',
+		                to: '#/chat/'+project._id,
 		            },
 		        ],
 		    })
