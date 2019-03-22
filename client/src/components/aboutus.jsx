@@ -1,23 +1,7 @@
 import React, { Component } from 'react'
-// import Navbar from './Navbar'
-// import Footer from './Footer'
 import './style.css'
-//import MetisMenu from 'react-metismenu';
-//import 'bulma/css/bulma.css'
+
 class AboutUs extends Component {
-	constructor(props) {
-	    super(props);
-	    this.state = {
-	    	projects:[],
-	    	userId:"medina2"
-	    }
-	}
-
-  	componentDidMount(props) {
-  		const userId = this.state.userId;	// idk what this is???
-	    
-	}
-
   	render() {
 	  	
 	    return (
