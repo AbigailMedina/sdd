@@ -9,9 +9,9 @@ export default class Project {
   // public user;//: User;
 
   constructor(data) {
-    this.id = data.id;
-    this.title = data.title;
-    this.userId = data.userId;
+    this.name = data.title;
+    // this.userId = data.userId;
+    this.collaborators = data.collaborators;
   }
 
   get user() {

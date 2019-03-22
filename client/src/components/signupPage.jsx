@@ -61,6 +61,7 @@ class SignUp extends Component{
             password: this.state.password
         }
         const uri = "https://sdd-shutup.herokuapp.com"
+        
         axios.post(uri+'/users', newUser).then(
             function(res){
                 console.log("res:data", res.data)

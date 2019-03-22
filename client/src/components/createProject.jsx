@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-
+import Project from '../models/Project';
 export default class CreateProject extends Component {
 	constructor(props){
 		super(props);
@@ -37,32 +37,26 @@ export default class CreateProject extends Component {
 			})
 	}
 
-	removeCollaborator = collaborator => {
-    this.setState(state => {
-      const list = state.collaborators.filter((j) => {		
-		return collaborator !== j});
-	    });console.log(this.state.collaborators);
+	onRemoveCollaborator(removeMe){
+		const list = this.state.collaborators.filter(
+			function (collaborator) {
+		  		return collaborator !== removeMe;
+			});
+		
+	    this.setState({collaborators:list});
+		console.log(this.state.collaborators);
 	};
-
-	// removeCollaborator(collaborator){
-	// 	var newArray = this.state.collaborators.slice();    
- //    	newArray.filter(function(ele){
-	//        return ele !== collaborator;
-	//    	});
-	// 	this.setState({collaborators:newArray})
-			
-	// }
 
 	onSubmit(e){
 		e.preventDefault();
-		const newProject = { name: this.state.name }
+		// const newProject = new Project( this.state.name, this.state.collaborators );
 		//axios call here sends the newProject object to the server
 		// console.log("new project",newProject);
 		const uri = "https://sdd-shutup.herokuapp.com"
-		axios.post(uri+'/add',
-			newProject).then(res => console.log("res.data:",res.data));
 
-		this.setState({name:"",email:""})//to reset to original state
+		axios.post(uri+'/add', {name: this.state.name,collaborators: this.state.collaborators}).then(res => console.log("res.data:",res.data));
+
+		this.setState({name:"",email:"",collaborators:[]})//to reset to original state
 	}
 
 	submit(e){

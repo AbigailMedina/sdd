@@ -36,7 +36,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/', function(req, res, next) {
+
+app.get('/projects', function(req, res, next) {
    Project.find(function(err, projects) {
         if (err) {
             console.log(err);
@@ -44,9 +45,11 @@ app.get('/', function(req, res, next) {
             res.json(projects);
         }
     });
+   
 });
 
-app.get('/:id', function(req, res, next) {
+
+app.get('/projects/:id', function(req, res, next) {
     let id = req.params.id;
     Project.findById(id, function(err, project) {
         res.json(project);
@@ -80,23 +83,21 @@ app.post('/update/:id', function(req, res) {
     });
 });
 
-// POST TO /api/users/login
-app.post('/users/login', function(req,res){
-    const{userId,password} = req.body;
-    User.findOne({userId})
-        .then(user =>{
-            if(user){
-                res.status(200).send({'user':user});
-            }
-        }).catch(err => {
-            res.status(400).send("login failed");
-        })
+app.get('/users', function(req,res){
+    User.find(function(err, users) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(users);
+        }
+    });
 });
+
 
 //@route    POST api/users
 //@desc     Register new user
 //@access   Public 
-router.route('/users').post(function(req, res){
+app.post('/users', (function(req, res){
     const{name,userId,email,password} = req.body;
     
     //Validation
@@ -138,8 +139,21 @@ router.route('/users').post(function(req, res){
                 })
             }
         })
-})
+}));
 
-// app.use("/api", router);
+// POST TO /api/users/login
+app.post('/login', function(req,res){
+    const{userId,password} = req.body;
+    User.findOne({userId})
+        .then(user =>{
+            if(user){
+                res.status(200).send({'user':user});
+            }
+        }).catch(err => {
+            res.status(400).send("login failed");
+        })
+});
+
+app.use("/api", router);
 // launch our backend into a port
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`));

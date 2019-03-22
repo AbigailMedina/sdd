@@ -40,7 +40,10 @@ class LoginPage extends Component {
         password: this.state.password
       }
 
-      axios.post(uri+'/users/login', user).then(function (response) {
+      axios.post(uri+'/login', {
+        userId: this.state.userId,
+        password: this.state.password
+      }).then(function (response) {
        console.log(response);
        if(response.data.code == 200){
          console.log("Login successfull", response.data.user);
