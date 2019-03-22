@@ -10,7 +10,7 @@ import Navbar from './components/navbar';
 import Footer from './components/footer';
 import CreateProject from './components/createProject';
 import TimerComponent from './components/timer';
-import "react-component-countdown-timer/lib/styles.css";
+//import "react-component-countdown-timer/lib/styles.css";
 import MeetingPage from './components/meetingpage';
 import UserSettings from './components/usersettings';
 import GroupSettings from './components/groupsettings';

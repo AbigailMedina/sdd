@@ -17,6 +17,7 @@
     "nodemon": "^1.14.6"
   },
   "dependencies": {
+    "@platoai/react-sound": "^0.6.2",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.5",
     "bcryptjs": "^2.4.3",
@@ -30,8 +31,11 @@
     "react-compound-timer": "^1.0.12",
     "react-helmet": "^5.2.0",
     "react-metismenu": "^1.4.0",
+    "react-player": "^1.9.3",
     "react-router-dom": "^4.3.1",
+    "react-sound": "^1.2.0",
     "react-time-input": "0.0.19",
+    "sound-player": "^1.0.13",
     "styled-components": "^4.1.3"
   }
 }

@@ -17,7 +17,7 @@ class HomePage extends Component {
 	    	<div class="homepage">
 	    		<Sidebar/>
 	    		<div class="columns">
-					<p class=" column is-three-quarters">hi, this is homepage</p>
+					<p class="column is-three-quarters">hi, this is homepage</p>
 				</div>				
 	    	</div>
 	    )

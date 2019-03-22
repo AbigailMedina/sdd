@@ -26,7 +26,7 @@ class TimerComponent extends Component {
   		console.log((1000*(minutes*60)+seconds))
   		return 1000*(minutes*60)+seconds
   	}
-
+/*
   	render() {
 	    return (
 			<div style={{marginTop: '100px'}}>
@@ -34,19 +34,29 @@ class TimerComponent extends Component {
 				   ref="TimeInputWrapper"
 				   className='form-control'
 				   mountFocus='true'
-				   onTimeChange={this.onTimeChangeHandler} />
-				<Timer initialTime={this.convertTime(this.state.time)} direction="backward" startImmediately={false}>
-    				{({ start, resume, pause, reset}) => (
+
+
+				   onTimeChange={this.onTimeChangeHandler} /> */
+
+  	render() {
+	    return (
+			<div class="center" style={{marginTop: '100px'}}>
+				<Timer initialTime={this.convertTime()} direction="backward" startImmediately={false} >
+    				{({ start, resume, pause, stop, reset, timerState }) => (
         				<React.Fragment>
-				            <div class="center">
-				                <h1><Timer.Minutes /> minutes <Timer.Seconds /> seconds</h1>
-				   
+				            <div class="box" $box-radius="6px">
+				                <h4><Timer.Minutes /> minutes <Timer.Seconds /> seconds</h4>
+				  
 				            </div>
+				
+
 				            <br />
 				            <div class="center">
 				                <button onClick={start}>Start</button>
 				                <button onClick={pause}>Pause</button>
-				                <button onClick={resume}>Resume</button>
+
+				                <button onClick={stop}>Stop</button>
+
 				                <button onClick={reset}>Reset</button>
 				            </div>
 				        </React.Fragment>
