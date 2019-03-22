@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-
+import Project from '../models/Project';
 export default class CreateProject extends Component {
 	constructor(props){
 		super(props);
@@ -10,6 +10,8 @@ export default class CreateProject extends Component {
 		this.onAddCollaborator = this.onAddCollaborator.bind(this);
 
 		this.onSubmit = this.onSubmit.bind(this);
+
+		this.submit = this.submit.bind(this);
 
 		this.state = {
 			name: "",
@@ -35,31 +37,39 @@ export default class CreateProject extends Component {
 			})
 	}
 
-	removeCollaborator = collaborator => {
-    this.setState(state => {
-      const list = state.collaborators.filter((j) => {		
-		return collaborator !== j});
-	    });console.log(this.state.collaborators);
+	onRemoveCollaborator(removeMe){
+		const list = this.state.collaborators.filter(
+			function (collaborator) {
+		  		return collaborator !== removeMe;
+			});
+		
+	    this.setState({collaborators:list});
+		console.log(this.state.collaborators);
 	};
-
-	// removeCollaborator(collaborator){
-	// 	var newArray = this.state.collaborators.slice();    
- //    	newArray.filter(function(ele){
-	//        return ele !== collaborator;
-	//    	});
-	// 	this.setState({collaborators:newArray})
-			
-	// }
 
 	onSubmit(e){
 		e.preventDefault();
-		const newProject = { name: this.state.name }
+		// const newProject = new Project( this.state.name, this.state.collaborators );
 		//axios call here sends the newProject object to the server
 		// console.log("new project",newProject);
-		axios.post('http:\//localhost:5000/api/add',
-			newProject).then(res => console.log("res.data:",res.data));
+		const uri = "https://sdd-shutup.herokuapp.com"
+  		const uri2 = "http://localhost:5000"
 
-		this.setState({name:"",email:""})//to reset to original state
+		axios.post(uri2+'/add', {
+			name: this.state.name,
+			collaborators: this.state.collaborators
+		}).then(res => console.log("res.data:",res.data));
+
+		this.setState({name:"",email:"",collaborators:[]})//to reset to original state
+	}
+
+	submit(e){
+		this.onSubmit(e);
+		window.location.href = "#/";
+	}
+
+	cancel(e){
+		window.location.href = "#/";
 	}
 	
 	render(){
@@ -76,14 +86,14 @@ export default class CreateProject extends Component {
 				</div>
 
 				<label className="label">Collaborator Emails</label>
-				{this.state.collaborators.map((collaborator)=>{
+				{this.state.collaborators.map((collaborator) => {
 					return( 
 						<li className = "level" key={collaborator}>{collaborator}
 							<div className="control">
-							    <button className="button is-danger" onClick={()=>
+							    <button className="button is-danger" onClick={() =>
 							    	this.setState({
 							    		collaborators: this.state.collaborators.filter(
-							    			(c)=>c!=collaborator)})
+							    			(c) => c !== collaborator)})
 							    }>Remove collaborator</button>
 							</div>
 						</li> 
@@ -102,10 +112,10 @@ export default class CreateProject extends Component {
 
 				<div className="field is-grouped">
 				  <div className="control">
-				    <button type="submit" disabled={!this.state.name} onClick = {this.onSubmit} className="button is-link">Submit</button>
+				    <button type="reset" disabled={!this.state.name} onClick = {this.submit} className="button is-link">Submit</button>
 				  </div>
 				  <div className="control">
-				    <button className="button is-text">Cancel</button>
+				    <button className="button is-text" onClick={this.cancel.bind(this)} >Cancel</button>
 				  </div>
 				</div>
 				
