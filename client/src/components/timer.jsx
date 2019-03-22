@@ -33,24 +33,23 @@ class TimerComponent extends Component {
 
   	render() {
 	    return (
-			<div class="center" style={{marginTop: '100px'}}>
+			<div class="center" style={{marginTop: '100px', maxWidth:"300px"}}>
 				<h4>Enter a time in the format '00:00' to use timer</h4>
 				<form className="field is-grouped">
 					<input class="input" type="text" onChange={this.addInput} placeholder="Pick a time" value={this.state.time} />
-					<button className="button is-info" onClick={this.changeState}>Enter</button>
+					<button className="button is-success" onClick={this.changeState}>Enter</button>
 				</form>
 				{this.state.go ?
 					<Timer initialTime={this.convertTime()} direction="backward" startImmediately={false} >
     					{({ start, resume, pause, stop, reset, timerState }) => (
         					<React.Fragment>
-				    	    	<div class="box" $box-radius="6px">
+				    	    	<div class="box">
 				                	<h4><Timer.Minutes /> minutes <Timer.Seconds /> seconds</h4>
-				            		<br />
+				            		<br/>
 				            		<div class="center">
-				                		<button onClick={start}>Start</button>
-				                		<button onClick={pause}>Pause</button>
-				                		<button onClick={stop}>Stop</button>
-				                		<button onClick={reset}>Reset</button>
+				                		<button class="button is-normal is-primary" onClick={start}>Start</button>
+				                		<button class="button is-normal is-danger" onClick={stop}>Stop</button>
+				                		<button class="button is-normal is-info" onClick={reset}>Reset</button>
 				            		</div>
 				         		</div>
 				        	</React.Fragment>
