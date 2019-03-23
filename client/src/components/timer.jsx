@@ -33,7 +33,7 @@ class TimerComponent extends Component {
 
   	render() {
 	    return (
-			<div class="center" style={{marginTop: '100px', maxWidth:"300px"}}>
+			<div class="center" style={{marginTop:"-50px", maxWidth:"300px"}}>
 				<h4>Enter a time in the format '00:00' to use timer</h4>
 				<form className="field is-grouped">
 					<input class="input" type="text" onChange={this.addInput} placeholder="Pick a time" value={this.state.time} />

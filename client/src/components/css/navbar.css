@@ -14,13 +14,7 @@
 	padding: 2px !important;
 	margin-right: 50px
 }
-.navbar div .aboutus{
-	float: right;
-	margin-right: 0px;
-	text-align: right;
-	padding: 2px !important;
-	margin-right: 50px
-}.navbar div .signup{
+.navbar div .signup{
 	float: right;
 	right: 100px;
 	text-align: right;

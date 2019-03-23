@@ -62,6 +62,16 @@ app.get('/projects/:id', function(req, res, next) {
     });
 });
 
+//will be used for removing a user in groupSettings
+app.patch('/projects/:id/removeUser/:userID', function(req, res, next) {
+    let projectId = req.params.id;
+    let userId = req.params.userId;
+    Project.findById(id, function(err, project) {
+        project.collaborators.filter((collaborator)=>{return collaborator!=userId})
+        res.status(200).send({'project':project});
+    });
+});
+
 app.post('/add', function(req, res) {
     console.log("post")
     let project = new Project(req.body);
@@ -113,6 +123,19 @@ app.get('/users', function(req,res){
             res.json(users);
         }
     });
+});
+
+app.get('/users/:email', function(req,res){
+    let email = req.params.email;
+    console.log(email)
+    User.findOne({email})
+        .then(user =>{
+            if(user){
+                return res.status(200).send({"user": user});
+            }else{
+                return res.status(400).send("cannot find user");
+            }
+        });
 });
 
 

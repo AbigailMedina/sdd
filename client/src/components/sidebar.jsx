@@ -20,7 +20,6 @@ class Sidebar extends Component {
 
   		axios.get(uri2+'/projects').then(response => {
                 this.setState({projects: Array.isArray(response.data) ? response.data : [response.data]});
-                console.log(this.state.projects)
             })
             .catch(function (error) {
                 console.log(error);
@@ -56,7 +55,6 @@ class Sidebar extends Component {
             label: 'Create New Project',
             to: '#/add',
         });
-	    console.log("content: ",content);
 	    return content;
 	}
 
@@ -67,13 +65,9 @@ class Sidebar extends Component {
 	    	<div className="sidebar">
 		    	<div class="content">
 		    	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/alpertuna/react-metismenu/master/dist/react-metismenu-standart.min.css" />
-		    		<div class="columns">
-
-						<div class="sidebar column is-one-quarter">
-							<MetisMenu content={content} activeLinkFromLocation/>
-						</div>
-
-					</div>				
+					<div class="sidebar">
+						<MetisMenu content={content} activeLinkFromLocation/>
+					</div>
 		    	</div>
 		    </div>
 	    )
