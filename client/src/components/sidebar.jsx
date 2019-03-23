@@ -20,7 +20,6 @@ class Sidebar extends Component {
 
   		axios.get(uri2+'/projects').then(response => {
                 this.setState({projects: Array.isArray(response.data) ? response.data : [response.data]});
-                console.log(this.state.projects)
             })
             .catch(function (error) {
                 console.log(error);
@@ -56,7 +55,6 @@ class Sidebar extends Component {
             label: 'Create New Project',
             to: '#/add',
         });
-	    console.log("content: ",content);
 	    return content;
 	}
 
