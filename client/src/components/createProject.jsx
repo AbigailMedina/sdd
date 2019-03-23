@@ -16,7 +16,8 @@ export default class CreateProject extends Component {
 		this.state = {
 			name: "",
 			email: "",
-			collaborators: []
+			collaborators: [],//array of emails of valid user objects
+			userError:false
 		}
 	}
 
@@ -25,16 +26,25 @@ export default class CreateProject extends Component {
 	}
 
 	onChangeEmail(e){
-		this.setState({email:e.target.value})
+		this.setState({email:e.target.value,userError:false})
 	}
 
 	onAddCollaborator(){
-		var newArray = this.state.collaborators.slice();    
-    	newArray.push(this.state.email);  
-		this.setState({collaborators:newArray},
-			()=>{
-				this.setState({email:""})
-			})
+		//verify that email == a real user
+		//using uri2 for local development
+		axios.get(`http://localhost:5000/users/${this.state.email}`).then(response => {
+            console.log("user found in createProject: ",response.data.user)
+           	var newArray = this.state.collaborators.slice();    
+	    	newArray.push(this.state.email);  
+			this.setState({collaborators:newArray},
+				()=>{
+					this.setState({email:""})
+				})
+        })
+        .catch( error =>{
+            console.log(error);
+            this.setState({userError:true})
+        })
 	}
 
 	onRemoveCollaborator(removeMe){
@@ -102,7 +112,10 @@ export default class CreateProject extends Component {
 				}
 				<div className="field is-grouped">
 				  <div className="control">
-				    <input className="input is-info" value = {this.state.email} onChange = {this.onChangeEmail} type="email" placeholder="Email input" />
+				    <input 
+				    	className={this.state.userError?"input is-danger":"input is-info"} 
+				    	value = {this.state.userError? "User does not exist":this.state.email} 
+				    	onChange = {this.onChangeEmail} type="email" placeholder="Email input" />
 				  </div>
 				  <div className="control">
 				    <button className="button is-link" disabled={!this.state.email} onClick={this.onAddCollaborator}>Add another</button>

@@ -12,7 +12,8 @@ class GroupSettings extends Component {
   		const uri2 = "http://localhost:5000"
 	    super(props);
 	    this.state = {
-	    	project:""
+	    	projectName:"",
+	    	collaborators:[]
 	    }
 	}
 	componentDidMount(props) {
@@ -20,7 +21,9 @@ class GroupSettings extends Component {
   		//using uri2
   		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
                 console.log("project found in settings: ",response.data.project)
-                this.setState({project:response.data.project.name})
+                this.setState({
+                	projectName:response.data.project.name,
+                	collaborators:response.data.project.collaborators})
             })
             .catch(function (error) {
                 console.log(error);
@@ -29,10 +32,25 @@ class GroupSettings extends Component {
     
 	render() {
 	  	return (
-	    	<div class="groupsettings">
-	    		<Sidebar/>
-	    		<div class="columns">
-					<p class=" column is-three-quarters">Group Settings for {this.state.project}</p>
+	    	<div class="groupsettings columns">
+	    		<Sidebar className="column is-one-quarter"/>
+	    		<div className="column is-three-quarters" style={{marginTop:"100px"}}>
+	    			<h2 class="title is-2">Group Settings for {this.state.projectName}</h2>
+					<label className="label">Collaborator Emails</label>
+					{this.state.collaborators.map((collaborator) => {
+						return( 
+							<li className = "level" key={collaborator}>{collaborator}
+								<div className="control">
+								    <button className="button is-danger" onClick={() =>
+								    	console.log("remove", collaborator)
+								    	//will send patch here to /projects/:id/removeUser/:userID
+								    	//first need to make sure collaborators are of User type, not just strings
+								    }>Remove collaborator</button>
+								</div>
+							</li> 
+							)
+						})
+					}
 				</div>				
 	    	</div>
 	    )
