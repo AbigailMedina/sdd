@@ -36,23 +36,18 @@ class MeetingPage extends Component {
  				onLoading={this.handleSongLoading}
    				onPlaying={this.handleSongPlaying}
    				onFinishedPlaying={this.handleSongFinishedPlaying} />*/
-   		return <h1>SHUT UP!!!!!!</h1>
+   		return <h1 >SHUT UP!!!!!!</h1>
 	}
 
   	render() {
 	    return (
 	    	<div class="columns">
-	    		<div class="column is-one-quarter">
-	    			<Sidebar/>
-	    		</div>
-	    		<div class="column" margin-top="100px" margin-bottom="100px">
-	    			<div class="shutup">
-						<button type="button" onClick = {this.doShutUp} className="button-is-text">Shut Up!</button>	
+	    		<Sidebar class="column is-one-quarter"/>
+	    		<div class="column is-three-quarters level" style = {{marginTop:"100px"}}>
+	    			<button type="button " onClick = {this.doShutUp} className="button is-danger level-left">Shut Up!</button>
+	    			<div className="level-item">
+						<TimerComponent />	
 					</div>
-				</div>
-				<div class="column" margin-top="100px" margin-bottom="100px">
-					<TimerComponent/>	
-			
 	    		</div>
 	    	</div>
 	    )

@@ -7,17 +7,14 @@ import './style.css'
 import 'bulma/css/bulma.css'
 import Sidebar from './sidebar';
 class HomePage extends Component {
-	constructor(props) {
-	    super(props);
-	}
 
   	render() {
 	  	
 	    return (
-	    	<div class="homepage">
-	    		<Sidebar/>
-	    		<div class="columns">
-					<p class="column is-three-quarters">hi, this is homepage</p>
+	    	<div class="homepage columns">
+	    		<Sidebar className="column is-one-quarter"/>
+	    		<div class="column is-three-quarters">
+					<p >hi, this is homepage</p>
 				</div>				
 	    	</div>
 	    )
