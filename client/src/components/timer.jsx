@@ -27,8 +27,8 @@ class TimerComponent extends Component {
   		const seconds=parseInt(splitTime[1])
   		console.log(minutes*60)
   		console.log(seconds)
-  		console.log((1000*(minutes*60)+seconds))
-  		return 1000*(minutes*60)+seconds
+  		console.log((1000*(minutes*60+seconds)))
+  		return 1000*(minutes*60+seconds)
   	}
 
   	render() {
