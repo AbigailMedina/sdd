@@ -28,8 +28,8 @@ class Chat extends Component {
 	render() {
 	  	return (
 	    	<div class="chat">
-	    		<Sidebar/>
 	    		<div class="columns">
+	    			<Sidebar class="column is-one-quarter"/>
 					<p class=" column is-three-quarters">Chat page for {this.state.project}</p>
 				</div>				
 	    	</div>
