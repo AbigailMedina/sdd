@@ -13,8 +13,8 @@ class HomePage extends Component {
 	    return (
 	    	<div class="homepage columns">
 	    		<Sidebar className="column is-one-quarter"/>
-	    		<div class="column is-three-quarters">
-					<p >hi, this is homepage</p>
+	    		<div class="column is-three-quarters "style={{marginTop:"100px"}}>
+					<h2 class="title is-2">Click on a project to get started :)</h2>
 				</div>				
 	    	</div>
 	    )
