@@ -62,13 +62,14 @@ app.get('/projects/:id', function(req, res, next) {
     });
 });
 
-//will be used for removing a user in groupSettings
-app.patch('/projects/:id/removeUser/:userID', function(req, res, next) {
-    let projectId = req.params.id;
-    let userId = req.params.userId;
+//used for removing a user in groupSettings
+app.patch('/projects/:id', function(req, res, next) {
+    let id = req.params.id;
     Project.findById(id, function(err, project) {
-        project.collaborators.filter((collaborator)=>{return collaborator!=userId})
-        res.status(200).send({'project':project});
+        project.collaborators = req.body.collaborators;
+         project.save().then(project => {
+            res.status(200).send({'project':project});
+        })
     });
 });
 
