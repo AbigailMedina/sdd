@@ -12,6 +12,7 @@ class GroupSettings extends Component {
   		const uri2 = "http://localhost:5000"
 	    super(props);
 	    this.state = {
+	    	project:{},
 	    	projectName:"",
 	    	collaborators:[],
 	    	email:"",
@@ -25,6 +26,7 @@ class GroupSettings extends Component {
   		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
                 console.log("project found in settings: ",response.data.project)
                 this.setState({
+                	project:response.data.project,
                 	projectName:response.data.project.name,
                 	collaborators:response.data.project.collaborators})
             })
@@ -34,7 +36,6 @@ class GroupSettings extends Component {
     }
 
     showCollaborators(){
-    	// console.log("collaborators1",this.state.collaborators)    	
     	var content = this.state.collaborators.map((collaborator) => {
 		return( 
 			<li className = "level" key={collaborator}>{collaborator}
@@ -69,9 +70,22 @@ class GroupSettings extends Component {
 		//verify that email == a real user
 		//using uri2 for local development
 		axios.get(`http://localhost:5000/users/${this.state.email}`).then(response => {
-            console.log("user found in groupSettings: ",response.data.user)
+            const user = response.data.user;
+            console.log("user found in groupSettings: ",user);
+
+            ///////VVVVVVV ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
+           	const newProjectArray = user.projects.slice();
+           	newProjectArray.push(this.state.project);
+            axios.patch(`http://localhost:5000/users/${this.state.email}`,{projects:newProjectArray}).then(response => {
+	            console.log("user updated: ",response.data.user);
+	        })//TODO in future, check that project doesnt already exist in users projectList
+	        .catch( error =>{
+	            console.log(error);
+	        })
+			///////^^^^ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
            	var newArray = this.state.collaborators.slice();    
 	    	newArray.push(this.state.email);  
+	    	//^TODO change this to hold users, not emails, deal with corresponding react error
 			this.setState({collaborators:newArray},
 				()=>{
 					this.setState({email:""});

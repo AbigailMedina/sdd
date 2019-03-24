@@ -139,12 +139,28 @@ app.get('/users/:email', function(req,res){
         });
 });
 
+app.patch('/users/:email', function(req,res){
+    let email = req.params.email;
+    console.log(email)
+    User.findOne({email})
+        .then(user =>{
+            if(user){
+                user.projects = req.body.projects;
+                user.save().then(user => {
+                    res.status(200).send({'user':user});
+                })
+            }else{
+                return res.status(400).send("cannot find user");
+            }
+        });
+});
+
 
 //@route    POST api/users
 //@desc     Register new user
 //@access   Public 
 app.post('/users', function(req, res){
-    const{name,userId,email,password} = req.body;
+    const{name,userId,email,password, projects} = req.body;
     console.log("in server /users")
     //Validation
     if(!name || !userId || !email || !password){
@@ -160,7 +176,8 @@ app.post('/users', function(req, res){
                     name,
                     userId,
                     email,
-                    password
+                    password,
+                    projects
                 });
                 
                 //Don't want to store actual password in db, so hash
@@ -177,7 +194,8 @@ app.post('/users', function(req, res){
                                        name: user.name,
                                        userId: user.userId,
                                        email: user.email,
-                                       id: user.id
+                                       id: user.id,
+                                       projects: user.projects
                                     }
                                 })
                             })

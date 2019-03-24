@@ -25,6 +25,7 @@ class MeetingPage extends Component {
     }
 
 	doShutUp() {
+		console.log("shut up");
 		/*
 		if (ReactPlayer.canPlay('./smaple.mp3')) {
 			console.log("exists");

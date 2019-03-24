@@ -31,14 +31,28 @@ export default class CreateProject extends Component {
 
 	onAddCollaborator(){
 		//verify that email == a real user
-		//using uri2 for local development
+        //using uri2 for local development
 		axios.get(`http://localhost:5000/users/${this.state.email}`).then(response => {
-            console.log("user found in createProject: ",response.data.user)
+            const user = response.data.user;
+            console.log("user found in createProject: ",user);
+
+            ///////VVVVVVV ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
+           	const newProjectArray = user.projects.slice();
+           	newProjectArray.push(this.state.project);
+            axios.patch(`http://localhost:5000/users/${this.state.email}`,{projects:newProjectArray}).then(response => {
+	            console.log("user updated: ",response.data.user);
+	        })//TODO in future, check that project doesnt already exist in users projectList
+	        .catch( error =>{
+	            console.log(error);
+	        })
+			///////^^^^ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
            	var newArray = this.state.collaborators.slice();    
 	    	newArray.push(this.state.email);  
+	    	//^TODO change this to hold users, not emails, deal with corresponding react error
 			this.setState({collaborators:newArray},
 				()=>{
-					this.setState({email:""})
+					this.setState({email:""});
+					this.updateProject(newArray)
 				})
         })
         .catch( error =>{
