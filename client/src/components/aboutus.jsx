@@ -57,13 +57,15 @@ class AboutUs extends Component {
         				<div class="card">
           				<div class="card-image">
             				<figure class="image is-4by3">
-              					<img src="https://source.unsplash.com/random/1280x960" alt="Placeholder image"></img>
+              					<img src={require("../photos/kiki.jpg")} alt="Kiki"></img>
             				</figure>
           				</div>
           				<br/>
           				<div class="center">
-          					<h4>Kiki Sanusi</h4>
-          					<p>Hi! I'm Eric!</p>
+          					<h4>Kikiola Sanusi</h4>
+          					<p>My name is Kikiola Sanusi and I am a junior Computer Science major at RPI. I enjoy playing volleyball and video games. This summer,
+								  I'll be interning at Santander Bank in Dorchester, MA!
+							  </p>
           				</div>
         				</div>
       				</div>
