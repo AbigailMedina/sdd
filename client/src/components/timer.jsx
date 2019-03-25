@@ -13,7 +13,6 @@ class TimerComponent extends Component {
 
   	addInput(e) {
   		this.setState({time:e.target.value, go:false})
-  		console.log(this.state.time)
   	}
 
   	changeState() {
@@ -21,13 +20,9 @@ class TimerComponent extends Component {
   	}
 
   	convertTime() {
-  		console.log(this.state.time)
   		const splitTime=this.state.time.split(":", 5)
   		const minutes=parseInt(splitTime[0])
   		const seconds=parseInt(splitTime[1])
-  		console.log(minutes*60)
-  		console.log(seconds)
-  		console.log((1000*(minutes*60+seconds)))
   		return 1000*(minutes*60+seconds)
   	}
 
