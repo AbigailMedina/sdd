@@ -52,7 +52,6 @@ export default class CreateProject extends Component {
 			this.setState({collaborators:newArray},
 				()=>{
 					this.setState({email:""});
-					this.updateProject(newArray)
 				})
         })
         .catch( error =>{
@@ -70,6 +69,7 @@ export default class CreateProject extends Component {
 	    this.setState({collaborators:list});
 		console.log(this.state.collaborators);
 	};
+
 
 	onSubmit(e){
 		e.preventDefault();
