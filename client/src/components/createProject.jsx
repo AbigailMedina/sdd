@@ -7,7 +7,7 @@ export default class CreateProject extends Component {
 		this.onChangeName = this.onChangeName.bind(this);
 		this.onChangeEmail = this.onChangeEmail.bind(this);
 
-		this.onAddCollaborator = this.onAddCollaborator.bind(this);
+		// this.onAddCollaborator = this.onAddCollaborator.bind(this);
 
 		this.onSubmit = this.onSubmit.bind(this);
 
@@ -29,46 +29,70 @@ export default class CreateProject extends Component {
 		this.setState({email:e.target.value,userError:false})
 	}
 
-	onAddCollaborator(){
-		//verify that email == a real user
-        //using uri2 for local development
-		axios.get(`http://localhost:5000/users/${this.state.email}`).then(response => {
-            const user = response.data.user;
-            console.log("user found in createProject: ",user);
+	// onAddCollaborator(){
+	// 	this.project.onAddCollaborator(this.state)//for email,collaborators, project
+	// 	//verify that email == a real user
+ //        //using uri2 for local development
+	// 	axios.get(`http://localhost:5000/users/${this.state.email}`).then(response => {
+ //            const user = response.data.user;
+ //            console.log("user found in createProject: ",user);
 
-            ///////VVVVVVV ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
-           	const newProjectArray = user.projects.slice();
-           	newProjectArray.push(this.state.project);
-            axios.patch(`http://localhost:5000/users/${this.state.email}`,{projects:newProjectArray}).then(response => {
-	            console.log("user updated: ",response.data.user);
-	        })//TODO in future, check that project doesnt already exist in users projectList
-	        .catch( error =>{
-	            console.log(error);
-	        })
-			///////^^^^ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
-           	var newArray = this.state.collaborators.slice();    
-	    	newArray.push(this.state.email);  
-	    	//^TODO change this to hold users, not emails, deal with corresponding react error
-			this.setState({collaborators:newArray},
-				()=>{
-					this.setState({email:""});
-				})
-        })
-        .catch( error =>{
-            console.log(error);
-            this.setState({userError:true})
-        })
-	}
+ //            ///////VVVVVVV ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
+ //           	const newProjectArray = user.projects.slice();
+ //           	newProjectArray.push(this.state.project);
+ //            axios.patch(`http://localhost:5000/users/${this.state.email}`,{projects:newProjectArray}).then(response => {
+	//             console.log("user updated: ",response.data.user);
+	//         })//TODO in future, check that project doesnt already exist in users projectList
+	//         .catch( error =>{
+	//             console.log(error);
+	//         })
+	// 		///////^^^^ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
+ //           	var newArray = this.state.collaborators.slice();    
+	//     	newArray.push(this.state.email);  
+	//     	//^TODO change this to hold users, not emails, deal with corresponding react error
+			
+ //        })
+ //        .catch( error =>{
+ //            console.log(error);
+ //            this.setState({userError:true})
+ //        })
+	// }
 
-	onRemoveCollaborator(removeMe){
-		const list = this.state.collaborators.filter(
-			function (collaborator) {
-		  		return collaborator !== removeMe;
-			});
+	// onRemoveCollaborator(removeMe){
+	// 	const list = this.state.collaborators.filter(
+	// 		function (collaborator) {
+	// 	  		return collaborator !== removeMe;
+	// 		});
 		
-	    this.setState({collaborators:list});
-		console.log(this.state.collaborators);
-	};
+	//     this.setState({collaborators:list});
+	// 	console.log(this.state.collaborators);
+	// };
+	// <label className="label">Collaborator Emails</label>
+	// 			{this.state.collaborators.map((collaborator) => {
+	// 				return( 
+	// 					<li className = "level" key={collaborator}>{collaborator}
+	// 						<div className="control">
+	// 						    <button className="button is-danger" onClick={() =>
+	// 						    	this.setState({
+	// 						    		collaborators: this.state.collaborators.filter(
+	// 						    			(c) => c !== collaborator)})
+	// 						    }>Remove collaborator</button>
+	// 						</div>
+	// 					</li> 
+	// 					)
+	// 				})
+	// 			}
+	// <div className="field is-grouped">
+	//   <div className="control">
+	//     <input 
+	//     	className={this.state.userError?"input is-danger":"input is-info"} 
+	//     	value = {this.state.userError? "User does not exist":this.state.email} 
+	//     	onChange = {this.onChangeEmail} type="email" placeholder="Email input" />
+	//   </div>
+	//   <div className="control">
+	//     <button className="button is-link" disabled={!this.state.email} onClick={this.onAddCollaborator}>Add another</button>
+	//   </div>
+	// </div>
 
 
 	onSubmit(e){
@@ -109,32 +133,8 @@ export default class CreateProject extends Component {
 				  </div>
 				</div>
 
-				<label className="label">Collaborator Emails</label>
-				{this.state.collaborators.map((collaborator) => {
-					return( 
-						<li className = "level" key={collaborator}>{collaborator}
-							<div className="control">
-							    <button className="button is-danger" onClick={() =>
-							    	this.setState({
-							    		collaborators: this.state.collaborators.filter(
-							    			(c) => c !== collaborator)})
-							    }>Remove collaborator</button>
-							</div>
-						</li> 
-						)
-					})
-				}
-				<div className="field is-grouped">
-				  <div className="control">
-				    <input 
-				    	className={this.state.userError?"input is-danger":"input is-info"} 
-				    	value = {this.state.userError? "User does not exist":this.state.email} 
-				    	onChange = {this.onChangeEmail} type="email" placeholder="Email input" />
-				  </div>
-				  <div className="control">
-				    <button className="button is-link" disabled={!this.state.email} onClick={this.onAddCollaborator}>Add another</button>
-				  </div>
-				</div>
+				
+				
 
 
 				<div className="field is-grouped">

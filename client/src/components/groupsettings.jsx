@@ -4,12 +4,13 @@ import axios from 'axios';
 import './style.css'
 import 'bulma/css/bulma.css'
 import Sidebar from './sidebar';
-
+import Project from '../models/Project';
 
 class GroupSettings extends Component {
 	constructor(props) {
 		const uri = "https://sdd-shutup.herokuapp.com"
   		const uri2 = "http://localhost:5000"
+  		const project=null;
 	    super(props);
 	    this.state = {
 	    	project:{},
@@ -25,6 +26,8 @@ class GroupSettings extends Component {
   		//using uri2
   		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
                 console.log("project found in settings: ",response.data.project)
+                this.project = new Project(response.data.project);
+                console.log("this.project ===>",this.project)
                 this.setState({
                 	project:response.data.project,
                 	projectName:response.data.project.name,
@@ -36,7 +39,11 @@ class GroupSettings extends Component {
     }
 
     showCollaborators(){
-    	var content = this.state.collaborators.map((collaborator) => {
+    	var content = [];
+    	if(!this.project){
+    		return content
+    	}
+    	content = this.project.collaborators.map((collaborator) => {
 		return( 
 			<li className = "level" key={collaborator}>{collaborator}
 				<div className="control">
@@ -53,61 +60,38 @@ class GroupSettings extends Component {
     onChangeEmail(e){
 		this.setState({email:e.target.value,userError:false})
 	}
-	updateProject(newArray){
+	async updateProject(newArray){
 		const { match: { params } } = this.props;
+		const response = await this.project.update(params.id,newArray)
+		console.log("response", response);
+    	this.setState({
+        	projectName:response.data.project.name,
+        	collaborators:response.data.project.collaborators
+        })
 
-		axios.patch(`http://localhost:5000/projects/${params.id}`,{collaborators:newArray}).then(response => {
-            console.log("updated project: ",response.data.project)
-            this.setState({
-            	projectName:response.data.project.name,
-            	collaborators:response.data.project.collaborators})
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+		  
+		
 	}
-	onAddCollaborator(){
-		//verify that email == a real user
-		//using uri2 for local development
-		axios.get(`http://localhost:5000/users/${this.state.email}`).then(response => {
-            const user = response.data.user;
-            console.log("user found in groupSettings: ",user);
-
-            ///////VVVVVVV ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
-           	const newProjectArray = user.projects.slice();
-           	newProjectArray.push(this.state.project);
-            axios.patch(`http://localhost:5000/users/${this.state.email}`,{projects:newProjectArray}).then(response => {
-	            console.log("user updated: ",response.data.user);
-	        })//TODO in future, check that project doesnt already exist in users projectList
-	        .catch( error =>{
-	            console.log(error);
-	        })
-			///////^^^^ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
-           	var newArray = this.state.collaborators.slice();    
-	    	newArray.push(this.state.email);  
-	    	//^TODO change this to hold users, not emails, deal with corresponding react error
-			this.setState({collaborators:newArray},
-				()=>{
-					this.setState({email:""});
-					this.updateProject(newArray)
-				})
-        })
-        .catch( error =>{
-            console.log(error);
-            this.setState({userError:true})
-        })
+	async onAddCollaborator(){
+		console.log("here",this.project);
+		const newArray = await this.project.onAddCollaborator(this.state)
+		this.setState({collaborators: newArray},
+		()=>{
+			console.log(this.state.collaborators)
+			this.setState({email:""});
+			this.updateProject(newArray)
+		})
+		
         
 	}
-	onRemoveCollaborator(removeMe){
-		const newArray = this.state.collaborators.filter(
-			function (collaborator) {
-		  		return collaborator !== removeMe;
-			});
-		
-	    this.setState({collaborators:newArray});
-		console.log(this.state.collaborators);
-
-		this.updateProject(newArray)
+	async onRemoveCollaborator(removeMe){
+		const newArray = await this.project.onRemoveCollaborator(removeMe)
+		this.setState({collaborators: newArray},
+    	()=>{
+    		console.log(this.state.collaborators);
+			this.updateProject(newArray);
+    	});
+	    
 		
 	}
     
