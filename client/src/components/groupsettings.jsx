@@ -10,45 +10,46 @@ class GroupSettings extends Component {
 	constructor(props) {
 		const uri = "https://sdd-shutup.herokuapp.com"
   		const uri2 = "http://localhost:5000"
+
   		const project=null;
 	    super(props);
+
 	    this.state = {
-	    	project:{},
 	    	projectName:"",
-	    	collaborators:[],
 	    	email:"",
-	    	userError:false
+	    	userError:false,
+	    	collaborators:[]
 	    }
-	    this.showCollaborators.bind(this)
 	}
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
   		//using uri2
   		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
-                console.log("project found in settings: ",response.data.project)
                 this.project = new Project(response.data.project);
-                console.log("this.project ===>",this.project)
                 this.setState({
-                	project:response.data.project,
                 	projectName:response.data.project.name,
-                	collaborators:response.data.project.collaborators})
+                	collaborators:response.data.project.collaborators
+                })
             })
             .catch(function (error) {
                 console.log(error);
             })
     }
 
-    showCollaborators(){
+    onChangeEmail(e){
+		this.setState({email:e.target.value,userError:false})
+	}
+
+	showCollaborators(){
     	var content = [];
     	if(!this.project){
     		return content
     	}
-    	content = this.project.collaborators.map((collaborator) => {
+    	content = this.state.collaborators.map((collaborator) => {
 		return( 
 			<li className = "level" key={collaborator}>{collaborator}
 				<div className="control">
 				    <button className="button is-danger" onClick={() =>{
-				    	console.log("remove", collaborator)
 				    	this.onRemoveCollaborator(collaborator)
 				    }}>Remove collaborator</button>
 				</div>
@@ -57,42 +58,32 @@ class GroupSettings extends Component {
 		})
 		return content;
     }
-    onChangeEmail(e){
-		this.setState({email:e.target.value,userError:false})
-	}
-	async updateProject(newArray){
-		const { match: { params } } = this.props;
-		const response = await this.project.update(params.id,newArray)
-		console.log("response", response);
-    	this.setState({
-        	projectName:response.data.project.name,
-        	collaborators:response.data.project.collaborators
-        })
 
-		  
-		
-	}
-	async onAddCollaborator(){
-		console.log("here",this.project);
-		const newArray = await this.project.onAddCollaborator(this.state)
-		this.setState({collaborators: newArray},
-		()=>{
-			console.log(this.state.collaborators)
-			this.setState({email:""});
-			this.updateProject(newArray)
+	updateProject(newArray){
+		const { match: { params } } = this.props;
+		console.log("in groupSettings updateProject. updating with newArray:",newArray)
+		this.project.update(params.id,newArray).then((response)=>{
+	    	this.setState({
+	        	projectName:response.data.project.name,
+	        	collaborators:response.data.project.collaborators,
+	        	email:""
+	        })
 		})
-		
-        
 	}
-	async onRemoveCollaborator(removeMe){
-		const newArray = await this.project.onRemoveCollaborator(removeMe)
-		this.setState({collaborators: newArray},
-    	()=>{
-    		console.log(this.state.collaborators);
-			this.updateProject(newArray);
-    	});
-	    
-		
+	onAddCollaborator(){
+		const newArray = this.project.onAddCollaborator(this.state).then((newArray) =>{
+			this.setState({
+				collaborators: newArray,
+				email:""
+			})
+		}).catch(err=>{
+			this.setState({userError:true})
+		})
+	}
+	onRemoveCollaborator(removeMe){
+		this.project.onRemoveCollaborator(removeMe, this.state.collaborators).then((newArray)=>{
+			this.setState({collaborators: newArray});
+		})
 	}
     
 	render() {
