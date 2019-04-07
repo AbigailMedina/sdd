@@ -4,44 +4,52 @@ import axios from 'axios';
 import './style.css'
 import 'bulma/css/bulma.css'
 import Sidebar from './sidebar';
-
+import Project from '../models/Project';
 
 class GroupSettings extends Component {
 	constructor(props) {
 		const uri = "https://sdd-shutup.herokuapp.com"
   		const uri2 = "http://localhost:5000"
+
+  		const project=null;
 	    super(props);
+
 	    this.state = {
-	    	project:{},
 	    	projectName:"",
-	    	collaborators:[],
 	    	email:"",
-	    	userError:false
+	    	userError:false,
+	    	collaborators:[]
 	    }
-	    this.showCollaborators.bind(this)
 	}
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
   		//using uri2
   		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
-                console.log("project found in settings: ",response.data.project)
+                this.project = new Project(response.data.project);
                 this.setState({
-                	project:response.data.project,
                 	projectName:response.data.project.name,
-                	collaborators:response.data.project.collaborators})
+                	collaborators:response.data.project.collaborators
+                })
             })
             .catch(function (error) {
                 console.log(error);
             })
     }
 
-    showCollaborators(){
-    	var content = this.state.collaborators.map((collaborator) => {
+    onChangeEmail(e){
+		this.setState({email:e.target.value,userError:false})
+	}
+
+	showCollaborators(){
+    	var content = [];
+    	if(!this.project){
+    		return content
+    	}
+    	content = this.state.collaborators.map((collaborator) => {
 		return( 
 			<li className = "level" key={collaborator}>{collaborator}
 				<div className="control">
 				    <button className="button is-danger" onClick={() =>{
-				    	console.log("remove", collaborator)
 				    	this.onRemoveCollaborator(collaborator)
 				    }}>Remove collaborator</button>
 				</div>
@@ -50,65 +58,32 @@ class GroupSettings extends Component {
 		})
 		return content;
     }
-    onChangeEmail(e){
-		this.setState({email:e.target.value,userError:false})
-	}
+
 	updateProject(newArray){
 		const { match: { params } } = this.props;
-
-		axios.patch(`http://localhost:5000/projects/${params.id}`,{collaborators:newArray}).then(response => {
-            console.log("updated project: ",response.data.project)
-            this.setState({
-            	projectName:response.data.project.name,
-            	collaborators:response.data.project.collaborators})
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+		console.log("in groupSettings updateProject. updating with newArray:",newArray)
+		this.project.update(params.id,newArray).then((response)=>{
+	    	this.setState({
+	        	projectName:response.data.project.name,
+	        	collaborators:response.data.project.collaborators,
+	        	email:""
+	        })
+		})
 	}
 	onAddCollaborator(){
-		//verify that email == a real user
-		//using uri2 for local development
-		axios.get(`http://localhost:5000/users/${this.state.email}`).then(response => {
-            const user = response.data.user;
-            console.log("user found in groupSettings: ",user);
-
-            ///////VVVVVVV ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
-           	const newProjectArray = user.projects.slice();
-           	newProjectArray.push(this.state.project);
-            axios.patch(`http://localhost:5000/users/${this.state.email}`,{projects:newProjectArray}).then(response => {
-	            console.log("user updated: ",response.data.user);
-	        })//TODO in future, check that project doesnt already exist in users projectList
-	        .catch( error =>{
-	            console.log(error);
-	        })
-			///////^^^^ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
-           	var newArray = this.state.collaborators.slice();    
-	    	newArray.push(this.state.email);  
-	    	//^TODO change this to hold users, not emails, deal with corresponding react error
-			this.setState({collaborators:newArray},
-				()=>{
-					this.setState({email:""});
-					this.updateProject(newArray)
-				})
-        })
-        .catch( error =>{
-            console.log(error);
-            this.setState({userError:true})
-        })
-        
+		const newArray = this.project.onAddCollaborator(this.state).then((newArray) =>{
+			this.setState({
+				collaborators: newArray,
+				email:""
+			})
+		}).catch(err=>{
+			this.setState({userError:true})
+		})
 	}
 	onRemoveCollaborator(removeMe){
-		const newArray = this.state.collaborators.filter(
-			function (collaborator) {
-		  		return collaborator !== removeMe;
-			});
-		
-	    this.setState({collaborators:newArray});
-		console.log(this.state.collaborators);
-
-		this.updateProject(newArray)
-		
+		this.project.onRemoveCollaborator(removeMe, this.state.collaborators).then((newArray)=>{
+			this.setState({collaborators: newArray});
+		})
 	}
     
 	render() {

@@ -74,11 +74,9 @@ app.patch('/projects/:id', function(req, res, next) {
 });
 
 app.post('/add', function(req, res) {
-    console.log("post")
     let project = new Project(req.body);
     project.save()
         .then(project => {
-            console.log(project)
             res.status(200).send({'project': project});
         })
         .catch(err => {
@@ -87,11 +85,9 @@ app.post('/add', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-    console.log("login")
     const{userId,password} = req.body;
     User.findOne({userId}, function (err, user) {
         if(user){
-            console.log(user)
             res.status(200).send({"user" : user})
         }else{
             res.status(400).send({message : "invalid login"})
@@ -128,8 +124,19 @@ app.get('/users', function(req,res){
 
 app.get('/users/:email', function(req,res){
     let email = req.params.email;
-    console.log(email)
     User.findOne({email})
+        .then(user =>{
+            if(user){
+                return res.status(200).send({"user": user});
+            }else{
+                return res.status(400).send("cannot find user");
+            }
+        });
+});
+
+app.get('/users/:id', function(req,res){
+    let id = req.params.id;
+    User.findOne({id})
         .then(user =>{
             if(user){
                 return res.status(200).send({"user": user});
@@ -141,7 +148,6 @@ app.get('/users/:email', function(req,res){
 
 app.patch('/users/:email', function(req,res){
     let email = req.params.email;
-    console.log(email)
     User.findOne({email})
         .then(user =>{
             if(user){
@@ -161,7 +167,6 @@ app.patch('/users/:email', function(req,res){
 //@access   Public 
 app.post('/users', function(req, res){
     const{name,userId,email,password, projects} = req.body;
-    console.log("in server /users")
     //Validation
     if(!name || !userId || !email || !password){
         return res.status(400).json({msg: 'Please enter all fields'});
