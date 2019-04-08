@@ -10,10 +10,14 @@ import Sidebar from './sidebar';
 
 class Chat extends Component {
 	constructor(props) {
+		super();
 		const uri = "https://sdd-shutup.herokuapp.com"
   		const uri2 = "http://localhost:5000"
 	    super(props);
-	    this.state = {project:null}
+		this.state = {
+			project:null,
+			messages: []
+		}
 	}
 	componentDidMount(props) {
 		const chatManager = new ChatManager({
