@@ -27,13 +27,15 @@ class ButtonComponent extends Component {
 
   render() {
     return (
-      <div class="center">
-      <h4>Enter a time in the format '00:00' to use timer</h4>
-      <input id="sliderWithValue" class="slider has-output is-fullwidth" min="0" max="100" onChange={this.addInput} value={this.state.level} step="25" type="range"/>
-        <output for="sliderWithValue">{this.state.level}</output><br/>
-        <button type="button" onClick = {this.doShutUp.bind(this)} className="button is-white">
-          <img src={require("../photos/button.png")} width="100" height="100"/>
-        </button>
+      <div class="center" style={{maxWidth:"400px"}}>
+        <h4>Slide agression bar to determine intensity of "Shut Up!" message</h4>
+        <div>
+          <input id="sliderWithValue" class="slider has-output is-fullwidth" min="0" max="100" onChange={this.addInput} value={this.state.level} step="25" type="range"/>
+          <output for="sliderWithValue"> {this.state.level}</output><br/>
+          <button type="button" onClick = {this.doShutUp.bind(this)} className="button is-white">
+            <img src={require("../photos/button.png")} width="100" height="100"/>
+          </button>
+        </div>
       </div>
     );
   }
