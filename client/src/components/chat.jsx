@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import {ChatManager, TokenProvider} from '@pusher/chatkit-client/react-native'
+import {tokenUrl,instanceLocator} from './config/config.js'
 
 import './style.css'
 import 'bulma/css/bulma.css'
@@ -18,6 +20,25 @@ class Chat extends Component {
 		}
 	}
 	componentDidMount(props) {
+		const chatManager = new ChatManager({
+			instanceLocator,
+			userId: 'sanusk',
+			tokenProvider: new TokenProvider({
+				url: tokenUrl
+			})
+		})
+		chatManager.connect()
+			.then(currentUser => {
+				currentUser.subscribeToRoomMultipart({
+					roomId: '19389417',
+					hooks: {
+						onMessage: message => {
+							console.log(message);
+						}
+					}
+				})
+			})
+		/*
   		const { match: { params } } = this.props;
   		//using uri2
   		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
@@ -26,7 +47,8 @@ class Chat extends Component {
             })
             .catch(function (error) {
                 console.log(error);
-            })
+			})
+		*/
     }
 
 	render() {
