@@ -25,14 +25,18 @@ export default class Project {
 
         ///////VVVVVVV ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
         const newProjectArray = user.projects.slice();
+        if (newProjectArray.find((p)=>{p.name==project.name})){
+          reject("user already has this project");
+          return;
+        }
         newProjectArray.push(project);
         axios.patch(`http://localhost:5000/users/${state.email}`,{projects:newProjectArray}).then(
           response => {
             console.log("user updated: ",response.data.user);
             
-          })//TODO in future, check that project doesnt already exist in users projectList
+          })
           .catch( error =>{
-              reject("user dne");
+              reject(error);
           })
         ///////^^^^ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
         var newArray = state.collaborators.slice();    
@@ -41,20 +45,45 @@ export default class Project {
         resolve(newArray);
       }).catch( error =>{
           console.log(error);
-          reject("user dne")
+          reject(error)
       })
     })
   }
-
+/*takes in current list of collaborators in fe and an email to remove*/
   onRemoveCollaborator(removeMe, collaborators){
-    return new Promise(resolve => {
-      const newArray = collaborators.filter(
-        (collaborator) => {
-            return collaborator !== removeMe;
-        });
-      this.collaborators = newArray;
-      resolve(newArray);
-      this.update(newArray)
+    return new Promise((resolve,reject) => {
+
+      axios.get(`http://localhost:5000/users/${removeMe}`).then(response => {
+        const user = response.data.user;
+
+        ///////VVVVVVV removing PROJECT IN ADDED USERS LIST OF PROJECTS
+        const newProjectArray = user.projects.slice();
+        
+        newProjectArray.filter((p)=>{
+          console.log("p",p, this.projectId)
+          return p._id!=this.projectId
+        })
+
+        axios.patch(`http://localhost:5000/users/${removeMe}`,{projects:newProjectArray}).then(
+          response => {
+            console.log("user updated: ",response.data.user);
+            
+          })
+          .catch( error =>{
+              reject(error);
+          })
+        ///////^^^^removing PROJECT IN ADDED USERS LIST OF PROJECTS
+        ///////vvvvremoving user from project list of collaborators
+        var newArray = collaborators.filter((c)=>{
+          return c!=removeMe
+        });    
+        this.update(newArray)
+        resolve(newArray);
+        }).catch( error =>{
+            console.log(error);
+            reject(error)
+        })
+    
       })
   };
 
@@ -62,6 +91,7 @@ export default class Project {
     return new Promise(resolve => {
       axios.patch(`http://localhost:5000/projects/${this.projectId}`,{collaborators: newArray}).then(
         response => {
+          this.collaborators = newArray
           resolve(response);
         })
         .catch(function (error) {
