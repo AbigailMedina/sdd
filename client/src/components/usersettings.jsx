@@ -13,8 +13,8 @@ class UserSettings extends Component {
 	render() {
 	  	return (
 	    	<div class="usersettings">
-	    		<Sidebar/>
 	    		<div class="columns">
+	    			<Sidebar class="column is-one-quarter"/>
 					<p class=" column is-three-quarters">hi, this is user settings</p>
 				</div>				
 	    	</div>

@@ -7,36 +7,14 @@ import './style.css'
 import 'bulma/css/bulma.css'
 import Sidebar from './sidebar';
 class HomePage extends Component {
-	constructor(props) {
-	    super(props);
-	}
 
   	render() {
-	  	
 	    return (
-	    	<div class="homepage">
-	    		<Sidebar/>
-	    		<div class="columns">
-<<<<<<< HEAD
-
-					<div class="sidebar column is-one-quarter">
-						<MetisMenu content={content} activeLinkFromLocation/>
-					</div>
-			
-					<p class=" column is-three-quarters">hi, this is homepage</p>
-
-				</div>
-
-				
-
-
-				
-
-				
-=======
-					<p class="column is-three-quarters">hi, this is homepage</p>
+	    	<div class="homepage columns">
+	    		<Sidebar className="column is-one-quarter"/>
+	    		<div class="column is-three-quarters "style={{marginTop:"100px"}}>
+					<h2 class="title is-2">Click on a project to get started :)</h2>
 				</div>				
->>>>>>> 1bd0604f36f15121905edd698fb520b0cd67180f
 	    	</div>
 	    )
   }

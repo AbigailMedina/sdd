@@ -21,6 +21,11 @@ let User = new Schema({
     password: {
         type: String,
         required: true
+    },
+
+    projects: {
+        type: Array,
+        required: true
     }
 })
 

@@ -35,17 +35,17 @@ class Sidebar extends Component {
 		            {
 		                icon: 'icon-class-name',
 		                label: 'group settings',
-		                to: '#/groupsettings',
+		                to: '#/groupsettings/'+project._id,
 		            },
 		            {
 		                icon: 'icon-class-name',
 		                label: 'group meeting',
-		                to: '#/meeting',
+		                to: '#/meeting/'+project._id,
 		            },
 		            {
 		                icon: 'icon-class-name',
 		                label: 'group chat',
-		                to: '#/chat',
+		                to: '#/chat/'+project._id,
 		            },
 		        ],
 		    })
@@ -55,7 +55,6 @@ class Sidebar extends Component {
             label: 'Create New Project',
             to: '#/add',
         });
-	    console.log("content: ",content);
 	    return content;
 	}
 
@@ -66,13 +65,9 @@ class Sidebar extends Component {
 	    	<div className="sidebar">
 		    	<div class="content">
 		    	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/alpertuna/react-metismenu/master/dist/react-metismenu-standart.min.css" />
-		    		<div class="columns">
-
-						<div class="sidebar column is-one-quarter">
-							<MetisMenu content={content} activeLinkFromLocation/>
-						</div>
-
-					</div>				
+					<div class="sidebar">
+						<MetisMenu content={content} activeLinkFromLocation/>
+					</div>
 		    	</div>
 		    </div>
 	    )
