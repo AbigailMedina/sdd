@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Timer from "react-compound-timer";
-import TimeInput from 'react-time-input'
 
 
 class TimerComponent extends Component {
