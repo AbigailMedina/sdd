@@ -121,7 +121,7 @@ app.get('/users', function(req,res){
         }
     });
 });
-
+/*
 app.get('/users/:email', function(req,res){
     let email = req.params.email;
     User.findOne({email})
@@ -133,17 +133,12 @@ app.get('/users/:email', function(req,res){
             }
         });
 });
-
+*/
 app.get('/users/:id', function(req,res){
     let id = req.params.id;
-    User.findOne({id})
-        .then(user =>{
-            if(user){
-                return res.status(200).send({"user": user});
-            }else{
-                return res.status(400).send("cannot find user");
-            }
-        });
+    User.findById(id, function(err, user) {
+        res.status(200).send({'user':user});
+    }).catch((err)=>res.status(400).send("cannot find user"));
 });
 
 app.patch('/users/:email', function(req,res){

@@ -62,7 +62,7 @@ class GroupSettings extends Component {
 	updateProject(newArray){
 		const { match: { params } } = this.props;
 		console.log("in groupSettings updateProject. updating with newArray:",newArray)
-		this.project.update(params.id,newArray).then((response)=>{
+		this.project.update(params.id,newArray).then((response) =>{
 	    	this.setState({
 	        	projectName:response.data.project.name,
 	        	collaborators:response.data.project.collaborators,
@@ -76,12 +76,12 @@ class GroupSettings extends Component {
 				collaborators: newArray,
 				email:""
 			})
-		}).catch(err=>{
+		}).catch(err =>{
 			this.setState({userError:true})
 		})
 	}
 	onRemoveCollaborator(removeMe){
-		this.project.onRemoveCollaborator(removeMe, this.state.collaborators).then((newArray)=>{
+		this.project.onRemoveCollaborator(removeMe, this.state.collaborators).then((newArray) =>{
 			this.setState({collaborators: newArray});
 		})
 	}

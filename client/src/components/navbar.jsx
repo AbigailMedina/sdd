@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 // import Favicon from'react-favicon'
 // <Favicon url='/favicon.png'/>
 import './css/navbar.css'
+import LoginPage from './loginpage'
 
 class Navbar extends Component {
 	constructor(props) {
@@ -20,8 +21,6 @@ class Navbar extends Component {
     	this.setState({LoggedIn: false});
   	}
 
-
-
   	render() {
   		const LoggedIn=this.state.LoggedIn;
 	    return (
@@ -32,7 +31,7 @@ class Navbar extends Component {
 					</div>
 					{ LoggedIn ? 
 						<div class="loggedin">
-							<Link to={'/settings'}>Settings</Link>
+							<Link to={`/settings/${this.props.userId}`}>Settings</Link>
 							<Link to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
 						</div>
 						:
