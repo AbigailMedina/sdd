@@ -9,7 +9,6 @@ import Sidebar from './sidebar';
 class HomePage extends Component {
 
   	render() {
-	  	
 	    return (
 	    	<div class="homepage columns">
 	    		<Sidebar className="column is-one-quarter"/>
