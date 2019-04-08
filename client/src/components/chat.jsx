@@ -27,12 +27,12 @@ class Chat extends Component {
 
 	render() {
 	  	return (
-	    	<div class="chat">
-	    		<div class="columns">
+	    		<div class="columns" >
 	    			<Sidebar class="column is-one-quarter"/>
-					<p class=" column is-three-quarters">Chat page for {this.state.project}</p>
+	    			<div class="column is-three-quarters level" style = {{marginTop:"100px"}}>
+						<h2 className="title is-2 ">Chat page for {this.state.project}</h2>
+					</div>
 				</div>				
-	    	</div>
 	    )
   }
 }
