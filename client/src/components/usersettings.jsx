@@ -22,6 +22,7 @@ class UserSettings extends Component {
 	componentDidMount(props) {
 		const { match: { params } } = this.props;
 		axios.get(`http://localhost:5000/users/${params.id}`).then(response => {
+			console.log(response.data.user);
 			this.user = new User(response.data.user);
 			this.setState({
 				name:response.data.user.name,

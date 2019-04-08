@@ -71,7 +71,8 @@ class GroupSettings extends Component {
 		})
 	}
 	onAddCollaborator(){
-		const newArray = this.project.onAddCollaborator(this.state).then((newArray) =>{
+		console.log(this.project);
+		const newArray = this.project.onAddCollaborator(this.state, this.project).then((newArray) =>{
 			this.setState({
 				collaborators: newArray,
 				email:""

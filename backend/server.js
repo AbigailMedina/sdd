@@ -121,7 +121,7 @@ app.get('/users', function(req,res){
         }
     });
 });
-/*
+
 app.get('/users/:email', function(req,res){
     let email = req.params.email;
     User.findOne({email})
@@ -133,7 +133,7 @@ app.get('/users/:email', function(req,res){
             }
         });
 });
-*/
+
 app.get('/users/:id', function(req,res){
     let id = req.params.id;
     User.findById(id, function(err, user) {
