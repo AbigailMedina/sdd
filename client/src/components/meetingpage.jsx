@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './style.css'
 import Sidebar from './sidebar';
-import TimerComponent from './timer.jsx';
+import TimerComponent from './TimerComponent.jsx';
 import axios from 'axios';
 import 'bulma/css/bulma.css'
 import ButtonComponent from './buttonComponent.jsx';
