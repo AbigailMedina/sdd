@@ -5,6 +5,7 @@ import TimerComponent from './TimerComponent.jsx';
 import axios from 'axios';
 import 'bulma/css/bulma.css'
 import ButtonComponent from './buttonComponent.jsx';
+import NotesComponent from './NotesComponent.jsx';
 
 class MeetingPage extends Component {
 	
@@ -34,11 +35,14 @@ class MeetingPage extends Component {
 	    			<Sidebar />
 	    		</div>
 	    		<div class="column is-one-quarter level" style = {{marginTop:"100px"}}>
-	    			<ButtonComponent />
+					<TimerComponent	/><br/>
+					<ButtonComponent />
 	    		</div>
-	    		<div class="column is-one-quarter level" style = {{marginTop:"100px"}}>
-					<TimerComponent	/>
+	    		<div class="column is-one-third level" style = {{marginTop:"100px"}}>
+					<NotesComponent	/>
+	    		
 				</div>
+				
 	    	</div>
 	    )
   	}
