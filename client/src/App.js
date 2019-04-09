@@ -13,6 +13,7 @@ import MeetingPage from './components/meetingpage';
 import UserSettings from './components/usersettings';
 import GroupSettings from './components/groupsettings';
 import Chat from './components/chat';
+import OldNotesPage from './components/OldNotesPage';
 
 class App extends Component {
   render() {
@@ -56,7 +57,11 @@ class App extends Component {
           <Route
             exact path="/settings"
             component={UserSettings}
-          />          
+          />
+          <Route
+            exact path="/oldnotes"
+            component={OldNotesPage}
+          />           
          <Footer/>
         </div>
       </HashRouter>
