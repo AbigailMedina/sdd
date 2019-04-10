@@ -9,6 +9,7 @@ const path = require('path');
 
 let Project = require('./model.project');
 let User = require('./model.user');
+let Notes=require('./model.notes.js');
 
 // this is our MongoDB database
 const uri = "mongodb://PEAKE:mongoDB1!@ds017175.mlab.com:17175/heroku_ht20w3xq";
@@ -208,6 +209,17 @@ app.post('/users', function(req, res){
                 })
             }
         })
+});
+
+app.post('/addNotes', function(req, res) {
+    let notes = new Notes(req.body);
+    notes.save()
+        .then(notes => {
+            res.status(200).send({'notes': notes});
+        })
+        .catch(err => {
+            res.status(400).send('adding new notes failed');
+        });
 });
 
 // app.use("/api", router);

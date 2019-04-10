@@ -7,26 +7,10 @@ let Notes = new Schema({
         required: true
     },
 
-    userId:{
-        type: String,
-        required: true
-    },
-    
-    email: {
+    content: {
         type: String,
         required: true,
-        unique: true
     },
-    
-    password: {
-        type: String,
-        required: true
-    },
-
-    projects: {
-        type: Array,
-        required: true
-    }
 })
 
-module.exports = mongoose.model('User', User)
+module.exports = mongoose.model('Notes', Notes)

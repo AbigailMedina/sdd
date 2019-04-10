@@ -1,15 +1,29 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
+import Project from '../models/Project';
 
 
 class NotesComponent extends Component {
 	constructor(props) {
     	super(props);
+    	this.project=null;
     	this.state={text:"no notes", date:"00/00/0000"}
     	this.addInput=this.addInput.bind(this)
     	this.addDate=this.addDate.bind(this)
     	this.storeNotes=this.storeNotes.bind(this)
   	}
+
+  	componentDidMount(props) {
+  		const { match: { params } } = this.props;
+  		//using uri2
+  		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
+                this.project = new Project(response.data.project);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 
   	addInput(e) {
   		this.setState({text:e.target.value})
@@ -22,7 +36,7 @@ class NotesComponent extends Component {
   	}
 
   	storeNotes() {
-
+  		this.project.updateNotes(this.state)
   	}
 
   	render() {

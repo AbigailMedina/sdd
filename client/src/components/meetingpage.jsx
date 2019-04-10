@@ -39,7 +39,7 @@ class MeetingPage extends Component {
 					<ButtonComponent />
 	    		</div>
 	    		<div class="column is-one-third level" style = {{marginTop:"100px"}}>
-					<NotesComponent	/>
+					<NotesComponent	{...this.props}/>
 	    		
 				</div>
 				

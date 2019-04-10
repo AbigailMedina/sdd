@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class Project {
+export default class User {
   
   constructor(data) {
     if(!data){
