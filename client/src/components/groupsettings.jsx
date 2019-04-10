@@ -8,10 +8,6 @@ import Project from '../models/Project';
 
 class GroupSettings extends Component {
 	constructor(props) {
-		const uri = "https://sdd-shutup.herokuapp.com"
-  		const uri2 = "http://localhost:5000"
-
-  		const project=null;
 	    super(props);
 
 	    this.state = {
@@ -23,8 +19,8 @@ class GroupSettings extends Component {
 	}
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
-  		//using uri2
-  		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
+  		const uri2 = "http://localhost:5000"
+  		axios.get(`${uri2}/projects/${params.id}`).then(response => {
                 this.project = new Project(response.data.project);
                 this.setState({
                 	projectName:response.data.project.name,
@@ -60,7 +56,7 @@ class GroupSettings extends Component {
     }
 
 	onAddCollaborator(){
-		const newArray = this.project.onAddCollaborator(this.state, this.project).then((newArray) =>{
+		this.project.onAddCollaborator(this.state, this.project).then((newArray) =>{
 			console.log("then newArray = ",newArray)
 			this.setState({
 				collaborators: newArray,

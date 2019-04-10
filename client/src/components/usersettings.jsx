@@ -6,9 +6,6 @@ import Sidebar from './sidebar';
 
 import 'bulma/css/bulma.css'
 class UserSettings extends Component {
-	constructor(props) {
-	    super(props);
-	}
 
 	render() {
 	  	return (

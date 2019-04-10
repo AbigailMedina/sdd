@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import Project from '../models/Project';
 export default class CreateProject extends Component {
 	constructor(props){
 		super(props);
@@ -20,8 +19,6 @@ export default class CreateProject extends Component {
 
 	onSubmit(e){
 		e.preventDefault();
-		
-		const uri = "https://sdd-shutup.herokuapp.com"
   		const uri2 = "http://localhost:5000"
 
 		axios.post(uri2+'/add', {

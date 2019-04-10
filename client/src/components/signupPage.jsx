@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { throwStatement } from 'babel-types';
 
 class SignUp extends Component{
     
@@ -62,7 +61,6 @@ class SignUp extends Component{
             projects:[]
         }//TODO: call new User here instead of plain JSON object
         
-        const uri = "https://sdd-shutup.herokuapp.com"
         const uri2 = "http://localhost:5000"
         axios.post(uri2+'/users', newUser).then(res =>{console.log("res:data", res.data)})
         this.setState({

@@ -7,18 +7,11 @@ import 'bulma/css/bulma.css'
 import ButtonComponent from './buttonComponent.jsx';
 
 class MeetingPage extends Component {
-	
-	constructor(props) {
-		const uri = "https://sdd-shutup.herokuapp.com"
-  		const uri2 = "http://localhost:5000"
-  		super(props);
-	    
-	}
 
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
-  		//using uri2
-  		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
+  		const uri2 = "http://localhost:5000"
+  		axios.get(`${uri2}/projects/${params.id}`).then(response => {
             console.log("project found in settings: ",response.data.project)
             this.setState({project:response.data.project.name})
         })
