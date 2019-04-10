@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import Project from '../models/Project';
 
-
 class NotesComponent extends Component {
 	constructor(props) {
     	super(props);
