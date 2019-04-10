@@ -17,7 +17,7 @@ class GroupSettings extends Component {
 	    this.state = {
 	    	projectName:"",
 	    	email:"",
-	    	userError:false,
+	    	userError:undefined,
 	    	collaborators:[]
 	    }
 	}
@@ -37,7 +37,7 @@ class GroupSettings extends Component {
     }
 
     onChangeEmail(e){
-		this.setState({email:e.target.value,userError:false})
+		this.setState({email:e.target.value,userError:undefined})
 	}
 
 	showCollaborators(){
@@ -59,25 +59,15 @@ class GroupSettings extends Component {
 		return content;
     }
 
-	updateProject(newArray){
-		const { match: { params } } = this.props;
-		console.log("in groupSettings updateProject. updating with newArray:",newArray)
-		this.project.update(params.id,newArray).then((response)=>{
-	    	this.setState({
-	        	projectName:response.data.project.name,
-	        	collaborators:response.data.project.collaborators,
-	        	email:""
-	        })
-		})
-	}
 	onAddCollaborator(){
-		const newArray = this.project.onAddCollaborator(this.state).then((newArray) =>{
+		const newArray = this.project.onAddCollaborator(this.state, this.project).then((newArray) =>{
+			console.log("then newArray = ",newArray)
 			this.setState({
 				collaborators: newArray,
 				email:""
 			})
 		}).catch(err=>{
-			this.setState({userError:true})
+			this.setState({userError:err})
 		})
 	}
 	onRemoveCollaborator(removeMe){
@@ -100,7 +90,7 @@ class GroupSettings extends Component {
 					 	<div className="control">
 					    	<input 
 						    	className={this.state.userError?"input is-danger":"input is-info"} 
-						    	value = {this.state.userError? "User does not exist":this.state.email} 
+						    	value = {this.state.userError? this.state.userError:this.state.email} 
 						    	onChange = {this.onChangeEmail.bind(this)} type="email" placeholder="Email input" />
 						</div>
 					  	<div className="control">
