@@ -4,16 +4,31 @@ export default class Project {
   
   constructor(data) {
     if(!data){
-      name = "defaultUser"
-      userId = "defaultUser"
-      email = "defaultUser"
-      projects = []
+      this.name = "defaultUser"
+      this.userId = "defaultUser"
+      this.email = "defaultUser"
+      this.projects = []
     }else{
-      name = data.name
-      userId = data.userId
-      email = data.email
+      this.name = data.name
+      this.userId = data.userId
+      this.email = data.email
+      this.projects = data.projects
+      // console.log("user constructor, data:",data);
+
     }
   }
 
-  
+  update(newProjectArray) {
+    return new Promise((resolve,reject) => {
+      axios.patch(`http://localhost:5000/users/${this.email}`,{projects:newProjectArray}).then(
+        response => {
+          this.projects = response.data.user.projects
+          // console.log("user updated: ",response.data.user);
+          resolve(response);
+        })
+        .catch( error =>{
+          reject("patch error on update user");
+        })      
+      })
+  }
 }
