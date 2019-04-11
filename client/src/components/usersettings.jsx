@@ -56,7 +56,7 @@ class UserSettings extends Component {
 
 	onRemoveProject(removeMe) {
 		this.user.onRemoveProject(removeMe).then((newArray) => {
-			this.projects = newArray;
+			this.setState({projects: newArray});
 		})
 	}
 
