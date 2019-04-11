@@ -21,15 +21,15 @@ class GroupSettings extends Component {
   		const { match: { params } } = this.props;
   		const uri2 = "http://localhost:5000"		// currently using local host to connect to database
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
-                this.project = new Project(response.data.project);
-                this.setState({
-                	projectName:response.data.project.name,
-                	collaborators:response.data.project.collaborators
-                })
+            this.project = new Project(response.data.project);
+            this.setState({
+               	projectName:response.data.project.name,
+                collaborators:response.data.project.collaborators
             })
-            .catch(function (error) {
-                console.log(error);
-            })
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
   
         .catch(function (error) {
             console.log(error);

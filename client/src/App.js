@@ -12,6 +12,7 @@ import MeetingPage from './components/meetingpage';
 import UserSettings from './components/usersettings';
 import GroupSettings from './components/groupsettings';
 import Chat from './components/chat';
+import OldNotesPage from './components/OldNotesPage';
 
 // main class used to establish routes to component pages
 class App extends Component {
@@ -56,7 +57,11 @@ class App extends Component {
           <Route
             exact path="/settings"
             component={UserSettings}
-          />          
+          />
+          <Route
+            exact path="/oldnotes/:id"
+            component={OldNotesPage}
+          />           
          <Footer/>
         </div>
       </HashRouter>

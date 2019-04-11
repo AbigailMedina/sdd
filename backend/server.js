@@ -9,6 +9,7 @@ const path = require('path');
 
 let Project = require('./model.project');   // import models used to store information
 let User = require('./model.user');
+let Notes=require('./model.notes.js');
 
 // reference to MongoDB database
 const uri = "mongodb://PEAKE:mongoDB1!@ds017175.mlab.com:17175/heroku_ht20w3xq";
@@ -50,7 +51,12 @@ app.get('/projects/:id', function(req, res, next) {
 app.patch('/projects/:id', function(req, res, next) {
     let id = req.params.id;
     Project.findById(id, function(err, project) {
-        project.collaborators = req.body.collaborators;
+        if (req.body.collaborators) {
+            project.collaborators = req.body.collaborators;
+        }
+        if (req.body.notes) {
+            project.notes=req.body.notes;
+        }
          project.save().then(project => {
             res.status(200).send({'project':project});
         })
@@ -194,6 +200,19 @@ app.post('/users', function(req, res){
         })
 });
 
+
+app.post('/addNotes', function(req, res) {
+    let notes = new Notes(req.body);
+    notes.save()
+        .then(notes => {
+            res.status(200).send({'notes': notes});
+        })
+        .catch(err => {
+            res.status(400).send('adding new notes failed');
+        });
+});
+
+// app.use("/api", router);
 
 // launch our backend into a port
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`));

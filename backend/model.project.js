@@ -8,6 +8,10 @@ let Project = new Schema({
     },
     collaborators: {
     	type: Array
+    },
+
+    notes: {
+    	type: Array
     }
 });
 
