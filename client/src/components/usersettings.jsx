@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
+
 import axios from 'axios';
 
 import './style.css'
-
 import Sidebar from './sidebar';
 import User from '../models/User';
 
 import 'bulma/css/bulma.css'
+
+// class containing information about user settings for a specific user
 class UserSettings extends Component {
 
 	constructor(props) {

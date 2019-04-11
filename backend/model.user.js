@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// schema holding information related to one user
 let User = new Schema({
     name: {
         type: String,
@@ -23,7 +24,7 @@ let User = new Schema({
         required: true
     },
 
-    projects: {
+    projects: {         // list of Project type objects related to current user
         type: Array,
         required: true
     }

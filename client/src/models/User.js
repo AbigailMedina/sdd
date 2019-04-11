@@ -9,11 +9,15 @@ export default class User {
       this.userId = "defaultUser"
       this.email = "defaultUser"
       this.projects = []
+      this.secretary=false
     }else{
       this.name = data.name
       this.userId = data.userId
       this.email = data.email
       this.projects = data.projects
+
+      this.secretary=data.secretary
+
     }
   }
 

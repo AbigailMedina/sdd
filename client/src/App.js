@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { HashRouter, Route } from 'react-router-dom';
-
 import './App.css';
 import HomePage from './components/homepage';
 import LoginPage from './components/loginpage';
@@ -13,7 +12,9 @@ import MeetingPage from './components/meetingpage';
 import UserSettings from './components/usersettings';
 import GroupSettings from './components/groupsettings';
 import Chat from './components/chat';
+import OldNotesPage from './components/OldNotesPage';
 
+// main class used to establish routes to component pages
 class App extends Component {
 
   constructor(props) {
@@ -85,7 +86,11 @@ class App extends Component {
           <Route
             exact path="/settings/:id"
             component={UserSettings}
-          />          
+          />
+          <Route
+            exact path="/oldnotes/:id"
+            component={OldNotesPage}
+          />           
          <Footer/>
         </div>
       </HashRouter>

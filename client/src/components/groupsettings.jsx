@@ -1,41 +1,47 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-
 import './style.css'
-import 'bulma/css/bulma.css'
+import 'bulma/css/bulma.css'		//DIDNT FINISH THIS
 import Sidebar from './sidebar';
 import Project from '../models/Project';
 
+// class containing information regarding a group's settings
 class GroupSettings extends Component {
 	constructor(props) {
 	    super(props);
-
-	    this.state = {
+	    this.state = {		// state containing this project's data
 	    	projectName:"",
 	    	email:"",
 	    	userError:undefined,
 	    	collaborators:[]
 	    }
 	}
+
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
-  		const uri2 = "http://localhost:5000"
+  		const uri2 = "http://localhost:5000"		// currently using local host to connect to database
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
-                this.project = new Project(response.data.project);
-                this.setState({
-                	projectName:response.data.project.name,
-                	collaborators:response.data.project.collaborators
-                })
+            this.project = new Project(response.data.project);
+            this.setState({
+               	projectName:response.data.project.name,
+                collaborators:response.data.project.collaborators
             })
-            .catch(function (error) {
-                console.log(error);
-            })
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+  
+        .catch(function (error) {
+            console.log(error);
+        })
     }
 
+    // function to change email based on user input
     onChangeEmail(e){
 		this.setState({email:e.target.value,userError:undefined})
 	}
 
+	// function to show all collaborators involved with this project
 	showCollaborators(){
     	var content = [];
     	if(!this.project){
