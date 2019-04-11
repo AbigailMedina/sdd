@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import './style.css'
 
+// class rendering information about developers for the About Us page
 class AboutUs extends Component {
   	render() {
-	  	
 	    return (
 	    	<div class="content">
      			<h3 class="title is-2 center">About Us</h3>
@@ -86,10 +86,6 @@ class AboutUs extends Component {
       				</div>
      			</div>
      		</div>
-     		
-      
-
-
 	    )
   }
 }

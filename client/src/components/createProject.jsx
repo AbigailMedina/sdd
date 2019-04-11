@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import Project from '../models/Project';
-export default class CreateProject extends Component {
+
+export default class CreateProject extends Component {		// WHY IS THIS NOT CONSISTENT
 	constructor(props){
 		super(props);
 		this.onChangeName = this.onChangeName.bind(this);

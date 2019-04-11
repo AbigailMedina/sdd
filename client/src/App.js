@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { HashRouter, Route } from 'react-router-dom';
-
 import './App.css';
 import HomePage from './components/homepage';
 import LoginPage from './components/loginpage';
@@ -14,6 +13,7 @@ import UserSettings from './components/usersettings';
 import GroupSettings from './components/groupsettings';
 import Chat from './components/chat';
 
+// main class used to establish routes to component pages
 class App extends Component {
   render() {
     return (

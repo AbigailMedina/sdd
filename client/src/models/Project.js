@@ -1,7 +1,8 @@
 import axios from 'axios';
 import User from './User';
+
+// class containing model for a project     NEED TO FINISH
 export default class Project {
-  
   constructor(data) {
     if(!data){
       this.collaborators = [];
