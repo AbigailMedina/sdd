@@ -94,8 +94,39 @@ export default class Project {
   updateNotes(input) {
     return new Promise((resolve,reject) => {
       axios.get(`http://localhost:5000/projects/${this._id}`).then(response => {
-        console.lo
-        this.notes=response.data.project.notes
+      var found=false
+      this.notes=response.data.project.notes
+      console.log(input.date)
+      //const newDate=new Date(input.date)
+      //console.log("new date object:", newDate)
+      for (var i=0; i<this.notes.length; i++) {
+        console.log("in the array: ", this.notes[i].date)
+        //const oldDate=new Date(this.notes[i].date)
+        //console.log(oldDate)
+        if (this.notes[i].date==input.date) {
+              console.log("same day")
+              found=true
+              var updatedText=this.notes[i].text+"\n"
+              updatedText=updatedText+input.text
+              const data={date:this.notes[i].date, text:updatedText}
+              const newNote=new Notes(data)
+              this.notes.splice(i, 1, newNote)
+              axios.patch(`http://localhost:5000/projects/${this._id}`,{notes: this.notes}).then(
+              response => {
+              this.notes=response.data.project.notes
+                resolve(response);
+              })
+              .catch(function (error) {
+                reject("patch error on update project")
+              })
+              break
+            }
+          
+        
+      }
+
+      if (!found) {
+        console.log("got in here")
         const newNote=new Notes(input)
         this.notes.push(newNote)
         axios.patch(`http://localhost:5000/projects/${this._id}`,{notes: this.notes}).then(
@@ -106,6 +137,7 @@ export default class Project {
         .catch(function (error) {
           reject("patch error on update project")
         })
+      }
       })
       .catch(function (error) {
         console.log(error);

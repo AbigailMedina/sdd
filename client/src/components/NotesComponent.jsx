@@ -8,15 +8,14 @@ class NotesComponent extends Component {
 	constructor(props) {
     	super(props);
     	this.project=null;
-      var today=new Date()
-    	this.state={text:"no notes", date:today.getMonth()+"/"+today.getDate()+"/"+today.getFullYear()}
+      const today=new Date()
+    	this.state={text:"", date: today.getMonth()+"/"+today.getDate()+"/"+today.getFullYear()}
       this.notes=new Notes(this.state)
     	this.addInput=this.addInput.bind(this)
     	this.storeNotes=this.storeNotes.bind(this)
   	}
 
   	componentDidMount(props) {
-      
   		const { match: { params } } = this.props;
   		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
         this.project = new Project(response.data.project);
@@ -32,9 +31,11 @@ class NotesComponent extends Component {
   	}
 
   	storeNotes() {
-      if (this.state.text!="no notes") {
+      this.notes.update(this.state)
+      if (this.state.text!="") {
         this.project.updateNotes(this.notes)
       }
+      this.setState({text:""})
   	}
 
   	render() {
