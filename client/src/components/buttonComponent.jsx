@@ -19,7 +19,7 @@ class ButtonComponent extends Component {
 
   }
 
-// function to sound "Shut Up" based on current aggression level
+  // function to sound "Shut Up" based on current aggression level
   doShutUp() {
     this.button.updateLevel(this.state.level)
     const button = document.querySelector('button')
