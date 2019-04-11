@@ -27,11 +27,12 @@ class NotesComponent extends Component {
   	addInput(e) {
   		this.setState({text:e.target.value})
   		console.log(this.state.text)
+      console.log(this.state.date)
   	}
 
   	addDate(e) {
   		this.setState({date:e.target.value})
-  		console.log(this.state.date)
+  		
   	}
 
   	storeNotes() {
