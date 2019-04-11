@@ -12,6 +12,9 @@ export default class Project {
       this.name = data.name
       this.userId = data.userId
       this.email = data.email
+      this.projects = data.projects
+      // console.log("user constructor, data:",data);
+
     }
   }
 
@@ -19,17 +22,18 @@ export default class Project {
 
   }
 
-  update(newArray) { 
-    return new Promise(resolve => {
-      axios.patch(`http://localhost:5000/users/${this.userId}`,{projects: newArray}).then(
+  update(newProjectArray) {
+    return new Promise((resolve,reject) => {
+      axios.patch(`http://localhost:5000/users/${this.email}`,{projects:newProjectArray}).then(
         response => {
+          this.projects = response.data.user.projects
+          // console.log("user updated: ",response.data.user);
           resolve(response);
         })
-        .catch(function (error) {
-            console.log(error);
-        })   
-    })
+        .catch( error =>{
+          reject("patch error on update user");
+        })      
+      })
   }
 
-  
 }

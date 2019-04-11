@@ -15,7 +15,6 @@ class Sidebar extends Component {
 	}
 
   	componentDidMount(props) {
-  		const uri = "https://sdd-shutup.herokuapp.com"
   		const uri2 = "http://localhost:5000"
 
   		axios.get(uri2+'/projects').then(response => {

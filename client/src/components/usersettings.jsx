@@ -8,6 +8,7 @@ import User from '../models/User';
 
 import 'bulma/css/bulma.css'
 class UserSettings extends Component {
+
 	constructor(props) {
 		const user = null;
 	    super(props);

@@ -1,15 +1,17 @@
 import axios from 'axios';
-
+import User from './User';
 export default class Project {
   
   constructor(data) {
     if(!data){
       this.collaborators = [];
-      this.projectId="placeholderId"
+      this._id="placeholderId"
+      this.name="placeholderName"
     }else{
       this.collaborators = data.collaborators;//array of EMAILS (type:string)
       //^TODO change this to hold users, not emails, deal with corresponding react error
-      this.projectId = data._id;
+      this._id = data._id;
+      this.name = data.name;
     }
   }
 
@@ -21,51 +23,66 @@ export default class Project {
   onAddCollaborator (state, project){//state.email,collaborators
     return new Promise((resolve, reject) => {
       axios.get(`http://localhost:5000/users/${state.email}`).then(response => {
-        const user = response.data.user;
-
-        ///////VVVVVVV ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
+        const user = new User(response.data.user)
+        // console.log("user fetched in onAddCollaborator::",user)//TODO bug this prints Project type????
+        
         const newProjectArray = user.projects.slice();
-        newProjectArray.push(project);
-        axios.patch(`http://localhost:5000/users/${state.email}`,{projects:newProjectArray}).then(
-          response => {
-            console.log("user updated: ",response.data.user);
-            
-          })//TODO in future, check that project doesnt already exist in users projectList
-          .catch( error =>{
-              reject("user dne");
-          })
-        ///////^^^^ADDING PROJECT IN ADDED USERS LIST OF PROJECTS
-        var newArray = state.collaborators.slice();    
-        newArray.push(state.email);  
-        this.update(newArray)
-        resolve(newArray);
-      }).catch( error =>{
-          console.log(error);
-          reject("user dne")
-      })
+        var newCollaboratorArray = state.collaborators.slice();   
+
+        // console.log("newProjectArray::",newProjectArray)
+        // console.log("newCollaboratorArray::",newCollaboratorArray)
+
+        if(newProjectArray.indexOf(project)!==-1){
+            reject("user already has this project");
+            return;
+        }else if (newCollaboratorArray.indexOf(user.email)!==-1){
+            reject("project already has this user");
+            return;
+        }else{ 
+          newProjectArray.push(project);console.log("newProjectArray2::",newProjectArray)
+          newCollaboratorArray.push(state.email);console.log("newCollaboratorArray2::",newCollaboratorArray)  
+          user.update(newProjectArray);//<- add project to collaborator
+          this.update(newCollaboratorArray)//<- add collaborator to project
+
+          resolve(newCollaboratorArray);
+        }
+      }).catch( error =>{reject("user get error onAddCollaborator")})
     })
   }
-
+/*takes in current list of collaborators in fe and an email to remove*/
   onRemoveCollaborator(removeMe, collaborators){
-    return new Promise(resolve => {
-      const newArray = collaborators.filter(
-        (collaborator) => {
-            return collaborator !== removeMe;
-        });
-      this.collaborators = newArray;
-      resolve(newArray);
-      this.update(newArray)
+    return new Promise((resolve,reject) => {
+
+      axios.get(`http://localhost:5000/users/${removeMe}`).then(response => {
+        const user = new User(response.data.user)
+        // console.log("user fetched in onRemoveCollaborator::",user)//TODO bug this prints Project type????
+
+        var newCollaboratorArray = collaborators.filter((c)=>{return c!==removeMe});    
+        var newProjectArray = user.projects.filter( (p)=>{return p._id!==this._id})
+        
+        // console.log("newProjectArray2::",newProjectArray)
+
+        user.update(newProjectArray);
+        this.update(newCollaboratorArray)
+        resolve(newCollaboratorArray);
+        }).catch( error =>{
+            console.log(error);
+            reject(error)
+        })
+    
       })
   };
 
-  update(newArray) {
-    return new Promise(resolve => {
-      axios.patch(`http://localhost:5000/projects/${this.projectId}`,{collaborators: newArray}).then(
+  update(newCollaboratorArray) {
+    return new Promise((resolve,reject) => {
+      axios.patch(`http://localhost:5000/projects/${this._id}`,{collaborators: newCollaboratorArray}).then(
         response => {
+          this.collaborators = newCollaboratorArray
+          // console.log("project updated: ",response.data.project);
           resolve(response);
         })
         .catch(function (error) {
-            console.log(error);
+          reject("patch error on update project")
         })
       })
   }

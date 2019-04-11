@@ -43,7 +43,7 @@ class AboutUs extends Component {
         				<div class="card">
           				<div class="card-image">
             				<figure class="image is-4by3">
-              					<img src="https://source.unsplash.com/random/1280x960" alt="Placeholder image"></img>
+              					<img src={require("../photos/ericl.jpg")} alt="eric"></img>
             				</figure>
           				</div>
          					<br/>
