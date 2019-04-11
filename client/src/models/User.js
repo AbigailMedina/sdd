@@ -40,6 +40,31 @@ export default class User {
       })
   }
 
+  onChangeEmail(newEmail) {
+    return new Promise((resolve,reject) => {
+      axios.patch(`http://localhost:5000/users/${this.email}`,{email:newEmail}).then(
+        response => {
+          this.email = response.data.user.email
+          resolve(response.data.user.email);
+        })
+        .catch( error =>{
+          reject("patch error on update user email");
+        })      
+      })
+  }
+
+  onChangePassword(newPass) {
+    return new Promise((resolve,reject) => {
+      axios.patch(`http://localhost:5000/users/${this.email}`,{password:newPass}).then(
+        response => {
+          resolve(response);
+        })
+        .catch( error =>{
+          reject("patch error on update user password");
+        })      
+      })    
+  }
+
   update(newProjectArray) {
     return new Promise((resolve,reject) => {
       axios.patch(`http://localhost:5000/users/${this.email}`,{projects:newProjectArray}).then(
@@ -49,7 +74,7 @@ export default class User {
           resolve(response);
         })
         .catch( error =>{
-          reject("patch error on update user");
+          reject("patch error on update user projects");
         })      
       })
   }

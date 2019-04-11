@@ -160,10 +160,34 @@ app.patch('/users/:email', function(req,res){
     User.findOne({email})
         .then(user =>{
             if(user){
-                user.projects = req.body.projects;
-                user.save().then(user => {
-                    res.status(200).send({'user':user});
-                })
+                if(req.body.email){
+                    user.email = req.body.email;
+                    user.save().then(user => {
+                        console.log(user);
+                        res.status(200).send({'user':user});
+                    })
+                }
+                if(req.body.password){
+                    bcrypt.genSalt(10, function(err, salt){
+                        bcrypt.hash(req.body.password, salt, function(err, hash){
+                            if(err){
+                                throw err;
+                            }
+                            user.password = hash;
+                            user.save().then(user => {
+                                console.log(user);
+                                res.status(200).send({'user':user});
+                            })
+                        })
+                    })
+                }
+                if(req.body.projects){
+                    user.projects = req.body.projects;
+                    user.save().then(user => {
+                        console.log(user);
+                        res.status(200).send({'user':user});
+                    })
+                }
             }else{
                 return res.status(400).send("cannot find user");
             }

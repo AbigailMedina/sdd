@@ -15,7 +15,10 @@ class UserSettings extends Component {
 	    this.state = {
 	    	name:null,
 	    	email:null,
-	    	projects:[]
+	    	password:null,
+	    	projects:[],
+	    	newEmail:"",
+	    	newPass:""
 	    }
 	}
 
@@ -26,6 +29,7 @@ class UserSettings extends Component {
 			this.setState({
 				name:response.data.user.name,
 				email:response.data.user.email,
+				password:response.data.user.password,
 				projects:response.data.user.projects
 			})
 		})
@@ -60,6 +64,30 @@ class UserSettings extends Component {
 		})
 	}
 
+	onChangeEmail(e) {
+		this.setState({
+			newEmail:e.target.value
+		})
+	}
+
+	onUpdateEmail() {
+		this.user.onChangeEmail(this.state.newEmail).then((newEmail) => {
+			this.setState({email:newEmail, newEmail:""})
+		})	
+	}
+
+	onChangePass(e) {
+		this.setState({
+			newPass:e.target.value
+		})
+	}
+
+	onUpdatePass() {
+		this.user.onChangePassword(this.state.newPass).then((newPass) => {
+			this.setState({password:newPass,newPass:""})
+		})
+	}
+
 	updateUser(newArray) {
 		const { match: { params } } = this.props;
 		console.log("in usersettings updateUser. updating with newArray:", newArray)
@@ -67,6 +95,7 @@ class UserSettings extends Component {
 			this.setState({
 				name:response.data.user.name,
 				email:response.data.user.email,
+				password:response.data.user.password,
 				projects:response.data.user.projects
 			})
 		}) 
@@ -81,8 +110,40 @@ class UserSettings extends Component {
 	    			<h2 class="title is-2">User Settings for {this.state.name}</h2>
 					<label className="label">Projects you're a member of</label>
 					
-					<span>{projects()}</span>					
-				</div>				
+					<span>{projects()}</span>	
+					<br></br>
+					<div className="field">
+						<div className="control">
+							<input  type="email"
+									className="input"
+									placeholder={this.state.email}
+									value = {this.state.newEmail}
+									onChange = {this.onChangeEmail.bind(this)}
+							/>
+							<button className="button is-primary" 
+									type="submit"
+									disabled={!this.state.newEmail}
+									onClick={this.onUpdateEmail.bind(this)}
+							>Update Email Address</button>
+						</div>
+					</div>	
+					<br></br>
+					<div className="field">
+						<div className="control">
+							<input  type="password"
+									className="input"
+									placeholder="Enter new password"
+									value={this.state.newPass}
+									onChange={this.onChangePass.bind(this)}
+							/>	
+							<button className="button is-primary"
+									type="submit"
+									disabled={!this.state.newPass}
+									onClick={this.onUpdatePass.bind(this)}
+							>Update Password</button>
+						</div>
+					</div>			
+				</div>		
 	    	</div>
 	    )
   }	
