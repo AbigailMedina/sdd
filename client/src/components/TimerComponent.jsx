@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Timer from "react-compound-timer";
 import OurTimer from '../models/timer';
 
-
+// class displaying timer component based on user input and Timer model
 class TimerComponent extends Component {
 	constructor(props) {
     	super(props);
@@ -12,11 +12,13 @@ class TimerComponent extends Component {
     	this.changeState=this.changeState.bind(this)
   	}
 
+  	// function to update time in Timer model based on user input
   	addInput(e) {
   		this.setState({go:false})
   		this.timer.updateTime(e.target.value)
   	}
 
+  	// function to change state and display timer
   	changeState() {
   		this.setState({go:true})
   	}
@@ -50,4 +52,5 @@ class TimerComponent extends Component {
 		)
 	}
 }
+
 export default TimerComponent;

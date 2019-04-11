@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
-
 import './style.css'
-
 import Sidebar from './sidebar';
-
 import 'bulma/css/bulma.css'
+
+// class containing information about user settings for a specific user
 class UserSettings extends Component {
-	constructor(props) {
-	    super(props);
-	}
 
 	render() {
 	  	return (

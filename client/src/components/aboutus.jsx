@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import './style.css'
 
+// class rendering information about developers for the About Us page
 class AboutUs extends Component {
   	render() {
-	  	
 	    return (
 	    	<div class="content">
      			<h3 class="title is-2 center">About Us</h3>
@@ -43,7 +43,7 @@ class AboutUs extends Component {
         				<div class="card">
           				<div class="card-image">
             				<figure class="image is-4by3">
-              					<img src="https://source.unsplash.com/random/1280x960" alt="Placeholder image"></img>
+              					<img src={require("../photos/ericl.jpg")} alt="eric"></img>
             				</figure>
           				</div>
          					<br/>
@@ -86,10 +86,6 @@ class AboutUs extends Component {
       				</div>
      			</div>
      		</div>
-     		
-      
-
-
 	    )
   }
 }
