@@ -61,6 +61,7 @@ class GroupSettings extends Component {
 		return content;
     }
 
+
 	onAddCollaborator(){
 		this.project.onAddCollaborator(this.state, this.project).then((newArray) =>{
 			console.log("then newArray = ",newArray)
@@ -73,7 +74,7 @@ class GroupSettings extends Component {
 		})
 	}
 	onRemoveCollaborator(removeMe){
-		this.project.onRemoveCollaborator(removeMe, this.state.collaborators).then((newArray)=>{
+		this.project.onRemoveCollaborator(removeMe, this.state.collaborators).then((newArray) =>{
 			this.setState({collaborators: newArray});
 		})
 	}

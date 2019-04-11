@@ -5,6 +5,7 @@ export default class CreateProject extends Component {		// WHY IS THIS NOT CONSI
 	constructor(props){
 		super(props);
 		this.onChangeName = this.onChangeName.bind(this);
+
 		this.onSubmit = this.onSubmit.bind(this);
 		this.submit = this.submit.bind(this);
 
