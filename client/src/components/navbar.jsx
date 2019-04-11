@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './css/navbar.css'
+import LoginPage from './loginpage'
 
 // class containing links to components displayed in the navigation bar
 class Navbar extends Component {
@@ -31,7 +32,7 @@ class Navbar extends Component {
 					</div>
 					{ LoggedIn ? 
 						<div class="loggedin">
-							<Link to={'/settings'}>Settings</Link>
+							<Link to={`/settings/${this.props.userId}`}>Settings</Link>
 							<Link to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
 						</div>
 						:

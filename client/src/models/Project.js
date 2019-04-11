@@ -26,7 +26,7 @@ export default class Project {
   */
   onAddCollaborator (state, project){//state.email,collaborators
     return new Promise((resolve, reject) => {
-      axios.get(`http://localhost:5000/users/${state.email}`).then(response => {
+      axios.get(`http://localhost:5000/users/get/${state.email}`).then(response => {
         const user = new User(response.data.user)
         // console.log("user fetched in onAddCollaborator::",user)//TODO bug this prints Project type????
         
@@ -57,7 +57,7 @@ export default class Project {
   onRemoveCollaborator(removeMe, collaborators){
     return new Promise((resolve,reject) => {
 
-      axios.get(`http://localhost:5000/users/${removeMe}`).then(response => {
+      axios.get(`http://localhost:5000/users/get/${removeMe}`).then(response => {
         const user = new User(response.data.user)
         // console.log("user fetched in onRemoveCollaborator::",user)//TODO bug this prints Project type????
 
