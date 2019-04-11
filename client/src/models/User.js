@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class Project {
+export default class User {
   
   constructor(data) {
     if(!data){
@@ -13,13 +13,11 @@ export default class Project {
       this.userId = data.userId
       this.email = data.email
       this.projects = data.projects
-      // console.log("user constructor, data:",data);
-
     }
   }
 
   onRemoveProject() {
-
+    console.log("Remove from project");
   }
 
   update(newProjectArray) {

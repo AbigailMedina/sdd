@@ -45,12 +45,13 @@ class LoginPage extends Component {
        console.log(response, "response.status:",response.status);
        if(response.status === 200){
          console.log("Login successfull", response.data.user);
+         this.props.login(response.data.user);
        }else{
           this.setState({loginError:true})
           console.log(response.data);
        }
      }).catch(error => {
-         this.setState({loginError:true},()=>console.log(error))
+         this.setState({loginError:true},() =>console.log(error))
        });
       this.setState({
         userId: '',

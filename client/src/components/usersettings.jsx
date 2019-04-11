@@ -12,18 +12,16 @@ class UserSettings extends Component {
 	constructor(props) {
 		const user = null;
 	    super(props);
-
 	    this.state = {
-	    	name: "",
-	    	email: "",
-	    	projects: ""
+	    	name:null,
+	    	email:null,
+	    	projects:[]
 	    }
 	}
 
 	componentDidMount(props) {
 		const { match: { params } } = this.props;
 		axios.get(`http://localhost:5000/users/${params.id}`).then(response => {
-			console.log(response.data.user);
 			this.user = new User(response.data.user);
 			this.setState({
 				name:response.data.user.name,
@@ -34,7 +32,6 @@ class UserSettings extends Component {
 		.catch(function(error) {
 			console.log(error);
 		})
-
 	}
 
 	showProjects() { 
@@ -42,9 +39,10 @@ class UserSettings extends Component {
 		if(!this.user) { 
 			return content;
 		}
+
 		content = this.state.projects.map((project) => {
 		return(
-			<li className = "level" key={project}>{project}
+			<li className = "level" key={project}>{project.name}
 				<div className="control">
 				    <button className="button is-danger" onClick={() =>{
 				    	this.onRemoveProject(project)
@@ -57,8 +55,8 @@ class UserSettings extends Component {
 	}
 
 	onRemoveProject(removeMe) {
-		this.user.onRemoveProject(removeMe, this.state.users).then((newArray) => {
-			this.setState({projects: newArray});
+		this.user.onRemoveProject(removeMe).then((newArray) => {
+			this.projects = newArray;
 		})
 	}
 
