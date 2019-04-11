@@ -5,8 +5,7 @@ import Button from '../models/button';
 class ButtonComponent extends Component {
   constructor(props) {
     super(props);
-    const button=null;
-  	this.state={level:"50"}      // initial aggression button is set to 50
+  	this.state={level:"50"}    // initial aggression button is set to 50
     this.addInput=this.addInput.bind(this)
   }
 
@@ -35,7 +34,7 @@ class ButtonComponent extends Component {
           <input id="sliderWithValue" class="slider has-output is-fullwidth" min="0" max="100" onChange={this.addInput} value={this.state.level} step="25" type="range"/>
           <output for="sliderWithValue"> {this.state.level}</output><br/>
           <button type="button" onClick = {this.doShutUp.bind(this)} className="button is-white">
-            <img src={require("../photos/button.png")} width="100" height="100"/>
+            <img src={require("../photos/button.png")} alt="button" width="100" height="100"/>
           </button>
         </div>
       </div>

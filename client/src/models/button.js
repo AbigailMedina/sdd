@@ -7,15 +7,15 @@ export default class Button {
   // function to play "Shut Up" sound based on set aggression level
   playSound() {
     const sound = new Audio()
-    if (this.level==0) {
+    if (this.level===0) {
       sound.src = 'level1.mp3'
-    } else if (this.level==25) {
+    } else if (this.level===25) {
       sound.src = 'level2.mp3'
-    } else if (this.level==50) {
+    } else if (this.level===50) {
       sound.src = 'level3.mp3'
-    } else if (this.level==75) {
+    } else if (this.level===75) {
       sound.src = 'level4.mp3'
-    } else if (this.level==100) {
+    } else if (this.level===100) {
       sound.src = 'level5.mp3'
     }
     sound.play()

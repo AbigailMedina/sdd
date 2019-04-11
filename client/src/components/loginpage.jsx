@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 // class containing information about user login
@@ -37,24 +36,18 @@ class LoginPage extends Component {
     console.log("Form Submitted");
     console.log("User Info", this.state.userId);
     console.log("User Info", this.state.password);
-      
-    const user = {
-      userId: this.state.userId,
-      password: this.state.password
-    }
-    const uri = "https://sdd-shutup.herokuapp.com"
+    
     const uri2 = "http://localhost:5000"
-
-    axios.post(uri2+'/login', {       // currently using local host to connect to database
+    axios.post(uri2+'/login', {   // currently using local host to connect to database
       userId: this.state.userId,
       password: this.state.password
     }).then( response=> {
-      console.log(response, "response.status:",response.status);
-      if(response.status == 200){
+     console.log(response, "response.status:",response.status);
+      if(response.status === 200){
         console.log("Login successfull", response.data.user);
       }else{
         this.setState({loginError:true})
-          console.log(response.data);
+        console.log(response.data);
       }
     }).catch(error => {
       this.setState({loginError:true},()=>console.log(error))

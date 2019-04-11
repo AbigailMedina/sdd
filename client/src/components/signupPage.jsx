@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { throwStatement } from 'babel-types';
 
 // classing containing and displaying sign up information for a new user
 class SignUp extends Component{

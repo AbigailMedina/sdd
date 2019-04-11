@@ -8,11 +8,7 @@ import Project from '../models/Project';
 // class containing information regarding a group's settings
 class GroupSettings extends Component {
 	constructor(props) {
-		const uri = "https://sdd-shutup.herokuapp.com"	// WILL CHANGE ON PRODUCTION BRANCH
-  		const uri2 = "http://localhost:5000"
-  		const project=null;
 	    super(props);
-
 	    this.state = {		// state containing this project's data
 	    	projectName:"",
 	    	email:"",
@@ -22,12 +18,17 @@ class GroupSettings extends Component {
 	}
 
 	componentDidMount(props) {
-  		const { match: { params } } = this.props;		// currently using local host to connect to database
-  		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
-            this.project = new Project(response.data.project);
-            this.setState({
-            	projectName:response.data.project.name,
-               	collaborators:response.data.project.collaborators
+  		const { match: { params } } = this.props;
+  		const uri2 = "http://localhost:5000"		// currently using local host to connect to database
+  		axios.get(`${uri2}/projects/${params.id}`).then(response => {
+                this.project = new Project(response.data.project);
+                this.setState({
+                	projectName:response.data.project.name,
+                	collaborators:response.data.project.collaborators
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
             })
         })
         .catch(function (error) {
@@ -61,7 +62,7 @@ class GroupSettings extends Component {
     }
 
 	onAddCollaborator(){
-		const newArray = this.project.onAddCollaborator(this.state, this.project).then((newArray) =>{
+		this.project.onAddCollaborator(this.state, this.project).then((newArray) =>{
 			console.log("then newArray = ",newArray)
 			this.setState({
 				collaborators: newArray,
