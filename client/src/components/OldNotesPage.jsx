@@ -15,7 +15,7 @@ class OldNotesPage extends Component {
   		const { match: { params } } = this.props;
   		const uri2 = "http://localhost:5000"		// currently using local host to connect to database
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
-            this.project = new Project(response.data.project);
+  			console.log(response)
             this.setState({
                 notes:response.data.project.notes
             })
@@ -24,9 +24,13 @@ class OldNotesPage extends Component {
 
   	render() {
     	return (
-    		<div>
+    		<div style={{marginTop:"100px"}}>
+    		<h2>Past Notes from Meetings</h2>
     		{this.state.notes.map((note, index) => (
-        		<p>Taken on {note.date}:\n {note.text}\n</p>
+    			<div class="box">
+        			<p>Taken on {note.date}:</p>
+        			<p>{note.text}</p>
+        		</div>
     		))}
     		</div>
     	)

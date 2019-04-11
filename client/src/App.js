@@ -59,7 +59,7 @@ class App extends Component {
             component={UserSettings}
           />
           <Route
-            exact path="/oldnotes"
+            exact path="/oldnotes/:id"
             component={OldNotesPage}
           />           
          <Footer/>

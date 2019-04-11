@@ -51,7 +51,12 @@ app.get('/projects/:id', function(req, res, next) {
 app.patch('/projects/:id', function(req, res, next) {
     let id = req.params.id;
     Project.findById(id, function(err, project) {
-        project.collaborators = req.body.collaborators;
+        if (req.body.collaborators) {
+            project.collaborators = req.body.collaborators;
+        }
+        if (req.body.notes) {
+            project.notes=req.body.notes;
+        }
          project.save().then(project => {
             res.status(200).send({'project':project});
         })

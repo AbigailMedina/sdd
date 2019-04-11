@@ -13,7 +13,7 @@ class MeetingPage extends Component {
   		const { match: { params } } = this.props;
   		const uri2 = "http://localhost:5000"
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
-            console.log("project found in settings: ",response.data.project)
+            console.log("project found in meeting: ",response.data.project)
             this.setState({project:response.data.project.name})
         })
         .catch(function (error) {

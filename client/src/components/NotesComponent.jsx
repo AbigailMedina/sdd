@@ -17,11 +17,12 @@ class NotesComponent extends Component {
   		const { match: { params } } = this.props;
   		//using uri2
   		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
-                this.project = new Project(response.data.project);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+        console.log("getting project", response)
+        this.project = new Project(response.data.project);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
     }
 
   	addInput(e) {
@@ -32,7 +33,6 @@ class NotesComponent extends Component {
 
   	addDate(e) {
   		this.setState({date:e.target.value})
-  		
   	}
 
   	storeNotes() {
@@ -53,7 +53,11 @@ class NotesComponent extends Component {
 						<textarea class="textarea" type="text" onChange={this.addInput} placeholder="Take notes during the meeting" rows="15"></textarea>
 						<div class="buttons is-centered">
 							<button className="button is-info" onClick={this.storeNotes}>Save</button>
-							<Link to={'/oldnotes'}>Look at past meetings' notes</Link>
+              {this.project ?
+
+                <Link to={'/oldnotes/'+this.project._id}>Look at past meetings' notes</Link>
+                : <div style={{marginTop:"100px"}}>cant</div>}
+							
 						</div>
 					</div>
 				</form>
