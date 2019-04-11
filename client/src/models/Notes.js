@@ -11,4 +11,9 @@ export default class Notes {
       this.date=data.date
     }
   }
+
+  update(data) {
+  	this.text=data.text
+  	this.date=data.date
+  }
 }
