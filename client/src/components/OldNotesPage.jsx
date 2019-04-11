@@ -24,12 +24,12 @@ class OldNotesPage extends Component {
 
   	render() {
     	return (
-    		<div style={{marginTop:"100px"}}>
+    		<div style={{marginTop:"100px", marginBottom:"70px"}}>
     		<h2>Past Notes from Meetings</h2>
     		{this.state.notes.map((note, index) => (
     			<div class="box">
         			<p>Taken on {note.date}:</p>
-        			<p>{note.text}</p>
+        			<pre>{note.text}</pre>
         		</div>
     		))}
     		</div>
