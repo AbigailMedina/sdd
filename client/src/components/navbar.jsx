@@ -19,22 +19,28 @@ class Navbar extends Component {
   	render() {
 
 	    return (
-
 			<div class = 'navbar' id = "nb">		
 				<div class = 'pages level'>
+				{ this.state.loggedIn ?
+					<div>
+						<Link class="name"to={'/'}>Home</Link>
+					</div>:
+					<div></div>
+				}
+				{ this.state.loggedIn ?
+					<div class="loggedin">
+						<Link to={`/settings/${this.props.userId}`}>Settings</Link>
+						<Link to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
+					</div>:
+					<div></div>
+				}
 					
-					{ this.props.loggedIn||this.state.loggedIn ? 
-						<div class = 'level'>
-							<Link className="level-left name"to={'/'}>Home</Link>
-							<Link className="level-right" to={`/settings/${this.props.userId}`}>Settings</Link>
-							<Link className="level-right" to={'/logout'} onClick={this.handleLogoutClick} >Logout</Link>
-							
-						</div>
-						:
-						<div></div>
-					}
+				
+					
 				</div>
 			</div>
+
+		
 		)
 	}
 }
