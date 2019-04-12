@@ -1,7 +1,6 @@
-import axios from 'axios';
 
+// class containing information related to one instance of notes
 export default class Notes {
-  
   	constructor(data) {
     	if(!data){
       	this.date = "00/00/0000"
@@ -12,6 +11,7 @@ export default class Notes {
     	}
   	}
 
+    // function to update text for a specific note
   	update(data) {
   		this.text=data.text	
   	}

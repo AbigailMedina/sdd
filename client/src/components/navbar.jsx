@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './css/navbar.css'
-import LoginPage from './loginpage'
 
 // class containing links to components displayed in the navigation bar
 class Navbar extends Component {
