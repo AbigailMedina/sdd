@@ -26,7 +26,7 @@ class Chat extends Component {
 	render() {
 	  	return (
 	    		<div class="columns" >
-	    			<Sidebar class="column is-one-quarter"/>
+	    			<Sidebar user={this.props.user} class="column is-one-quarter"/>
 	    			<div class="column is-three-quarters level" style = {{marginTop:"100px"}}>
 						<h2 className="title is-2 ">Chat page for {this.state.project}</h2>
 					</div>

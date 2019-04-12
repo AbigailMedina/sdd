@@ -107,21 +107,24 @@ class UserSettings extends Component {
 		const projects = this.showProjects.bind(this);
 	  	return (
 	    	<div class="groupsettings columns">
-	    		<Sidebar className="column is-one-quarter"/>
+	    		<Sidebar user={this.props.user} className="column is-one-quarter"/>
 	    		<div className="column is-three-quarters" style={{marginTop:"100px"}}>
 	    			<h2 class="title is-2">User Settings for {this.state.name}</h2>
-					<label className="label">Projects you're a member of</label>
-					
+					<label className="label">Projects you're a member of</label>	
 					<span>{projects()}</span>	
 					<br></br>
-					<div className="field">
+					<div className="field is-grouped">
 						<div className="control">
 							<input  type="email"
+									size="40"
 									className="input"
 									placeholder={this.state.email}
 									value = {this.state.newEmail}
 									onChange = {this.onChangeEmail.bind(this)}
 							/>
+						</div>
+						<p>&emsp;</p>
+						<div className="control">
 							<button className="button is-primary" 
 									type="submit"
 									disabled={!this.state.newEmail}
@@ -130,14 +133,18 @@ class UserSettings extends Component {
 						</div>
 					</div>	
 					<br></br>
-					<div className="field">
+					<div className="field is-grouped">
 						<div className="control">
 							<input  type="password"
+									size="30"
 									className="input"
 									placeholder="Enter new password"
 									value={this.state.newPass}
 									onChange={this.onChangePass.bind(this)}
-							/>	
+							/>
+						</div>
+						<p>&emsp;</p>
+						<div className="control">
 							<button className="button is-primary"
 									type="submit"
 									disabled={!this.state.newPass}

@@ -38,7 +38,14 @@ app.get('/projects', function(req, res, next) {
     });
    
 });
-
+app.get('/users/:id/projects', function(req, res, next) {
+    let id = req.params.id;
+    User.findById(id, function(err, user) {
+        res.status(200).send({'projects':user.projects});
+    }).catch((err)=>res.status(400).send(err));
+    
+   
+});
 
 app.get('/projects/:id', function(req, res, next) {
     let id = req.params.id;

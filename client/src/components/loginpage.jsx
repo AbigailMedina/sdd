@@ -51,7 +51,7 @@ class LoginPage extends Component {
         console.log(response.data);
       }
     }).catch(error => {
-      this.setState({loginError:true},()=>console.log(error))
+      this.setState({loginError:true},() =>console.log(error))
     });
     this.setState({      // reset current state holding user information if error happens
       userId: '',
