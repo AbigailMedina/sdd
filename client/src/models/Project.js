@@ -1,15 +1,19 @@
 import axios from 'axios';
 import User from './User';
+import Notes from './Notes';
+
+// class containing model for a project     NEED TO FINISH
 export default class Project {
-  
   constructor(data) {
     if(!data){
       this.collaborators = [];
+      this.notes = [];
       this._id="placeholderId"
       this.name="placeholderName"
     }else{
       this.collaborators = data.collaborators;//array of EMAILS (type:string)
       //^TODO change this to hold users, not emails, deal with corresponding react error
+      this.notes = data.notes;
       this._id = data._id;
       this.name = data.name;
     }
@@ -85,5 +89,59 @@ export default class Project {
           reject("patch error on update project")
         })
       })
+  }
+
+  updateNotes(input) {
+    return new Promise((resolve,reject) => {
+      axios.get(`http://localhost:5000/projects/${this._id}`).then(response => {
+      var found=false
+      this.notes=response.data.project.notes
+      console.log(input.date)
+      //const newDate=new Date(input.date)
+      //console.log("new date object:", newDate)
+      for (var i=0; i<this.notes.length; i++) {
+        console.log("in the array: ", this.notes[i].date)
+        //const oldDate=new Date(this.notes[i].date)
+        //console.log(oldDate)
+        if (this.notes[i].date==input.date) {
+              console.log("same day")
+              found=true
+              var updatedText=this.notes[i].text+"\n"
+              updatedText=updatedText+input.text
+              const data={date:this.notes[i].date, text:updatedText}
+              const newNote=new Notes(data)
+              this.notes.splice(i, 1, newNote)
+              axios.patch(`http://localhost:5000/projects/${this._id}`,{notes: this.notes}).then(
+              response => {
+              this.notes=response.data.project.notes
+                resolve(response);
+              })
+              .catch(function (error) {
+                reject("patch error on update project")
+              })
+              break
+            }
+          
+        
+      }
+
+      if (!found) {
+        console.log("got in here")
+        const newNote=new Notes(input)
+        this.notes.push(newNote)
+        axios.patch(`http://localhost:5000/projects/${this._id}`,{notes: this.notes}).then(
+        response => {
+          this.notes=response.data.project.notes
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject("patch error on update project")
+        })
+      }
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+    })
   }
 }

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-
 import './style.css'
 import 'bulma/css/bulma.css'
-
 import Sidebar from './sidebar';
 
 class Chat extends Component {

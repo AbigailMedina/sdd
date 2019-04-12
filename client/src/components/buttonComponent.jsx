@@ -1,23 +1,25 @@
 import React, { Component } from 'react'
 import Button from '../models/button';
 
+// class containing information regarding the Shut Up button
 class ButtonComponent extends Component {
   constructor(props) {
     super(props);
-  	this.state={level:"50"}
+  	this.state={level:"50"}    // initial aggression button is set to 50
     this.addInput=this.addInput.bind(this)
-	  
   }
 
   componentDidMount(props) {
     this.button = new Button();
   }
   
+  // function to update aggression level based on user input
   addInput(e) {
     this.setState({level:e.target.value})
 
   }
 
+  // function to sound "Shut Up" based on current aggression level
   doShutUp() {
     this.button.updateLevel(this.state.level)
     const button = document.querySelector('button')
@@ -39,4 +41,5 @@ class ButtonComponent extends Component {
     );
   }
 }
+
 export default ButtonComponent;

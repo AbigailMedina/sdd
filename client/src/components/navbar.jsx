@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-// import Favicon from'react-favicon'
-// <Favicon url='/favicon.png'/>
 import './css/navbar.css'
 import LoginPage from './loginpage'
 
+// class containing links to components displayed in the navigation bar
 class Navbar extends Component {
 	constructor(props) {
 	    super(props);
 	    this.handleLogoutClick = this.handleLogoutClick.bind(this);
 	    this.state = {loggedIn: this.props.loggedIn};
+    
   	}
 
+  	// function to set state when user is logged out
   	handleLogoutClick() {
     	this.props.logout()
   	}
@@ -38,4 +39,5 @@ class Navbar extends Component {
 		)
 	}
 }
+
 export default Navbar;

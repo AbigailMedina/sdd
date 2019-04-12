@@ -1,10 +1,10 @@
-
+// class containing model for "Shut Up" button
 export default class Button {
-
   constructor() {
     this.level=50; 
   }
 
+  // function to play "Shut Up" sound based on set aggression level
   playSound() {
     const sound = new Audio()
     if (this.level===0) {
@@ -21,6 +21,7 @@ export default class Button {
     sound.play()
   }
 
+  // function to change level based on user input
   updateLevel(value) {
     this.level=value;
   }
