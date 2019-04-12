@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import Project from '../models/Project';
-export default class CreateProject extends Component {
+
+export default class CreateProject extends Component {		// WHY IS THIS NOT CONSISTENT
 	constructor(props){
 		super(props);
 		this.onChangeName = this.onChangeName.bind(this);
-		//this.onChangeEmail = this.onChangeEmail.bind(this);
 
 		this.onSubmit = this.onSubmit.bind(this);
 		this.submit = this.submit.bind(this);
@@ -22,8 +21,6 @@ export default class CreateProject extends Component {
 
 	onSubmit(e){
 		e.preventDefault();
-		
-		const uri = "https://sdd-shutup.herokuapp.com"
   		const uri2 = "http://localhost:5000"
 
 		axios.post(uri2+'/add', {

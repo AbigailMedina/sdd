@@ -1,45 +1,47 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-
 import './style.css'
-import 'bulma/css/bulma.css'
+import 'bulma/css/bulma.css'		//DIDNT FINISH THIS
 import Sidebar from './sidebar';
 import Project from '../models/Project';
 
+// class containing information regarding a group's settings
 class GroupSettings extends Component {
 	constructor(props) {
-		const uri = "https://sdd-shutup.herokuapp.com"
-  		const uri2 = "http://localhost:5000"
-
-  		const project=null;
 	    super(props);
-
-	    this.state = {
+	    this.state = {		// state containing this project's data
 	    	projectName:"",
 	    	email:"",
-	    	userError:false,
+	    	userError:undefined,
 	    	collaborators:[]
 	    }
 	}
+
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
-  		//using uri2
-  		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
-                this.project = new Project(response.data.project);
-                this.setState({
-                	projectName:response.data.project.name,
-                	collaborators:response.data.project.collaborators
-                })
+  		const uri2 = "http://localhost:5000"		// currently using local host to connect to database
+  		axios.get(`${uri2}/projects/${params.id}`).then(response => {
+            this.project = new Project(response.data.project);
+            this.setState({
+               	projectName:response.data.project.name,
+                collaborators:response.data.project.collaborators
             })
-            .catch(function (error) {
-                console.log(error);
-            })
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+  
+        .catch(function (error) {
+            console.log(error);
+        })
     }
 
+    // function to change email based on user input
     onChangeEmail(e){
-		this.setState({email:e.target.value,userError:false})
+		this.setState({email:e.target.value,userError:undefined})
 	}
 
+	// function to show all collaborators involved with this project
 	showCollaborators(){
     	var content = [];
     	if(!this.project){
@@ -59,29 +61,20 @@ class GroupSettings extends Component {
 		return content;
     }
 
-	updateProject(newArray){
-		const { match: { params } } = this.props;
-		console.log("in groupSettings updateProject. updating with newArray:",newArray)
-		this.project.update(params.id,newArray).then((response)=>{
-	    	this.setState({
-	        	projectName:response.data.project.name,
-	        	collaborators:response.data.project.collaborators,
-	        	email:""
-	        })
-		})
-	}
+
 	onAddCollaborator(){
-		const newArray = this.project.onAddCollaborator(this.state).then((newArray) =>{
+		this.project.onAddCollaborator(this.state, this.project).then((newArray) =>{
+			console.log("then newArray = ",newArray)
 			this.setState({
 				collaborators: newArray,
 				email:""
 			})
 		}).catch(err=>{
-			this.setState({userError:true})
+			this.setState({userError:err})
 		})
 	}
 	onRemoveCollaborator(removeMe){
-		this.project.onRemoveCollaborator(removeMe, this.state.collaborators).then((newArray)=>{
+		this.project.onRemoveCollaborator(removeMe, this.state.collaborators).then((newArray) =>{
 			this.setState({collaborators: newArray});
 		})
 	}
@@ -100,7 +93,7 @@ class GroupSettings extends Component {
 					 	<div className="control">
 					    	<input 
 						    	className={this.state.userError?"input is-danger":"input is-info"} 
-						    	value = {this.state.userError? "User does not exist":this.state.email} 
+						    	value = {this.state.userError? this.state.userError:this.state.email} 
 						    	onChange = {this.onChangeEmail.bind(this)} type="email" placeholder="Email input" />
 						</div>
 					  	<div className="control">

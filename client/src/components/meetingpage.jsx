@@ -1,58 +1,44 @@
 import React, { Component } from 'react'
 import './style.css'
 import Sidebar from './sidebar';
-import TimerComponent from './timer.jsx';
+import TimerComponent from './TimerComponent.jsx';
 import axios from 'axios';
 import 'bulma/css/bulma.css'
-import ReactPlayer from 'react-player';
+import ButtonComponent from './buttonComponent.jsx';
+import NotesComponent from './NotesComponent.jsx';
 
+// class rendering components regarding a group's meeting page
 class MeetingPage extends Component {
-	constructor(props) {
-		const uri = "https://sdd-shutup.herokuapp.com"
-  		const uri2 = "http://localhost:5000"
-	    super(props);
-	}
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
-  		//using uri2
-  		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
-                console.log("project found in settings: ",response.data.project)
-                this.setState({project:response.data.project.name})
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+  		const uri2 = "http://localhost:5000"
+  		axios.get(`${uri2}/projects/${params.id}`).then(response => {
+            console.log("project found in meeting: ",response.data.project)
+            this.setState({project:response.data.project.name})
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
     }
-
-	doShutUp() {
-		console.log("shut up");
-		/*
-		if (ReactPlayer.canPlay('./smaple.mp3')) {
-			console.log("exists");
-		}
-		
-		return <ReactPlayer url='./smaple.mp3' playing={true} volume={0.800} />*/
- 		/*return <Sound url={'./smaple.mp3'} 
- 				playStatus={Sound.status.PLAYING} 
- 				onLoading={this.handleSongLoading}
-   				onPlaying={this.handleSongPlaying}
-   				onFinishedPlaying={this.handleSongFinishedPlaying} />*/
-   		return <h1 >SHUT UP!!!!!!</h1>
-	}
 
   	render() {
 	    return (
-	    	<div class="columns">
-	    		<Sidebar class="column is-one-quarter"/>
-	    		<div class="column is-three-quarters level" style = {{marginTop:"100px"}}>
-	    			<button type="button " onClick = {this.doShutUp} className="button is-danger level-left">Shut Up!</button>
-	    			<div className="level-item">
-						<TimerComponent />	
-					</div>
+	    	<div class="columns" >
+	    		<div class="column is-one-quarter level">
+	    			<Sidebar />
 	    		</div>
+	    		<div class="column is-one-quarter level" style = {{marginTop:"100px"}}>
+					<TimerComponent	/><br/>
+					<ButtonComponent />
+	    		</div>
+	    		<div class="column is-one-third level" style = {{marginTop:"100px"}}>
+					<NotesComponent	{...this.props}/>
+	    		
+				</div>
+				
 	    	</div>
 	    )
-  }
+  	}
 }
 
 export default MeetingPage;
