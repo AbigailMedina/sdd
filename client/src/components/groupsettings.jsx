@@ -77,7 +77,7 @@ class GroupSettings extends Component {
 		const collaborators = this.showCollaborators.bind(this);
 	  	return (
 	    	<div class="groupsettings columns">
-	    		<Sidebar className="column is-one-quarter"/>
+	    		<Sidebar user={this.props.user} className="column is-one-quarter"/>
 	    		<div className="column is-three-quarters" style={{marginTop:"100px"}}>
 	    			<h2 class="title is-2">Group Settings for {this.state.projectName}</h2>
 					<label className="label">Collaborator Emails</label>

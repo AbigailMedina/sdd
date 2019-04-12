@@ -24,7 +24,7 @@ class MeetingPage extends Component {
 	    return (
 	    	<div class="columns" >
 	    		<div class="column is-one-quarter level">
-	    			<Sidebar />
+	    			<Sidebar user={this.props.user}/>
 	    		</div>
 	    		<div class="column is-one-quarter level" style = {{marginTop:"100px"}}>
 	    			<ButtonComponent />
