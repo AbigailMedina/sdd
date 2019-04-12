@@ -5,7 +5,7 @@ export default class CreateProject extends Component {
 	constructor(props){
 		super(props);
 		this.onChangeName = this.onChangeName.bind(this);
-		this.onChangeEmail = this.onChangeEmail.bind(this);
+		//this.onChangeEmail = this.onChangeEmail.bind(this);
 
 		this.onSubmit = this.onSubmit.bind(this);
 		this.submit = this.submit.bind(this);

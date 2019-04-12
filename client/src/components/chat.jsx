@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import {ChatManager, TokenProvider} from '@pusher/chatkit-client/react-native'
 import {tokenUrl,instanceLocator} from './config/config.js'
+import MessageList from './chat_components/MessageList'
+import SendMessageForm from './chat_components/SendMessageForm'
 
 import './style.css'
 import 'bulma/css/bulma.css'
@@ -18,6 +20,9 @@ class Chat extends Component {
 			project:null,
 			messages: []
 		}
+
+		this.sendMessage = this.sendMessage.bind(this);
+		this.subscribeToRoom = this.subscribeToRoom.bind(this);
 	}
 	componentDidMount(props) {
 		const chatManager = new ChatManager({
@@ -29,14 +34,8 @@ class Chat extends Component {
 		})
 		chatManager.connect()
 			.then(currentUser => {
-				currentUser.subscribeToRoomMultipart({
-					roomId: '19389417',
-					hooks: {
-						onMessage: message => {
-							console.log(message);
-						}
-					}
-				})
+				this.currentUser = currentUser
+				
 			})
 		/*
   		const { match: { params } } = this.props;
@@ -49,14 +48,36 @@ class Chat extends Component {
                 console.log(error);
 			})
 		*/
-    }
+		}
+		
+
+	subscribeToRoom(){
+		this.currentUser.subscribeToRoomMultipart({
+			roomId: '19389417',
+			hooks: {
+				onMessage: message => {
+					this.setState({
+						messages: [...this.state.messages, message]
+					})
+				}
+			}
+		})
+	}
+
+	sendMessage(text){
+		this.currentUser.sendMessage({
+			text,
+			roomId: '19389417'
+		})
+	}
 
 	render() {
 	  	return (
 	    		<div class="columns" >
 	    			<Sidebar class="column is-one-quarter"/>
-	    			<div class="column is-three-quarters level" style = {{marginTop:"100px"}}>
-						<h2 className="title is-2 ">Chat page for {this.state.project}</h2>
+	    			<div className= "column is-three-quarters level" style = {{marginTop:"100px"}}>
+						<MessageList messages = {this.state.messages}/>
+						<SendMessageForm sendMessage = {this.sendMessage}/>
 					</div>
 				</div>				
 	    )
