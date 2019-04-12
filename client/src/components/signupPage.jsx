@@ -64,7 +64,6 @@ class SignUp extends Component{
             projects:[]
         }//TODO: call new User here instead of plain JSON object
         
-        const uri = "https://sdd-shutup.herokuapp.com"
         const uri2 = "http://localhost:5000"        // currently using local host to connect to database
         axios.post(uri2+'/users', newUser).then(res =>{console.log("res:data", res.data)})
         

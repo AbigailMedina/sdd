@@ -32,7 +32,7 @@ class NotesComponent extends Component {
 
   	storeNotes() {
       this.notes.update(this.state)
-      if (this.state.text!="") {
+      if (this.state.text!=="") {
         this.project.updateNotes(this.notes)
       }
       this.setState({text:""})
