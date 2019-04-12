@@ -16,12 +16,14 @@ class Sidebar extends Component {
 
   	componentDidMount(props) {
   		const uri2 = "http://localhost:5000"
-		axios.get(uri2+'/projects').then(response => {		// currently using local host to connect to database
-            this.setState({projects: Array.isArray(response.data) ? response.data : [response.data]});
-       	})
-        .catch(function (error) {
-            console.log(error);
-        })
+  		axios.get(uri2+'/users/'+this.props.user._id+'/projects').then(response => {
+                this.setState({projects: Array.isArray(response.data.projects) ? response.data.projects : [response.data.projects]});
+                console.log(`${this.props.user._id}'s projects:`,response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
     }
 
     // function to display specific user's projects
