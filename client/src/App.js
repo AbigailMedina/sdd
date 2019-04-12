@@ -126,6 +126,13 @@ class App extends Component {
                       {...props}
                     />}
                 /> 
+                <Route
+                  exact path="/oldnotes/:id"
+                  render={(props) => <OldNotesPage 
+                      user={this.state.user}
+                      {...props}
+                    />}
+                />
               </Switch>
             }         
            <Footer/>
