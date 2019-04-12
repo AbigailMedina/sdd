@@ -34,8 +34,8 @@ class Chat extends Component {
 		})
 		chatManager.connect()
 			.then(currentUser => {
-				this.currentUser = currentUser
-				subscribeToRoom()
+				this.currentUser = currentUser;
+				this.subscribeToRoom();
 			})
 		/*
   		const { match: { params } } = this.props;
