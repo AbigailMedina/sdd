@@ -19,7 +19,7 @@ class GroupSettings extends Component {
 
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
-  		const uri2 = "http://localhost:5000"		// currently using local host to connect to database
+  		const uri2 = "https://sdd-shutup.herokuapp.com"
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
             this.project = new Project(response.data.project);
             this.setState({

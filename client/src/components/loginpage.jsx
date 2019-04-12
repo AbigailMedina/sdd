@@ -37,7 +37,7 @@ class LoginPage extends Component {
     console.log("User Info", this.state.userId);
     console.log("User Info", this.state.password);
     
-    const uri2 = "http://localhost:5000"
+    const uri2 = "https://sdd-shutup.herokuapp.com"
     axios.post(uri2+'/login', {   // currently using local host to connect to database
       userId: this.state.userId,
       password: this.state.password

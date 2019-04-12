@@ -11,7 +11,7 @@ import NotesComponent from './NotesComponent.jsx';
 class MeetingPage extends Component {
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
-  		const uri2 = "http://localhost:5000"
+  		const uri2 = "https://sdd-shutup.herokuapp.com"
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
             console.log("project found in meeting: ",response.data.project)
             this.setState({project:response.data.project.name})

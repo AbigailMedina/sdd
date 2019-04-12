@@ -23,7 +23,7 @@ class CreateProject extends Component {
 	// function to post new project to database
 	onSubmit(e){
 		e.preventDefault();
-  		const uri2 = "http://localhost:5000"
+  		const uri2 = "https://sdd-shutup.herokuapp.com"
 		axios.post(uri2+'/add', {			// currently using local host as database
 			name: this.state.name,
 		}).then(res => console.log("res.data:",res.data));
