@@ -25,7 +25,7 @@ class MeetingPage extends Component {
 	    return (
 	    	<div class="columns" >
 	    		<div class="column is-one-quarter level">
-	    			<Sidebar user={this.props.user}/>
+	    			<Sidebar />
 	    		</div>
 	    		<div class="column is-one-quarter level" style = {{marginTop:"100px"}}>
 					<TimerComponent	/><br/>

@@ -7,11 +7,10 @@ const app = express();
 const router = express.Router();
 const path = require('path');
 
-let Project = require('./model.project');   // import models used to store information
+let Project = require('./model.project');
 let User = require('./model.user');
-let Notes=require('./model.notes.js');
 
-// reference to MongoDB database
+// this is our MongoDB database
 const uri = "mongodb://PEAKE:mongoDB1!@ds017175.mlab.com:17175/heroku_ht20w3xq";
 mongoose.connect( uri, { useNewUrlParser: true });
 const connection = mongoose.connection;
@@ -28,6 +27,22 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors());
 
+// {
+//     'origin': '*',
+//     'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     'preflightContinue': false,
+//     'optionsSuccessStatus': 204}
+
+// bodyParser, parses the request body to be a readable json format
+
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+//   next();
+// });
+
+
 app.get('/projects', function(req, res, next) {
    Project.find(function(err, projects) {
         if (err) {
@@ -38,14 +53,7 @@ app.get('/projects', function(req, res, next) {
     });
    
 });
-app.get('/users/:id/projects', function(req, res, next) {
-    let id = req.params.id;
-    User.findById(id, function(err, user) {
-        res.status(200).send({'projects':user.projects});
-    }).catch((err)=>res.status(400).send(err));
-    
-   
-});
+
 
 app.get('/projects/:id', function(req, res, next) {
     let id = req.params.id;
@@ -58,12 +66,7 @@ app.get('/projects/:id', function(req, res, next) {
 app.patch('/projects/:id', function(req, res, next) {
     let id = req.params.id;
     Project.findById(id, function(err, project) {
-        if (req.body.collaborators) {
-            project.collaborators = req.body.collaborators;
-        }
-        if (req.body.notes) {
-            project.notes=req.body.notes;
-        }
+        project.collaborators = req.body.collaborators;
          project.save().then(project => {
             res.status(200).send({'project':project});
         })
@@ -157,34 +160,10 @@ app.patch('/users/:email', function(req,res){
     User.findOne({email})
         .then(user =>{
             if(user){
-                if(req.body.email){
-                    user.email = req.body.email;
-                    user.save().then(user => {
-                        console.log(user);
-                        res.status(200).send({'user':user});
-                    })
-                }
-                if(req.body.password){
-                    bcrypt.genSalt(10, function(err, salt){
-                        bcrypt.hash(req.body.password, salt, function(err, hash){
-                            if(err){
-                                throw err;
-                            }
-                            user.password = hash;
-                            user.save().then(user => {
-                                console.log(user);
-                                res.status(200).send({'user':user});
-                            })
-                        })
-                    })
-                }
-                if(req.body.projects){
-                    user.projects = req.body.projects;
-                    user.save().then(user => {
-                        console.log(user);
-                        res.status(200).send({'user':user});
-                    })
-                }
+                user.projects = req.body.projects;
+                user.save().then(user => {
+                    res.status(200).send({'user':user});
+                })
             }else{
                 return res.status(400).send("cannot find user");
             }
@@ -240,19 +219,6 @@ app.post('/users', function(req, res){
         })
 });
 
-
-app.post('/addNotes', function(req, res) {
-    let notes = new Notes(req.body);
-    notes.save()
-        .then(notes => {
-            res.status(200).send({'notes': notes});
-        })
-        .catch(err => {
-            res.status(400).send('adding new notes failed');
-        });
-});
-
 // app.use("/api", router);
-
 // launch our backend into a port
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`));

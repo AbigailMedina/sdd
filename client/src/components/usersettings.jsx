@@ -107,7 +107,7 @@ class UserSettings extends Component {
 		const projects = this.showProjects.bind(this);
 	  	return (
 	    	<div class="groupsettings columns">
-	    		<Sidebar user={this.props.user} className="column is-one-quarter"/>
+	    		<Sidebar className="column is-one-quarter"/>
 	    		<div className="column is-three-quarters" style={{marginTop:"100px"}}>
 	    			<h2 class="title is-2">User Settings for {this.state.name}</h2>
 					<label className="label">Projects you're a member of</label>	
