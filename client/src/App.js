@@ -89,7 +89,10 @@ class App extends Component {
               <Switch>
               <Route 
                   exact path="/add" 
-                  component={CreateProject} 
+                  render={(props) => <CreateProject 
+                      user={this.state.user}
+                      {...props}
+                    />}
                 />
                 <Route 
                   exact path="/" 
