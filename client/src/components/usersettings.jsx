@@ -48,13 +48,15 @@ class UserSettings extends Component {
 
 		content = this.state.projects.map((project) => {
 		return(
-			<li className = "level" key={project}>{project.name}
-				<div className="control">
-				    <button className="button is-danger" onClick={() =>{
-				    	this.onRemoveProject(project)
-				    }}>Leave project</button>
-				</div>
-			</li> 
+			<div className="field has-addons">
+				<li className = "level" key={project}>{project.name}
+					<div className="column is-one-quarter">
+					    <button className="button is-danger" onClick={() =>{
+					    	this.onRemoveProject(project)
+					    }}>Leave project</button>
+					</div>
+				</li> 
+			</div>
 			)		
 		})
 		return content;
@@ -107,7 +109,9 @@ class UserSettings extends Component {
 		const projects = this.showProjects.bind(this);
 	  	return (
 	    	<div class="groupsettings columns">
-	    		<Sidebar user={this.props.user} className="column is-one-quarter"/>
+	    		<div class="column is-one-quarter level">
+	    			<Sidebar user={this.props.user}/>
+	    		</div>
 	    		<div className="column is-three-quarters" style={{marginTop:"100px"}}>
 	    			<h2 class="title is-2">User Settings for {this.state.name}</h2>
 					<label className="label">Projects you're a member of</label>	

@@ -7,9 +7,11 @@ import Sidebar from './sidebar';
 class HomePage extends Component {
   	render() {
 	    return (
-	    	<div class="homepage columns">
-	    		<Sidebar user={this.props.user} className="column is-one-quarter"/>
-	    		<div class="column is-three-quarters "style={{marginTop:"100px"}}>
+	    	<div class="columns">
+	    		<div class="column is-one-quarter level">
+	    			<Sidebar user={this.props.user}/>
+	    		</div>
+	    		<div class="column is-three-quarters level"style={{marginTop:"100px"}}>
 					<h2 class="title is-2">Click on a project to get started :)</h2>
 				</div>				
 	    	</div>

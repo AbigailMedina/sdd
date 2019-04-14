@@ -48,14 +48,16 @@ class GroupSettings extends Component {
     		return content
     	}
     	content = this.state.collaborators.map((collaborator) => {
-		return( 
-			<li className = "level" key={collaborator}>{collaborator}
-				<div className="control">
-				    <button className="button is-danger" onClick={() =>{
-				    	this.onRemoveCollaborator(collaborator)
-				    }}>Remove collaborator</button>
-				</div>
-			</li> 
+		return(
+			<div class="field has-addons">
+				<li className = "level" key={collaborator}>{collaborator}
+					<div className="column is-one-quarter">
+					    <button className="button is-danger" onClick={() =>{
+					    	this.onRemoveCollaborator(collaborator)
+					    }}>Remove collaborator</button>
+					</div>
+				</li> 
+			</div>
 			)
 		})
 		return content;
@@ -83,7 +85,9 @@ class GroupSettings extends Component {
 		const collaborators = this.showCollaborators.bind(this);
 	  	return (
 	    	<div class="groupsettings columns">
-	    		<Sidebar user={this.props.user} className="column is-one-quarter"/>
+	    		<div class="column is-one-quarter level">
+	    			<Sidebar user={this.props.user}/>
+	    		</div>
 	    		<div className="column is-three-quarters" style={{marginTop:"100px"}}>
 	    			<h2 class="title is-2">Group Settings for {this.state.projectName}</h2>
 					<label className="label">Collaborator Emails</label>
