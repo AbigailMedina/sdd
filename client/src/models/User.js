@@ -24,7 +24,7 @@ export default class User {
   onRemoveProject(removeMe) {
     return new Promise((resolve,reject) => {
 
-      axios.get(`http://localhost:5000/projects/${removeMe._id}`).then(response => {
+      axios.get(`https://sdd-shutup.herokuapp.com/projects/${removeMe._id}`).then(response => {
         const project = new Project(response.data.project)
         // console.log("user fetched in onRemoveCollaborator::",user)//TODO bug this prints Project type????
 
@@ -46,7 +46,7 @@ export default class User {
 
   onChangeEmail(newEmail) {
     return new Promise((resolve,reject) => {
-      axios.patch(`http://localhost:5000/users/${this.email}`,{email:newEmail}).then(
+      axios.patch(`https://sdd-shutup.herokuapp.com/users/${this.email}`,{email:newEmail}).then(
         response => {
           this.email = response.data.user.email
           resolve(response.data.user.email);
@@ -59,7 +59,7 @@ export default class User {
 
   onChangePassword(newPass) {
     return new Promise((resolve,reject) => {
-      axios.patch(`http://localhost:5000/users/${this.email}`,{password:newPass}).then(
+      axios.patch(`https://sdd-shutup.herokuapp.com/users/${this.email}`,{password:newPass}).then(
         response => {
           resolve(response);
         })
@@ -71,7 +71,7 @@ export default class User {
 
   update(newProjectArray) {
     return new Promise((resolve,reject) => {
-      axios.patch(`http://localhost:5000/users/${this.email}`,{projects:newProjectArray}).then(
+      axios.patch(`https://sdd-shutup.herokuapp.com/users/${this.email}`,{projects:newProjectArray}).then(
         response => {
           this.projects = response.data.user.projects
           // console.log("user updated: ",response.data.user);

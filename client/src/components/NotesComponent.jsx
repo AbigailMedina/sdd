@@ -17,7 +17,7 @@ class NotesComponent extends Component {
 
   	componentDidMount(props) {
   		const { match: { params } } = this.props;
-  		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
+  		axios.get(`https://sdd-shutup.herokuapp.com/projects/${params.id}`).then(response => {
         this.project = new Project(response.data.project);
       })
       .catch(function (error) {

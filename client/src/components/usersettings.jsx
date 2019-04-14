@@ -26,7 +26,7 @@ class UserSettings extends Component {
 
 	componentDidMount(props) {
 		const { match: { params } } = this.props;
-		axios.get(`http://localhost:5000/users/${params.id}`).then(response => {
+		axios.get(`https://sdd-shutup.herokuapp.com/${params.id}`).then(response => {
 			this.user = new User(response.data.user);
 			this.setState({
 				name:response.data.user.name,

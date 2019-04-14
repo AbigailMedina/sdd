@@ -22,7 +22,7 @@ export default class Project {
   // function to add collaborater with given input of email and list of projects user adds
   onAddCollaborator (state, project){           // state contains email,collaborators
     return new Promise((resolve, reject) => {
-      axios.get(`http://localhost:5000/users/get/${state.email}`).then(response => {
+      axios.get(`https://sdd-shutup.herokuapp.com/users/get/${state.email}`).then(response => {
         const user = new User(response.data.user)
         const newProjectArray = user.projects.slice();
         var newCollaboratorArray = state.collaborators.slice();
@@ -46,7 +46,7 @@ export default class Project {
 // function takes in current list of collaborators in frontend and an email to remove
   onRemoveCollaborator(removeMe, collaborators){
     return new Promise((resolve,reject) => {
-      axios.get(`http://localhost:5000/users/get/${removeMe}`).then(response => {
+      axios.get(`https://sdd-shutup.herokuapp.com/users/get/${removeMe}`).then(response => {
         const user = new User(response.data.user)
         var newCollaboratorArray = collaborators.filter((c)=>{return c!==removeMe});    
         var newProjectArray = user.projects.filter( (p)=>{return p._id!==this._id})
