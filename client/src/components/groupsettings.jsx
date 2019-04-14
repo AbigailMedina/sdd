@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+// import nodemailer from 'nodemailer'
 import './style.css'
 import 'bulma/css/bulma.css'		//DIDNT FINISH THIS
 import Sidebar from './sidebar';
@@ -74,7 +75,7 @@ class GroupSettings extends Component {
 			})
 		}).catch(err=>{
 			this.setState({userError:err})
-		})
+		});this.sendMail()
 	}
 
 	// function to remove collaborator from project
@@ -95,6 +96,34 @@ class GroupSettings extends Component {
 			this.setState({projectName:newName,newName:""})
 		})
 	}
+
+	sendMail(){
+		var nodemailer = require('nodemailer');
+
+		var transporter = nodemailer.createTransport({
+		  service: 'gmail',
+		  auth: {
+		    user: 'Abigail Medina',
+		    pass: 'mongoDB1!'
+		  }
+		});
+
+		var mailOptions = {
+		  from: 'teampeakepeake@gmail.com',
+		  to: this.props.user.email,
+		  subject: 'Added to project',
+		  text: 'That was easy!'
+		};
+
+		transporter.sendMail(mailOptions, function(error, info){
+		  if (error) {
+		    console.log(error);
+		  } else {
+		    console.log('Email sent: ' + info.response);
+		  }
+		});	
+	}
+	
     
 	render() {
 		const collaborators = this.showCollaborators.bind(this);
