@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Starter kit for creating React and Express apps",
   "main": "server.js",
+  "homepage" : "http://sdd-shutup.herokuapp.com/",
   "scripts": {
+    "postinstall": "cd client && npm install && npm run build",
     "client-install": "cd client && npm install",
     "start": "node ./backend/server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
     "server": "nodemon ./backend/server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "PEAKE",
   "license": "MIT",

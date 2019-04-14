@@ -1,1 +1,1 @@
-web: npm run client && node ./backend/server.js
+web: cd backend && node server.js
