@@ -21,12 +21,10 @@ class Navbar extends Component {
 	    return (
 			<div class = 'navbar' id = "nb">		
 				<div class = 'pages level'>
-				{ this.state.loggedIn ?
-					<div>
-						<Link class="name"to={'/'}>Home</Link>
-					</div>:
-					<div></div>
-				}
+				<div>
+					<Link class="name"to={'/'}>Home</Link>
+				</div>:
+				<div></div>
 				{ this.state.loggedIn ?
 					<div class="loggedin">
 						<Link to={`/settings/${this.props.userId}`}>Settings</Link>
