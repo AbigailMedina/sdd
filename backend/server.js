@@ -64,6 +64,9 @@ app.patch('/projects/:id', function(req, res, next) {
         if (req.body.notes) {
             project.notes=req.body.notes;
         }
+        if (req.body.name) {
+            project.name=req.body.name;
+        }
          project.save().then(project => {
             res.status(200).send({'project':project});
         }).catch((err)=>res.send({'err':err}))
@@ -178,7 +181,6 @@ app.patch('/users/:email', function(req,res){
                 if(req.body.email){
                     user.email = req.body.email;
                     user.save().then(user => {
-                        console.log(user);
                         res.status(200).send({'user':user});
                     }).catch((err)=>res.send({'err':err}))    
                 }
@@ -190,7 +192,6 @@ app.patch('/users/:email', function(req,res){
                             }
                             user.password = hash;
                             user.save().then(user => {
-                                console.log(user);
                                 res.status(200).send({'user':user});
                             }).catch((err)=>res.send({'err':err}))    
                         })
@@ -199,7 +200,6 @@ app.patch('/users/:email', function(req,res){
                 if(req.body.projects){
                     user.projects = req.body.projects;
                     user.save().then(user => {
-                        console.log(user);
                         res.status(200).send({'user':user});
                     }).catch((err)=>res.send({'err':err}))    
                 }

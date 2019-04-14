@@ -117,6 +117,7 @@ class UserSettings extends Component {
 					<label className="label">Projects you're a member of</label>	
 					<span>{projects()}</span>	
 					<br></br>
+					<label className="label">Email Address</label>
 					<div className="field is-grouped">
 						<div className="control">
 							<input  type="email"
@@ -137,6 +138,7 @@ class UserSettings extends Component {
 						</div>
 					</div>	
 					<br></br>
+					<label className="label">Password</label>
 					<div className="field is-grouped">
 						<div className="control">
 							<input  type="password"

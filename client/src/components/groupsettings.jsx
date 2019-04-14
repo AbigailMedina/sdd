@@ -13,7 +13,8 @@ class GroupSettings extends Component {
 	    	projectName:"",
 	    	email:"",
 	    	userError:undefined,
-	    	collaborators:[]
+	    	collaborators:[],
+	    	newName:""
 	    }
 	}
 
@@ -80,6 +81,16 @@ class GroupSettings extends Component {
 			this.setState({collaborators: newArray});
 		})
 	}
+
+	onChangeName(e) {
+		this.setState({newName:e.target.value});
+	}
+
+	onUpdateName() {
+		this.project.onChangeName(this.state.newName).then((newName) => {
+			this.setState({projectName:newName,newName:""})
+		})
+	}
     
 	render() {
 		const collaborators = this.showCollaborators.bind(this);
@@ -105,6 +116,27 @@ class GroupSettings extends Component {
 						    	className="button is-link" 
 						    	disabled={!this.state.email} 
 						    	onClick={this.onAddCollaborator.bind(this)}>Add another</button>
+						</div>
+					</div>
+					<br></br>
+					<label className="label">Project Name</label>
+					<div className="field is-grouped">
+						<div className="control">
+							<input  type="text"
+									size="30"
+									className="input"
+									placeholder={this.state.projectName}
+									value={this.state.newName}
+									onChange={this.onChangeName.bind(this)}
+							/>
+						</div>
+						<p>&emsp;</p>
+						<div className="control">
+							<button className="button is-primary"
+									type="submit"
+									disabled={!this.state.newName}
+									onClick={this.onUpdateName.bind(this)}
+							>Update Name</button>
 						</div>
 					</div>
 				</div>				
