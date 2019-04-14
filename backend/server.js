@@ -20,6 +20,10 @@ connection.once('open', function() {
 })
 connection.on("error", console.error.bind(console, "MongoDB connection error:"));
 
+if (process.env.NODE_ENV === 'production') {
+    console.log("production build")
+    app.use(express.static('../client/build'));
+}
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -27,6 +31,10 @@ app.use(bodyParser.json());
 // enable cors
 const cors = require('cors');
 app.use(cors());
+
+app.get('*', (request, response) => {
+    response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 app.get('/projects', function(req, res, next) {
    Project.find(function(err, projects) {
