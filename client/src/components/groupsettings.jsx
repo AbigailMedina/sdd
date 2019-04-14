@@ -64,7 +64,7 @@ class GroupSettings extends Component {
 		return content;
     }
 
-
+    // function to add new collaborator to project
 	onAddCollaborator(){
 		this.project.onAddCollaborator(this.state, this.project).then((newArray) =>{
 			console.log("then newArray = ",newArray)
@@ -76,16 +76,20 @@ class GroupSettings extends Component {
 			this.setState({userError:err})
 		})
 	}
+
+	// function to remove collaborator from project
 	onRemoveCollaborator(removeMe){
 		this.project.onRemoveCollaborator(removeMe, this.state.collaborators).then((newArray) =>{
 			this.setState({collaborators: newArray});
 		})
 	}
 
+	// function to update new name from input field
 	onChangeName(e) {
 		this.setState({newName:e.target.value});
 	}
 
+	// function to update project's name
 	onUpdateName() {
 		this.project.onChangeName(this.state.newName).then((newName) => {
 			this.setState({projectName:newName,newName:""})

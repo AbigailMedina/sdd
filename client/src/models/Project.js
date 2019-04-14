@@ -60,6 +60,7 @@ export default class Project {
     })
   };
 
+  // function to update name of project
   onChangeName(newName) {
     return new Promise((resolve,reject) => {
       axios.patch(`http://localhost:5000/projects/${this._id}`,{name: newName}).then(
@@ -126,7 +127,7 @@ export default class Project {
         }
       })
       .catch(function (error) {
-        console.log(error);
+        reject(error);
       })
     })
   }
