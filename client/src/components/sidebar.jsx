@@ -18,7 +18,7 @@ class Sidebar extends Component {
   		const uri2 = "http://localhost:5000"
   		axios.get(uri2+'/users/'+this.props.user._id+'/projects').then(response => {
                 this.setState({projects: Array.isArray(response.data.projects) ? response.data.projects : [response.data.projects]});
-                console.log(`${this.props.user._id}'s projects:`,response.data)
+                console.log(`${this.props.user._id}'s projects:`,response.data);
             })
             .catch(function (error) {
                 console.log(error);

@@ -72,7 +72,18 @@ app.patch('/projects/:id', function(req, res, next) {
         }
         // update project name
         if (req.body.name) {
+            oldName = project.name;
             project.name=req.body.name;
+            collabs = project.collaborators;
+            for(email of collabs) {
+                User.findOne({email}).then(user => {
+                    if(user){
+                        user.projects.splice(user.projects.indexOf(oldName),1);
+                        user.projects.push(project);
+                        user.save();
+                    }
+                })
+            }
         }
          project.save().then(project => {
             res.status(200).send({'project':project});
@@ -194,10 +205,26 @@ app.patch('/users/:email', function(req,res){
             if(user){
                 // update email address
                 if(req.body.email){
+                    //oldEmail = user.email;
                     user.email = req.body.email;
                     user.save().then(user => {
                         res.status(200).send({'user':user});
-                    }).catch((err)=>res.send({'err':err}))    
+                    }).catch((err)=>res.send({'err':err})) 
+                    /*
+                    for(project of user.projects) {
+                        name = project.name;
+                        user.projects.splice(user.projects.indexOf(project),1);
+                        Project.findOne({name}).then(proj => {                      
+                            if(proj) {
+                                proj.collaborators.splice(proj.collaborators.indexOf(oldEmail),1);
+                                proj.collaborators.push(user.email);
+                                console.log(proj);
+                                proj.save();
+                                user.projects.push(proj);
+                            }
+                        })   
+                    }
+                    */
                 }
                 // update password
                 if(req.body.password){
