@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Starter kit for creating React and Express apps",
   "main": "server.js",
-  "homepage" : "http://sdd-shutup.herokuapp.com",
+  "homepage": "http://sdd-shutup.herokuapp.com",
   "scripts": {
     "start": "node ./backend/server.js",
     "postinstall": "cd client && npm install && npm run build",

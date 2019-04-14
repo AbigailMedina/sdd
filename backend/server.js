@@ -56,6 +56,7 @@ app.get('/users/:id/projects', function(req, res, next) {
 });
 
 app.get('/projects/:id', function(req, res, next) {
+    console.log("gets in here")
     let id = req.params.id;
     Project.findById(id, function(err, project) {
         res.status(200).send({'project':project});

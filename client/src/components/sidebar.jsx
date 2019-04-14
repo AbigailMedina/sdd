@@ -10,7 +10,7 @@ class Sidebar extends Component {
 	    super(props);
 	    this.state = {
 	    	projects:[],
-	    	userId:"medina2"		//SHOULD WE BE HARDCODING THIS USER?
+	    	userId:"medina2"
 	    }
 	}
 
