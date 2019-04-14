@@ -66,19 +66,37 @@ app.patch('/projects/:id', function(req, res, next) {
         }
          project.save().then(project => {
             res.status(200).send({'project':project});
-        })
+        }).catch((err)=>res.send({'err':err}))
     });
 });
 
 app.post('/add', function(req, res) {
-    let project = new Project(req.body);
-    project.save()
-        .then(project => {
-            res.status(200).send({'project': project});
-        })
-        .catch(err => {
-            res.status(400).send('adding new project failed');
-        });
+    let userId = req.body.user._id;
+    User.findById(userId, function (err,user){
+        if(user){
+            let project = new Project(req.body);
+            project.collaborators.push(user.email);
+            project.save()
+            .then(project2 => {
+                user.projects.push(project)
+                user.save().then(user2 =>{
+                    res.status(200).send({'user':user2});
+                }).catch(err =>{
+                    res.status(400).send('updating user failed');
+                })
+                res.status(200).send(
+                    {'project': project2});
+            })
+            .catch(err => {
+                res.status(400).send('adding new project failed');
+            });
+        }else{
+            res.status(400).send({'user could not be found:':req.body.user})
+        }
+    })
+
+    
+    
 });
 
 app.post('/login', function(req, res) {
@@ -142,7 +160,7 @@ app.get('/users/get/:email', function(req,res){
             }else{
                 return res.status(400).send(err);
             }
-        });    
+        }).catch((err)=>res.send({'err':err}))    
 });
 
 app.get('/users/:id', function(req,res){
@@ -162,7 +180,7 @@ app.patch('/users/:email', function(req,res){
                     user.save().then(user => {
                         console.log(user);
                         res.status(200).send({'user':user});
-                    })
+                    }).catch((err)=>res.send({'err':err}))    
                 }
                 if(req.body.password){
                     bcrypt.genSalt(10, function(err, salt){
@@ -174,7 +192,7 @@ app.patch('/users/:email', function(req,res){
                             user.save().then(user => {
                                 console.log(user);
                                 res.status(200).send({'user':user});
-                            })
+                            }).catch((err)=>res.send({'err':err}))    
                         })
                     })
                 }
@@ -183,12 +201,12 @@ app.patch('/users/:email', function(req,res){
                     user.save().then(user => {
                         console.log(user);
                         res.status(200).send({'user':user});
-                    })
+                    }).catch((err)=>res.send({'err':err}))    
                 }
             }else{
                 return res.status(400).send("cannot find user");
             }
-        });
+        }).catch((err)=>res.send({'err':err}))    
 });
 
 
@@ -233,11 +251,11 @@ app.post('/users', function(req, res){
                                        projects: user.projects
                                     }
                                 })
-                            })
+                            }).catch((err)=>res.send({'err':err}))    
                     })
                 })
             }
-        })
+        }).catch((err)=>res.send({'err':err}))    
 });
 
 

@@ -26,6 +26,7 @@ class CreateProject extends Component {
   		const uri2 = "http://localhost:5000"
 		axios.post(uri2+'/add', {			// currently using local host as database
 			name: this.state.name,
+			user: this.props.user
 		}).then(res => console.log("res.data:",res.data));
 		
 		this.setState({name:""})	// to reset to original state
