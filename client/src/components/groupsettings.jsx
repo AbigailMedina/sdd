@@ -96,23 +96,6 @@ class GroupSettings extends Component {
 			this.setState({projectName:newName,newName:""})
 		})
 	}
-
-	sendMail(){
-
-		var sendmail = require('sendmail')({silent: true})
-
-		sendmail({
-		  from: 'teampeakepeake@gmail.com',
-		  to: this.state.newName,
-		  replyTo: 'teampeakepeake@gmail.com',
-		  subject: 'Added to project',
-		  html: 'That was easy!'
-		}, function (err, reply) {
-		  console.log(err && err.stack)
-		  console.dir(reply)
-		})
-	}
-	
     
 	render() {
 		const collaborators = this.showCollaborators.bind(this);

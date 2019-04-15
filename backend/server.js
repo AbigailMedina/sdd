@@ -65,7 +65,22 @@ app.patch('/projects/:id', function(req, res, next) {
         // update collaborators
         if (req.body.collaborators) {
             project.collaborators = req.body.collaborators;
+
+        var api_key = '93e6b5db99d6a0b37e832a4ad54b3cee-3fb021d1-70b21e94';
+        var domain = 'sandboxd07b10a50ffa41a184b3512cb4f563d7.mailgun.org';
+        var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+ 
+        var data = {
+            from: 'PEAKE <teampeakepeake@gmail.com>',
+            to: req.body.collaborators[req.body.collaborators.length-1],
+            subject: 'Added to project',
+            text: 'Hi! You\'ve been added to the following project:'+project.name+"\nJoin your group at https://sdd-shutup.herokuapp.com/#/"
+        };
+        mailgun.messages().send(data, function (error, body) {
+            console.log(body);
+            });
         }
+
         // update notes
         if (req.body.notes) {
             project.notes=req.body.notes;
