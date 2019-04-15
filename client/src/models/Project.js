@@ -63,7 +63,7 @@ export default class Project {
   // function to update a specific project's list of collaborators
   update(newCollaboratorArray) {
     return new Promise((resolve,reject) => {
-      axios.patch(`http://localhost:5000/projects/${this._id}`,{collaborators: newCollaboratorArray}).then(
+      axios.patch(`https://sdd-shutup.herokuapp.com/projects/${this._id}`,{collaborators: newCollaboratorArray}).then(
         response => {
           this.collaborators = newCollaboratorArray
           resolve(response);
@@ -77,7 +77,7 @@ export default class Project {
   // function to update array holding notes for a specific project model
   updateNotes(input) {
     return new Promise((resolve,reject) => {
-      axios.get(`http://localhost:5000/projects/${this._id}`).then(response => {
+      axios.get(`https://sdd-shutup.herokuapp.com/projects/${this._id}`).then(response => {
         var found=false                 // variable to hold whether current date already exists
         this.notes=response.data.project.notes
         for (var i=0; i<this.notes.length; i++) {
@@ -88,7 +88,7 @@ export default class Project {
             const data={date:this.notes[i].date, text:updatedText}
             const newNote=new Notes(data)       // update existing note with new text input
             this.notes.splice(i, 1, newNote)
-            axios.patch(`http://localhost:5000/projects/${this._id}`,{notes: this.notes}).then(
+            axios.patch(`https://sdd-shutup.herokuapp.com/projects/${this._id}`,{notes: this.notes}).then(
               response => {
                 this.notes=response.data.project.notes      // currently referencing local host for database
                 resolve(response);
@@ -102,7 +102,7 @@ export default class Project {
         if (!found) {       // current date wasn't found in notes array
           const newNote=new Notes(input)
           this.notes.push(newNote)      // add new note to notes array
-          axios.patch(`http://localhost:5000/projects/${this._id}`,{notes: this.notes}).then(
+          axios.patch(`https://sdd-shutup.herokuapp.com/projects/${this._id}`,{notes: this.notes}).then(
             response => {
               this.notes=response.data.project.notes
               resolve(response);
