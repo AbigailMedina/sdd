@@ -40,7 +40,6 @@ class UserSettings extends Component {
 		})
 	}
 
-	// function to dislplay user's projects and render remove button
 	showProjects() { 
 		var content = [];
 		if(!this.user) { 
@@ -49,56 +48,48 @@ class UserSettings extends Component {
 
 		content = this.state.projects.map((project) => {
 		return(
-			<div className="field has-addons">
-				<li className = "level" key={project}>{project.name}
-					<div className="column is-one-quarter">
-					    <button className="button is-danger" onClick={() =>{
-					    	this.onRemoveProject(project)
-					    }}>Leave project</button>
-					</div>
-				</li> 
-			</div>
+			<li className = "level" key={project}>{project.name}
+				<div className="control">
+				    <button className="button is-danger" onClick={() =>{
+				    	this.onRemoveProject(project)
+				    }}>Leave project</button>
+				</div>
+			</li> 
 			)		
 		})
 		return content;
 	}
 
-	// function to remove user from project
 	onRemoveProject(removeMe) {
 		this.user.onRemoveProject(removeMe).then((newArray) => {
 			this.setState({projects: newArray});
 		})
 	}
 
-	// function to update new email from input field
 	onChangeEmail(e) {
 		this.setState({
 			newEmail:e.target.value
 		})
 	}
 
-	// function to update user's email address
 	onUpdateEmail() {
 		this.user.onChangeEmail(this.state.newEmail).then((newEmail) => {
 			this.setState({email:newEmail, newEmail:""})
 		})	
 	}
 
-	// function to update new password from input field
 	onChangePass(e) {
 		this.setState({
 			newPass:e.target.value
 		})
 	}
 
-	// function to update user's password
 	onUpdatePass() {
 		this.user.onChangePassword(this.state.newPass).then((newPass) => {
 			this.setState({password:newPass,newPass:""})
 		})
 	}
 
-	// function to update user's information
 	updateUser(newArray) {
 		const { match: { params } } = this.props;
 		console.log("in usersettings updateUser. updating with newArray:", newArray)
@@ -116,15 +107,12 @@ class UserSettings extends Component {
 		const projects = this.showProjects.bind(this);
 	  	return (
 	    	<div class="groupsettings columns">
-	    		<div class="column is-one-quarter level">
-	    			<Sidebar user={this.props.user}/>
-	    		</div>
+	    		<Sidebar className="column is-one-quarter"/>
 	    		<div className="column is-three-quarters" style={{marginTop:"100px"}}>
 	    			<h2 class="title is-2">User Settings for {this.state.name}</h2>
 					<label className="label">Projects you're a member of</label>	
 					<span>{projects()}</span>	
 					<br></br>
-					<label className="label">Email Address</label>
 					<div className="field is-grouped">
 						<div className="control">
 							<input  type="email"
@@ -145,7 +133,6 @@ class UserSettings extends Component {
 						</div>
 					</div>	
 					<br></br>
-					<label className="label">Password</label>
 					<div className="field is-grouped">
 						<div className="control">
 							<input  type="password"
