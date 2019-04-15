@@ -61,4 +61,5 @@ class NotesComponent extends Component {
 	}
 }
 
+
 export default NotesComponent;
