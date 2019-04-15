@@ -30,12 +30,14 @@ class NotesComponent extends Component {
       this.notes.update(this.state)
   	}
 
-  	storeNotes() {
-      this.notes.update(this.state)
+  	storeNotes(e) {
+      e.preventDefault();
+      this.notes.update(this.state)  
       if (this.state.text!=="") {
         this.project.updateNotes(this.notes)
       }
       this.setState({text:""})
+      
   	}
 
   	render() {
@@ -47,7 +49,7 @@ class NotesComponent extends Component {
 			</div>
 				<form className="field">
 					<div class="control">
-						<textarea class="textarea" type="text" onChange={this.addInput} placeholder="Take notes during the meeting" rows="15"></textarea>
+						<textarea class="textarea" type="text" value={this.state.text} onChange={this.addInput} placeholder="Take notes during the meeting" rows="15"></textarea>
 						<div class="buttons is-centered">
 							<button className="button is-info" onClick={this.storeNotes}>Save</button>
               {this.project ?

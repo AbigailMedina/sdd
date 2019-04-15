@@ -38,6 +38,13 @@ class GroupSettings extends Component {
         })
     }
 
+    // Reload page if we're switching between projects
+    componentDidUpdate (prevProps) {
+    	if (prevProps !== this.props) {
+        	window.location.reload();
+    	}
+	}    
+
     // function to change email based on user input
     onChangeEmail(e){
 		this.setState({email:e.target.value,userError:undefined})
@@ -95,6 +102,7 @@ class GroupSettings extends Component {
 		this.project.onChangeName(this.state.newName).then((newName) => {
 			this.setState({projectName:newName,newName:""})
 		})
+		window.location.reload();
 	}
     
 	render() {
