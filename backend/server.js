@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 const router = express.Router();
 const path = require('path');
-
+const Chatkit = require('@pusher/chatkit-server')
 let Project = require('./model.project');
 let User = require('./model.user');
 
@@ -42,7 +42,21 @@ app.use(cors());
 //   next();
 // });
 
+// Chatkit Stuff
+const chatkit = new Chatkit.default({
+    instanceLocator: 'v1:us1:1ac58f9f-8dfe-4f8f-bdcf-95ea233fe7f6',
+    key: 'ff9ae820-8f89-4a87-820c-131d94b4fe7a:gZnsTHSgDMZ8s6tZGqEgILemkDImFRk+aSuliOCRjeU='
+});
 
+app.post('/auth', (req, res) =>{
+    const authData = chatkit.authenticate({
+        userId: req.query.user_id
+    })
+    res.status(authData.status)
+        .send(authData.body)
+})
+
+//Chatkit Stuff
 app.get('/projects', function(req, res, next) {
    Project.find(function(err, projects) {
         if (err) {
@@ -214,6 +228,14 @@ app.post('/users', function(req, res){
                                 })
                             })
                     })
+                })
+                chatkit.createUser({
+                    id: newUser.userId,
+                    name : newUser.name
+                }).then(() =>{
+                    console.log('Created user: ', newUser.userId);
+                }).catch((err) =>{
+                    console.log(err);
                 })
             }
         })

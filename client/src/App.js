@@ -76,7 +76,10 @@ class App extends Component {
           />
           <Route
             exact path="/chat/:id"
-            component={Chat}
+            render = {(props) => <Chat
+              user = {this.state.userId}
+              {...props}
+            />}
           />
           <Route
             path="/groupsettings/:id"

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {tokenUrl, instanceLocator, secretKey} from './config/config.js'
+import {ChatManager, TokenProvider} from '@pusher/chatkit-client/react-native'
 
 // classing containing and displaying sign up information for a new user
 class SignUp extends Component{
@@ -67,6 +69,21 @@ class SignUp extends Component{
         const uri2 = "http://localhost:5000"        // currently using local host to connect to database
         axios.post(uri2+'/users', newUser).then(res =>{console.log("res:data", res.data)})
         
+        const chatkitUser = {
+            name: this.state.name,
+            id : this.state.userId
+        }
+
+        const chatManager = new ChatManager({
+            instanceLocator,
+            tokenProvider: new TokenProvider({
+                url: tokenUrl
+            }),
+            userId: 'admin'
+        })
+
+        axios.post("https://us1.pusherplatform.io/services/chatkit/v3/"+"1ac58f9f-8dfe-4f8f-bdcf-95ea233fe7f6"+"/users", chatkitUser).then(res =>{console.log("res:data", res.data)})
+
         this.setState({     // reset state for next new user
             name: '',
             userId: '',
