@@ -32,9 +32,9 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors());
 
-app.get('*', (request, response) => {
-    response.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});
+//app.get('*', (request, response) => {
+    //response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+//});
 
 app.get('/projects', function(req, res, next) {
    Project.find(function(err, projects) {
