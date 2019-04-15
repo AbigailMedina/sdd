@@ -98,30 +98,19 @@ class GroupSettings extends Component {
 	}
 
 	sendMail(){
-		var nodemailer = require('nodemailer');
 
-		var transporter = nodemailer.createTransport({
-		  service: 'gmail',
-		  auth: {
-		    user: 'Abigail Medina',
-		    pass: 'mongoDB1!'
-		  }
-		});
+		var sendmail = require('sendmail')({silent: true})
 
-		var mailOptions = {
+		sendmail({
 		  from: 'teampeakepeake@gmail.com',
-		  to: this.props.user.email,
+		  to: this.state.newName,
+		  replyTo: 'teampeakepeake@gmail.com',
 		  subject: 'Added to project',
-		  text: 'That was easy!'
-		};
-
-		transporter.sendMail(mailOptions, function(error, info){
-		  if (error) {
-		    console.log(error);
-		  } else {
-		    console.log('Email sent: ' + info.response);
-		  }
-		});	
+		  html: 'That was easy!'
+		}, function (err, reply) {
+		  console.log(err && err.stack)
+		  console.dir(reply)
+		})
 	}
 	
     
