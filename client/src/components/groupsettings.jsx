@@ -82,7 +82,7 @@ class GroupSettings extends Component {
 			})
 		}).catch(err=>{
 			this.setState({userError:err})
-		});this.sendMail()
+		});
 	}
 
 	// function to remove collaborator from project
