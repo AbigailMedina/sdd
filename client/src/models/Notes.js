@@ -13,6 +13,7 @@ export default class Notes {
 
     // function to update text for a specific note
   	update(data) {
-  		this.text=data.text	
+      this.text=data.text  
+      resolve(this)
   	}
 }
