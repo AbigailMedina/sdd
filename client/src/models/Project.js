@@ -63,7 +63,7 @@ export default class Project {
   // function to update name of project
   onChangeName(newName) {
     return new Promise((resolve,reject) => {
-      axios.patch(`http://localhost:5000/projects/${this._id}`,{name: newName}).then(
+      axios.patch(`http://sdd-shutup.herokuapp.com/projects/${this._id}`,{name: newName}).then(
         response => {
           this.name = response.data.project.name
           resolve(response.data.project.name);
