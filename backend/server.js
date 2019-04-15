@@ -36,6 +36,8 @@ app.use(cors());
     //response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 //});
 
+// get list of projects
+
 app.get('/projects', function(req, res, next) {
    Project.find(function(err, projects) {
         if (err) {
@@ -46,6 +48,8 @@ app.get('/projects', function(req, res, next) {
     });
    
 });
+
+// get list of specific user's projects
 app.get('/users/:id/projects', function(req, res, next) {
     let id = req.params.id;
     User.findById(id, function(err, user) {
@@ -55,6 +59,7 @@ app.get('/users/:id/projects', function(req, res, next) {
    
 });
 
+// get a specific project
 app.get('/projects/:id', function(req, res, next) {
     console.log("gets in here")
     let id = req.params.id;
@@ -63,15 +68,32 @@ app.get('/projects/:id', function(req, res, next) {
     });
 });
 
-//used for removing a user in groupSettings
+// update a specific project
 app.patch('/projects/:id', function(req, res, next) {
     let id = req.params.id;
     Project.findById(id, function(err, project) {
+        // update collaborators
         if (req.body.collaborators) {
             project.collaborators = req.body.collaborators;
         }
+        // update notes
         if (req.body.notes) {
             project.notes=req.body.notes;
+        }
+        // update project name
+        if (req.body.name) {
+            oldName = project.name;
+            project.name=req.body.name;
+            collabs = project.collaborators;
+            for(email of collabs) {
+                User.findOne({email}).then(user => {
+                    if(user){
+                        user.projects.splice(user.projects.indexOf(oldName),1);
+                        user.projects.push(project);
+                        user.save();
+                    }
+                })
+            }
         }
          project.save().then(project => {
             res.status(200).send({'project':project});
@@ -79,6 +101,7 @@ app.patch('/projects/:id', function(req, res, next) {
     });
 });
 
+// add a new project
 app.post('/add', function(req, res) {
     let userId = req.body.user._id;
     User.findById(userId, function (err,user){
@@ -108,6 +131,7 @@ app.post('/add', function(req, res) {
     
 });
 
+// login as a user
 app.post('/login', function(req, res) {
     const{userId,password} = req.body;
     User.findOne({userId}, function (err, user) {
@@ -120,6 +144,7 @@ app.post('/login', function(req, res) {
     });    
 });
 
+// update a project
 app.post('/update/:id', function(req, res) {
     Project.findById(req.params.id, function(err, project) {
         if (!project)
@@ -136,6 +161,7 @@ app.post('/update/:id', function(req, res) {
     });
 });
 
+// get a list of all users
 app.get('/users', function(req,res){
     User.find(function(err, users) {
         if (err) {
@@ -160,6 +186,7 @@ app.get('/users/:email', function(req,res){
 });
 */
 
+// get a specific user by email
 app.get('/users/get/:email', function(req,res){
     let email = req.params.email;
     User.findOne({email})
@@ -172,6 +199,7 @@ app.get('/users/get/:email', function(req,res){
         }).catch((err)=>res.send({'err':err}))    
 });
 
+// get a specific user by id
 app.get('/users/:id', function(req,res){
     let id = req.params.id;
     User.findById(id, function(err, user) {
@@ -179,18 +207,36 @@ app.get('/users/:id', function(req,res){
     }).catch((err)=>res.status(400).send(err));
 });
 
+// update a specific user by email
 app.patch('/users/:email', function(req,res){
     let email = req.params.email;
     User.findOne({email})
         .then(user =>{
             if(user){
+                // update email address
                 if(req.body.email){
+                    //oldEmail = user.email;
                     user.email = req.body.email;
                     user.save().then(user => {
-                        console.log(user);
                         res.status(200).send({'user':user});
-                    }).catch((err)=>res.send({'err':err}))    
+                    }).catch((err)=>res.send({'err':err})) 
+                    /*
+                    for(project of user.projects) {
+                        name = project.name;
+                        user.projects.splice(user.projects.indexOf(project),1);
+                        Project.findOne({name}).then(proj => {                      
+                            if(proj) {
+                                proj.collaborators.splice(proj.collaborators.indexOf(oldEmail),1);
+                                proj.collaborators.push(user.email);
+                                console.log(proj);
+                                proj.save();
+                                user.projects.push(proj);
+                            }
+                        })   
+                    }
+                    */
                 }
+                // update password
                 if(req.body.password){
                     bcrypt.genSalt(10, function(err, salt){
                         bcrypt.hash(req.body.password, salt, function(err, hash){
@@ -199,16 +245,15 @@ app.patch('/users/:email', function(req,res){
                             }
                             user.password = hash;
                             user.save().then(user => {
-                                console.log(user);
                                 res.status(200).send({'user':user});
                             }).catch((err)=>res.send({'err':err}))    
                         })
                     })
                 }
+                // update user's list of projects
                 if(req.body.projects){
                     user.projects = req.body.projects;
                     user.save().then(user => {
-                        console.log(user);
                         res.status(200).send({'user':user});
                     }).catch((err)=>res.send({'err':err}))    
                 }
@@ -267,7 +312,7 @@ app.post('/users', function(req, res){
         }).catch((err)=>res.send({'err':err}))    
 });
 
-
+// Save notes
 app.post('/addNotes', function(req, res) {
     let notes = new Notes(req.body);
     notes.save()

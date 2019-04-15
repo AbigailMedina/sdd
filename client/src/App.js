@@ -28,11 +28,13 @@ class App extends Component {
   }
 
   onLogin(user) {
-    this.cookies.set('User', user, { path: '/' });
+    
     this.setState({
       user: user,
       loggedIn: true
     })
+    this.cookies.set('User', user, { path: '/' });
+    window.location.reload();
   }
 
   onLogout() {
@@ -49,12 +51,9 @@ class App extends Component {
 
     return (
       <div className="App">
-       
-
         <HashRouter>
-
           <div>
-           <Navbar
+            <Navbar
               userId={this.state.user ? this.state.user._id:""}
               loggedIn ={this.state.loggedIn}
               logout={this.onLogout.bind(this)}

@@ -36,6 +36,7 @@ class CreateProject extends Component {
 	submit(e){
 		this.onSubmit(e);
 		window.location.href = "#/";
+		window.location.reload();
 	}
 
 	// function to go back if user wants to cancel

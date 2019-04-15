@@ -40,6 +40,7 @@ class UserSettings extends Component {
 		})
 	}
 
+	// function to dislplay user's projects and render remove button
 	showProjects() { 
 		var content = [];
 		if(!this.user) { 
@@ -62,36 +63,42 @@ class UserSettings extends Component {
 		return content;
 	}
 
+	// function to remove user from project
 	onRemoveProject(removeMe) {
 		this.user.onRemoveProject(removeMe).then((newArray) => {
 			this.setState({projects: newArray});
 		})
 	}
 
+	// function to update new email from input field
 	onChangeEmail(e) {
 		this.setState({
 			newEmail:e.target.value
 		})
 	}
 
+	// function to update user's email address
 	onUpdateEmail() {
 		this.user.onChangeEmail(this.state.newEmail).then((newEmail) => {
 			this.setState({email:newEmail, newEmail:""})
 		})	
 	}
 
+	// function to update new password from input field
 	onChangePass(e) {
 		this.setState({
 			newPass:e.target.value
 		})
 	}
 
+	// function to update user's password
 	onUpdatePass() {
 		this.user.onChangePassword(this.state.newPass).then((newPass) => {
 			this.setState({password:newPass,newPass:""})
 		})
 	}
 
+	// function to update user's information
 	updateUser(newArray) {
 		const { match: { params } } = this.props;
 		console.log("in usersettings updateUser. updating with newArray:", newArray)
@@ -117,6 +124,7 @@ class UserSettings extends Component {
 					<label className="label">Projects you're a member of</label>	
 					<span>{projects()}</span>	
 					<br></br>
+					<label className="label">Email Address</label>
 					<div className="field is-grouped">
 						<div className="control">
 							<input  type="email"
@@ -137,6 +145,7 @@ class UserSettings extends Component {
 						</div>
 					</div>	
 					<br></br>
+					<label className="label">Password</label>
 					<div className="field is-grouped">
 						<div className="control">
 							<input  type="password"

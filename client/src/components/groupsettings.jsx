@@ -13,7 +13,8 @@ class GroupSettings extends Component {
 	    	projectName:"",
 	    	email:"",
 	    	userError:undefined,
-	    	collaborators:[]
+	    	collaborators:[],
+	    	newName:""
 	    }
 	}
 
@@ -35,6 +36,13 @@ class GroupSettings extends Component {
             console.log(error);
         })
     }
+
+    // Reload page if we're switching between projects
+    componentDidUpdate (prevProps) {
+    	if (prevProps !== this.props) {
+        	window.location.reload();
+    	}
+	}    
 
     // function to change email based on user input
     onChangeEmail(e){
@@ -63,7 +71,7 @@ class GroupSettings extends Component {
 		return content;
     }
 
-
+    // function to add new collaborator to project
 	onAddCollaborator(){
 		this.project.onAddCollaborator(this.state, this.project).then((newArray) =>{
 			console.log("then newArray = ",newArray)
@@ -75,10 +83,25 @@ class GroupSettings extends Component {
 			this.setState({userError:err})
 		})
 	}
+
+	// function to remove collaborator from project
 	onRemoveCollaborator(removeMe){
 		this.project.onRemoveCollaborator(removeMe, this.state.collaborators).then((newArray) =>{
 			this.setState({collaborators: newArray});
 		})
+	}
+
+	// function to update new name from input field
+	onChangeName(e) {
+		this.setState({newName:e.target.value});
+	}
+
+	// function to update project's name
+	onUpdateName() {
+		this.project.onChangeName(this.state.newName).then((newName) => {
+			this.setState({projectName:newName,newName:""})
+		})
+		window.location.reload();
 	}
     
 	render() {
@@ -105,6 +128,27 @@ class GroupSettings extends Component {
 						    	className="button is-link" 
 						    	disabled={!this.state.email} 
 						    	onClick={this.onAddCollaborator.bind(this)}>Add another</button>
+						</div>
+					</div>
+					<br></br>
+					<label className="label">Project Name</label>
+					<div className="field is-grouped">
+						<div className="control">
+							<input  type="text"
+									size="30"
+									className="input"
+									placeholder={this.state.projectName}
+									value={this.state.newName}
+									onChange={this.onChangeName.bind(this)}
+							/>
+						</div>
+						<p>&emsp;</p>
+						<div className="control">
+							<button className="button is-primary"
+									type="submit"
+									disabled={!this.state.newName}
+									onClick={this.onUpdateName.bind(this)}
+							>Update Name</button>
 						</div>
 					</div>
 				</div>				
