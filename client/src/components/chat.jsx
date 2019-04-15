@@ -33,7 +33,7 @@ class Chat extends Component {
 	componentDidMount(props) {
 		const { match: { params } } = this.props;
 		//using uri2
-		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
+		axios.get(`${this.uri2}/projects/${params.id}`).then(response => {
                 console.log("project found in settings: ",response.data.project)
                 this.setState({
 					project:response.data.project.name,
@@ -84,7 +84,7 @@ class Chat extends Component {
 		const { match: { params } } = props;
 		console.log(params)
 		//using uri2
-		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
+		axios.get(`${this.uri2}/projects/${params.id}`).then(response => {
                 console.log("project found in settings: ",response.data.project)
                 this.setState({
 					project:response.data.project.name,
@@ -174,7 +174,7 @@ class Chat extends Component {
 	render() {
 	  	return (
 	    		<div class="columns" >
-	    			<Sidebar class="column is-one-quarter"/>
+	    			<Sidebar user = {this.props.user}/>
 	    			<div className= "column is-three-quarters level" style = {{marginTop:"100px"}}>
 						<h1>{this.state.project}</h1>
 						<div className = "box" style = {{height:"700px",maxHeight:"700px","overflow-y":"scroll"}}>

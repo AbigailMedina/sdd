@@ -60,6 +60,20 @@ export default class Project {
     })
   };
 
+  // function to update name of project
+  onChangeName(newName) {
+    return new Promise((resolve,reject) => {
+      axios.patch(`http://localhost:5000/projects/${this._id}`,{name: newName}).then(
+        response => {
+          this.name = response.data.project.name
+          resolve(response.data.project.name);
+        })
+        .catch(function (error) {
+          reject(error);
+        })      
+      })    
+  }
+
   // function to update a specific project's list of collaborators
   update(newCollaboratorArray) {
     return new Promise((resolve,reject) => {
@@ -113,7 +127,7 @@ export default class Project {
         }
       })
       .catch(function (error) {
-        console.log(error);
+        reject(error);
       })
     })
   }

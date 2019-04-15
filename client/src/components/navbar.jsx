@@ -25,17 +25,20 @@ class Navbar extends Component {
 	    return (
 			<div class = 'navbar' id = "nb">		
 				<div class = 'pages level'>
-					<div>
-						<Link class="name"to={'/'}>Home</Link>
-					</div>
-					{ LoggedIn ? 
-						<div class="loggedin">
-							<Link to={`/settings/${this.props.userId}`}>Settings</Link>
-							<Link to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
-						</div>
-						:
-						<Link class="login" to={'/login'} onClick={this.handleLoginClick} >Login</Link>
-					}
+				<div>
+					<Link class="name"to={'/'}>Home</Link>
+				</div>:
+				<div></div>
+				{ this.state.loggedIn ?
+					<div class="loggedin">
+						<Link to={`/settings/${this.props.userId}`}>Settings</Link>
+						<Link to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
+					</div>:
+					<div></div>
+				}
+					
+				
+					
 				</div>
 			</div>
 
