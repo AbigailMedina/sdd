@@ -144,12 +144,12 @@ class Chat extends Component {
 	    			<div class="column is-one-quarter level">
 	    				<Sidebar user={this.props.user}/>
 	    			</div>
-				<div className=  "column is-three-quarters level" style = {{marginTop:"100px"}}>
+				<div className=  "column is-three-quarters level" style = {{marginTop:"100px", marginBottom:"100px"}}>
 	    			<h1>{this.state.project}</h1>
-					<div className = "box" style = {{height:"700px",maxHeight:"700px","overflow-y":"scroll"}}>
+					<div className = "box" style = {{height:"400px",maxHeight:"400px","overflow-y":"scroll"}}>
 						<MessageList messages = {this.state.messages}/>
 					</div>
-					<SendMessageForm sendMessage = {this.sendMessage}/>
+					<SendMessageForm sendMessage = {this.sendMessage} />
 				</div>
 				</div>				
 	    )
