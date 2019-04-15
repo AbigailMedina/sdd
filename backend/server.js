@@ -6,10 +6,16 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 const router = express.Router();
 const path = require('path');
+const Chatkit = require('@pusher/chatkit-server');
 
 let Project = require('./model.project');   // import models used to store information
 let User = require('./model.user');
 let Notes=require('./model.notes.js');
+
+
+const instance_locator_id = '1ac58f9f-8dfe-4f8f-bdcf-95ea233fe7f6';
+const secret_key = 'ff9ae820-8f89-4a87-820c-131d94b4fe7a:gZnsTHSgDMZ8s6tZGqEgILemkDImFRk+aSuliOCRjeU='
+
 
 // reference to MongoDB database
 const uri = "mongodb://PEAKE:mongoDB1!@ds017175.mlab.com:17175/heroku_ht20w3xq";
@@ -20,6 +26,10 @@ connection.once('open', function() {
 })
 connection.on("error", console.error.bind(console, "MongoDB connection error:"));
 
+const chatkit = new Chatkit.default({
+    instanceLocator:'v1:us1:1ac58f9f-8dfe-4f8f-bdcf-95ea233fe7f6',
+    key: secret_key,
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -276,6 +286,19 @@ app.post('/users', function(req, res){
                     password,
                     projects
                 });
+                
+                // Create user for Chatkit
+                chatkit
+                    .createUser({
+                        id: userId,
+                        name: name,
+                    })
+                    .then(()=>{
+                        res.sendStatus(201);
+                    })
+                    .catch((error) =>{
+                        console.log(error);
+                    });
                 
                 //Don't want to store actual password in db, so hash
                 //Create salt & hash
