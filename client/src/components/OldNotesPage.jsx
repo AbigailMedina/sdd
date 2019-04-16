@@ -13,7 +13,7 @@ class OldNotesPage extends Component {
 
   	componentDidMount(props) {
   		const { match: { params } } = this.props;
-  		const uri2 = "http://localhost:5000"		// currently using local host to connect to database
+  		const uri2 = "http://localhost:5000"		// currently using local host to connect to database and get all notes
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
   			console.log(response)
   			this.id=params.id
@@ -23,10 +23,7 @@ class OldNotesPage extends Component {
         })
   	}
 
-  	sortNotes() {
-
-  	}
-
+    // function to render all notes for a project
   	render() {
     	return (
     		<div style={{marginTop:"100px", marginBottom:"70px"}}>

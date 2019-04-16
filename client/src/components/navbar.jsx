@@ -8,7 +8,6 @@ class Navbar extends Component {
 	    super(props);
 	    this.handleLogoutClick = this.handleLogoutClick.bind(this);
 	    this.state = {loggedIn: this.props.loggedIn};
-    
   	}
 
   	// function to set state when user is logged out
@@ -16,29 +15,23 @@ class Navbar extends Component {
     	this.props.logout()
   	}
 
+  	// function to render links within navbar
   	render() {
-
 	    return (
 			<div class = 'navbar' id = "nb">		
 				<div class = 'pages level'>
-				<div>
-					<Link class="name"to={'/'}>Home</Link>
-				</div>:
-				<div></div>
-				{ this.state.loggedIn ?
-					<div class="loggedin">
-						<Link to={`/settings/${this.props.userId}`}>Settings</Link>
-						<Link to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
-					</div>:
-					<div></div>
-				}
-					
-				
-					
+					<div>
+						<Link class="name"to={'/'}>Home</Link>
+					</div>
+					{ this.state.loggedIn ?
+						<div class="loggedin">
+							<Link to={`/settings/${this.props.userId}`}>Settings</Link>
+							<Link to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
+						</div>:
+						<div></div>
+					}
 				</div>
 			</div>
-
-		
 		)
 	}
 }

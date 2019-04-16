@@ -1,20 +1,16 @@
 import React, { Component } from 'react'
-
 import axios from 'axios';
-
 import './style.css'
 import Sidebar from './sidebar';
 import User from '../models/User';
-
 import 'bulma/css/bulma.css'
 
 // class containing information about user settings for a specific user
 class UserSettings extends Component {
-
 	constructor(props) {
 		const user = null;
 	    super(props);
-	    this.state = {
+	    this.state = {		// initializing state for current user
 	    	name:null,
 	    	email:null,
 	    	password:null,
@@ -27,7 +23,7 @@ class UserSettings extends Component {
 	componentDidMount(props) {
 		const { match: { params } } = this.props;
 		axios.get(`http://localhost:5000/users/${params.id}`).then(response => {
-			this.user = new User(response.data.user);
+			this.user = new User(response.data.user);		// get information from database for this user
 			this.setState({
 				name:response.data.user.name,
 				email:response.data.user.email,
@@ -46,7 +42,6 @@ class UserSettings extends Component {
 		if(!this.user) { 
 			return content;
 		}
-
 		content = this.state.projects.map((project) => {
 		return(
 			<div className="field has-addons">
@@ -54,7 +49,8 @@ class UserSettings extends Component {
 					<div className="column is-one-quarter">
 					    <button className="button is-danger" onClick={() =>{
 					    	this.onRemoveProject(project)
-					    }}>Leave project</button>
+					    	}}>Leave project
+					    </button>
 					</div>
 				</li> 
 			</div>
@@ -127,48 +123,50 @@ class UserSettings extends Component {
 					<label className="label">Email Address</label>
 					<div className="field is-grouped">
 						<div className="control">
-							<input  type="email"
-									size="40"
-									className="input"
-									placeholder={this.state.email}
-									value = {this.state.newEmail}
-									onChange = {this.onChangeEmail.bind(this)}
+							<input type="email"
+								size="40"
+								className="input"
+								placeholder={this.state.email}
+								value = {this.state.newEmail}
+								onChange = {this.onChangeEmail.bind(this)}
 							/>
 						</div>
 						<p>&emsp;</p>
 						<div className="control">
 							<button className="button is-primary" 
-									type="submit"
-									disabled={!this.state.newEmail}
-									onClick={this.onUpdateEmail.bind(this)}
-							>Update Email Address</button>
+								type="submit"
+								disabled={!this.state.newEmail}
+								onClick={this.onUpdateEmail.bind(this)}>
+								Update Email Address
+							</button>
 						</div>
 					</div>	
 					<br></br>
 					<label className="label">Password</label>
 					<div className="field is-grouped">
 						<div className="control">
-							<input  type="password"
-									size="30"
-									className="input"
-									placeholder="Enter new password"
-									value={this.state.newPass}
-									onChange={this.onChangePass.bind(this)}
+							<input type="password"
+								size="30"
+								className="input"
+								placeholder="Enter new password"
+								value={this.state.newPass}
+								onChange={this.onChangePass.bind(this)}
 							/>
 						</div>
 						<p>&emsp;</p>
 						<div className="control">
 							<button className="button is-primary"
-									type="submit"
-									disabled={!this.state.newPass}
-									onClick={this.onUpdatePass.bind(this)}
-							>Update Password</button>
+								type="submit"
+								disabled={!this.state.newPass}
+								onClick={this.onUpdatePass.bind(this)}>
+								Update Password
+							</button>
 						</div>
 					</div>			
 				</div>		
 	    	</div>
 	    )
-  }	
+  	}	
 }
 
 export default UserSettings;

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-// import nodemailer from 'nodemailer'
 import './style.css'
-import 'bulma/css/bulma.css'		//DIDNT FINISH THIS
+import 'bulma/css/bulma.css'
 import Sidebar from './sidebar';
 import Project from '../models/Project';
 
@@ -32,13 +31,9 @@ class GroupSettings extends Component {
         .catch(function (error) {
             console.log(error);
         })
-  
-        .catch(function (error) {
-            console.log(error);
-        })
     }
 
-    // Reload page if we're switching between projects
+    // function to reload page if switching between projects
     componentDidUpdate (prevProps) {
     	if (prevProps !== this.props) {
         	window.location.reload();
@@ -115,7 +110,6 @@ class GroupSettings extends Component {
 	    		<div className="column is-three-quarters" style={{marginTop:"100px"}}>
 	    			<h2 class="title is-2">Group Settings for {this.state.projectName}</h2>
 					<label className="label">Collaborator Emails</label>
-					
 					<span>{collaborators()}</span>					
 					<div className="field is-grouped">
 					 	<div className="control">
@@ -135,27 +129,27 @@ class GroupSettings extends Component {
 					<label className="label">Project Name</label>
 					<div className="field is-grouped">
 						<div className="control">
-							<input  type="text"
-									size="30"
-									className="input"
-									placeholder={this.state.projectName}
-									value={this.state.newName}
-									onChange={this.onChangeName.bind(this)}
+							<input type="text"
+								size="30"
+								className="input"
+								placeholder={this.state.projectName}
+								value={this.state.newName}
+								onChange={this.onChangeName.bind(this)}
 							/>
 						</div>
 						<p>&emsp;</p>
 						<div className="control">
 							<button className="button is-primary"
-									type="submit"
-									disabled={!this.state.newName}
-									onClick={this.onUpdateName.bind(this)}
+								type="submit"
+								disabled={!this.state.newName}
+								onClick={this.onUpdateName.bind(this)}
 							>Update Name</button>
 						</div>
 					</div>
 				</div>				
 	    	</div>
 	    )
-  }
+  	}
 }
 
 export default GroupSettings;
