@@ -21,3 +21,7 @@ To Install and Run ShutUp!:
 6) To start the app, ./ShutUp start
 
 7) To stop the app, ./ShutUp stop
+
+8) To run backend and client seperately:
+  - Backend: nodemon backend/server.js
+  - Client: npm run client
