@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 const router = express.Router();
 const path = require('path');
+const Chatkit = require('@pusher/chatkit-server')
 
 let Project = require('./model.project');   // import models used to store information
 let User = require('./model.user');
@@ -29,6 +30,11 @@ app.use(bodyParser.json());
 // enable cors
 const cors = require('cors');
 app.use(cors());
+
+const chatkit = new Chatkit.default({
+    instanceLocator: 'v1:us1:1ac58f9f-8dfe-4f8f-bdcf-95ea233fe7f6',
+    key: 'ff9ae820-8f89-4a87-820c-131d94b4fe7a:gZnsTHSgDMZ8s6tZGqEgILemkDImFRk+aSuliOCRjeU='
+})
 
 // get list of projects
 app.get('/projects', function(req, res, next) {
@@ -125,6 +131,15 @@ app.post('/add', function(req, res) {
                 })
                 res.status(200).send(
                     {'project': project2});
+                chatkit
+                    .createRoom({
+                    creatorId: user.userId,
+                    name: project.name
+                }).then(() =>{
+                    console.log(project.name + '\'s room created');
+                }).catch((err) =>{
+                    console.log(err);
+                })
             })
             .catch(err => {
                 res.status(400).send('adding new project failed');
@@ -293,6 +308,27 @@ app.post('/users', function(req, res){
                     password,
                     projects
                 });
+
+                chatkit
+                    .createUser({
+                        id: newUser.userId,
+                        name: newUser.name
+                    })
+                    .then(() =>{
+                        res.sendStatus(201);
+                    })
+                    .catch((error) => {
+                        if (error.error === 'services/chatkit/user_already_exists') {
+                            res.sendStatus(200);
+                        }else {
+                            let statusCode = error.status;
+                            if (statusCode >= 100 && statusCode < 600) {
+                                res.status(statusCode);
+                            } else {
+                                res.status(500);
+                            }
+                        }
+                    })
                 
                 //Don't want to store actual password in db, so hash
                 //Create salt & hash
