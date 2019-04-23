@@ -1,8 +1,6 @@
-import React , {Component} from 'react'
+import React from 'react'
 
-
-//Functional Component
-
+// functional component holding one message
 function Message(props){
     return(
         <div className = "message">

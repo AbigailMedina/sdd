@@ -16,10 +16,9 @@ class MeetingPage extends Component {
 		}
 	}
 
-
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
-  		const uri2 = "http://localhost:5000"
+  		const uri2 = "http://localhost:5000"			// get current project from database
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
             console.log("project found in meeting: ",response.data.project);
             this.setState({project:response.data.project.name});
@@ -29,7 +28,7 @@ class MeetingPage extends Component {
         })
     }
 
-    // Reload page if we're switching between projects
+    // function to reload page if switching between projects
     componentDidUpdate (prevProps) {
     	if (prevProps !== this.props) {
         	window.location.reload();
@@ -50,9 +49,7 @@ class MeetingPage extends Component {
 	    		</div>
 	    		<div class="column is-one-third level" style = {{marginTop:"100px"}}>
 					<NotesComponent	{...this.props}/>
-	    		
 				</div>
-				
 	    	</div>
 	    )
   	}

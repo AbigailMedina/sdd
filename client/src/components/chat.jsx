@@ -10,7 +10,6 @@ import Sidebar from './sidebar';
 
 class Chat extends Component {
 	constructor(props) {
-  		
 	    super(props);
 		this.state = {
 			project:null,
@@ -23,29 +22,30 @@ class Chat extends Component {
 		this.fetchProjectName = this.fetchProjectName.bind(this);
 		this.createChatManager = this.createChatManager.bind(this);
 	}
+
+	// function to set project information and connect to chat manager
 	componentDidMount(props) {
   		const { match: { params } } = this.props;
   		const uri2 = "http://localhost:5000"
 
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
-                console.log("project found in settings: ",response.data.project)
-                this.setState({
-					project:response.data.project.name,
-					id : params.id
-				})
-            })
-            .catch(function (error) {
-                console.log(error);
+            this.setState({
+				project:response.data.project.name,			// get current project information
+				id : params.id
 			})
+        })
+        .catch(function (error) {
+            console.log(error);
+		})
 		const curr_user_id = this.props.user.userId
-		const chatManager = new ChatManager({
+		const chatManager = new ChatManager({			// create a new chat manager
 			instanceLocator,
 			userId: curr_user_id,
 			tokenProvider: new TokenProvider({
 				url: tokenUrl
 			})
 		})
-		chatManager.connect()
+		chatManager.connect()			// assign user to the correct chat room
 			.then(currentUser => {
 				this.currentUser = currentUser;
 				var room;
@@ -59,36 +59,32 @@ class Chat extends Component {
 						break;
 					}
 				}
-			})
+			}
+		)
     }
 
+    // function to get project name and set project id
 	fetchProjectName(props){
 		const { match: { params } } = props;
-		console.log(params)
-		//using uri2
 		axios.get(`${this.uri2}/projects/${params.id}`).then(response => {
-                console.log("project found in settings: ",response.data.project)
-                this.setState({
-					project:response.data.project.name,
-					id : params.id})
+            this.setState({
+				project:response.data.project.name,
+				id : params.id})
             })
-            .catch(function (error) {
-                console.log(error);
-			})
-		console.log(this.state)
+        .catch(function (error) {
+       	    console.log(error);
+		})
 	}
 
+	// function to check if project id is still the same
 	componentDidUpdate(prevProps,prevState){
-		console.log(prevProps)
-		console.log(this.props)
-		console.log(prevState)
-		console.log(this.state)
 		if (prevProps.match.params.id !== this.props.match.params.id){
 			this.fetchProjectName(this.props)
-			this.createChatManager();
+			this.createChatManager();		// call function to create chat manager
 		}
 	}
 
+	// function to create chat manager
 	createChatManager(){
 		const curr_user_id = this.props.user.userId
 		const chatManager = new ChatManager({
@@ -99,23 +95,23 @@ class Chat extends Component {
 			})
 		})
 		chatManager.connect()
-			.then(currentUser => {
-				this.currentUser = currentUser;
-				var room;
-				for (room in this.currentUser.rooms){
-					if (this.currentUser.rooms[room].name == this.state.project){
-						this.setState({
-							roomId: this.currentUser.rooms[room].id
-						})
-						room = this.currentUser.rooms[room].id
-						this.subscribeToRoom(room);
-						break;
-					}
+		.then(currentUser => {
+			this.currentUser = currentUser;
+			var room;
+			for (room in this.currentUser.rooms){
+				if (this.currentUser.rooms[room].name == this.state.project){
+					this.setState({
+						roomId: this.currentUser.rooms[room].id
+					})
+					room = this.currentUser.rooms[room].id
+					this.subscribeToRoom(room);
+					break;
 				}
-			})
-		
-  		
+			}
+		})
 	}
+
+	// function to assign user's messages to correct message room
 	subscribeToRoom(roomId){
 		this.setState({
 			messages: []
@@ -131,6 +127,8 @@ class Chat extends Component {
 			}
 		})
 	}
+
+	// function to send message to correct room
 	sendMessage(text){
 		this.currentUser.sendMessage({
 			text,
@@ -138,22 +136,23 @@ class Chat extends Component {
 		})
 	}
 
+
 	render() {
 	  	return (
-	    		<div class="columns" >
-	    			<div class="column is-one-quarter level">
-	    				<Sidebar user={this.props.user}/>
-	    			</div>
-				<div className=  "column is-three-quarters level" style = {{marginTop:"100px"}}>
+	    	<div class="columns" >
+	    		<div class="column is-one-quarter level">
+	    			<Sidebar user={this.props.user}/>
+	    		</div>
+				<div className=  "column is-three-quarters level" style = {{marginTop:"100px", marginBottom:"100px"}}>
 	    			<h1>{this.state.project}</h1>
-					<div className = "box" style = {{height:"700px",maxHeight:"700px","overflow-y":"scroll"}}>
+					<div className = "box" style = {{height:"400px",maxHeight:"400px","overflow-y":"scroll"}}>
 						<MessageList messages = {this.state.messages}/>
 					</div>
-					<SendMessageForm sendMessage = {this.sendMessage}/>
+					<SendMessageForm sendMessage = {this.sendMessage} />
 				</div>
-				</div>				
+			</div>				
 	    )
-  }
+  	}
 }
 
 export default Chat;

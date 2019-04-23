@@ -17,7 +17,6 @@ import OldNotesPage from './components/OldNotesPage';
 
 // main class used to establish routes to component pages
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.cookies = new Cookies();
@@ -27,8 +26,8 @@ class App extends Component {
     }
   }
 
+  // function to log in user and set appropriate cookie path
   onLogin(user) {
-    
     this.setState({
       user: user,
       loggedIn: true
@@ -37,6 +36,7 @@ class App extends Component {
     window.location.reload();
   }
 
+  // function to log out user and remove cookie session for user
   onLogout() {
     this.cookies.remove('User');
     this.setState({
@@ -46,9 +46,8 @@ class App extends Component {
     window.location.href="/"
   }
 
+  // function assigning and rendering routes between pages
   render() {
-    
-
     return (
       <div className="App">
         <HashRouter>
@@ -137,7 +136,7 @@ class App extends Component {
                 />
               </Switch>
             }         
-           <Footer/>
+            <Footer/>
           </div>
         </HashRouter>
       </div>

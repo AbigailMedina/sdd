@@ -50,12 +50,6 @@ class SignUp extends Component{
     // function to store new user information in database
     onSubmit(e){
         e.preventDefault();
-        console.log('Form submitted:');
-        console.log(`User Info: ${this.state.name}`);       //NEED TO TAKE THESE OUT
-        console.log(`User Info: ${this.state.userId}`);
-        console.log(`User Info: ${this.state.email}`);
-        console.log(`User Info: ${this.state.password}`);
-        
         const newUser = {
             name: this.state.name,      // make a new user based on user input given
             userId: this.state.userId,

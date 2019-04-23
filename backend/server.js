@@ -1,5 +1,4 @@
-const key = require("./config.js");
-
+const key = require("../config.js");
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -58,7 +57,7 @@ app.get('/users/:id/projects', function(req, res, next) {
    
 });
 
-// get a specific project
+// get a specific project based on project id
 app.get('/projects/:id', function(req, res, next) {
     let id = req.params.id;
     Project.findById(id, function(err, project) {
@@ -70,36 +69,31 @@ app.get('/projects/:id', function(req, res, next) {
 app.patch('/projects/:id', function(req, res, next) {
     let id = req.params.id;
     Project.findById(id, function(err, project) {
-        // update collaborators
-        if (req.body.collaborators) {
+        if (req.body.collaborators) {                   // update collaborators
             project.collaborators = req.body.collaborators;
 
-        var api_key = key;
-        var domain = 'sandbox0fc3639d3b344baba0780170dc5faff2.mailgun.org';
-        var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
- 
-        var data = {
-            from: 'PEAKE <teampeakepeake@gmail.com>',
-            to: req.body.collaborators[req.body.collaborators.length-1],
-            subject: 'Added to project',
-            text: 'Hi! You\'ve been added to the following project:'+project.name+"\nJoin your group at https://sdd-shutup.herokuapp.com/#/"
-        };
-        mailgun.messages().send(data, function (error, body) {
-            console.log(body);
+            var api_key = key;                              // send email when user is added
+            var domain = 'sandbox0fc3639d3b344baba0780170dc5faff2.mailgun.org';
+            var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+            var data = {
+                from: 'PEAKE <teampeakepeake@gmail.com>',
+                to: req.body.collaborators[req.body.collaborators.length-1],
+                subject: 'Added to project',
+                text: 'Hi! You\'ve been added to the following project:'+project.name+"\nJoin your group at https://sdd-shutup.herokuapp.com/#/"
+            };
+            mailgun.messages().send(data, function (error, body) {
+                console.log(body);
             });
         }
-
-        // update notes
-        if (req.body.notes) {
+        if (req.body.notes) {               // update notes for this project
             project.notes=req.body.notes;
         }
-        // update project name
-        if (req.body.name) {
+        if (req.body.name) {                // update project name
             oldName = project.name;
             project.name=req.body.name;
             collabs = project.collaborators;
             for(email of collabs) {
-                User.findOne({email}).then(user => {
+                User.findOne({email}).then(user => {        // update new project name for each user
                     if(user){
                         user.projects.splice(user.projects.indexOf(oldName),1);
                         user.projects.push(project);
@@ -108,7 +102,7 @@ app.patch('/projects/:id', function(req, res, next) {
                 })
             }
         }
-         project.save().then(project => {
+        project.save().then(project => {
             res.status(200).send({'project':project});
         }).catch((err)=>res.send({'err':err}))
     });
@@ -117,7 +111,7 @@ app.patch('/projects/:id', function(req, res, next) {
 // add a new project
 app.post('/add', function(req, res) {
     let userId = req.body.user._id;
-    User.findById(userId, function (err,user){
+    User.findById(userId, function (err,user){      // add new project to specific users
         if(user){
             let project = new Project(req.body);
             project.collaborators.push(user.email);
@@ -148,12 +142,9 @@ app.post('/add', function(req, res) {
             res.status(400).send({'user could not be found:':req.body.user})
         }
     })
-
-    
-    
 });
 
-// login as a user
+// log in a user
 app.post('/login', function(req, res) {
     const{userId,password} = req.body;
     User.findOne({userId}, function (err, user) {
@@ -169,17 +160,17 @@ app.post('/login', function(req, res) {
 // update a project
 app.post('/update/:id', function(req, res) {
     Project.findById(req.params.id, function(err, project) {
-        if (!project)
+        if (!project) {
             res.status(404).send('data is not found');
-        else
+        } else {
             project.name = req.body.name;
-
             project.save().then(project => {
                 res.json('project updated');
             })
             .catch(err => {
                 res.status(400).send("Update not possible");
             });
+        }
     });
 });
 
@@ -193,20 +184,6 @@ app.get('/users', function(req,res){
         }
     });
 });
-
-/*
-app.get('/users/:email', function(req,res){
-    let email = req.params.email;
-    User.findOne({email})
-        .then(user =>{
-            if(user){
-                return res.status(200).send({"user": user});
-            }else{
-                return res.status(400).send(err);
-            }
-        });
-});
-*/
 
 // get a specific user by email
 app.get('/users/get/:email', function(req,res){
@@ -235,31 +212,13 @@ app.patch('/users/:email', function(req,res){
     User.findOne({email})
         .then(user =>{
             if(user){
-                // update email address
-                if(req.body.email){
-                    //oldEmail = user.email;
+                if(req.body.email){     // update email address
                     user.email = req.body.email;
                     user.save().then(user => {
                         res.status(200).send({'user':user});
                     }).catch((err)=>res.send({'err':err})) 
-                    /*
-                    for(project of user.projects) {
-                        name = project.name;
-                        user.projects.splice(user.projects.indexOf(project),1);
-                        Project.findOne({name}).then(proj => {                      
-                            if(proj) {
-                                proj.collaborators.splice(proj.collaborators.indexOf(oldEmail),1);
-                                proj.collaborators.push(user.email);
-                                console.log(proj);
-                                proj.save();
-                                user.projects.push(proj);
-                            }
-                        })   
-                    }
-                    */
                 }
-                // update password
-                if(req.body.password){
+                if(req.body.password){              // update password
                     bcrypt.genSalt(10, function(err, salt){
                         bcrypt.hash(req.body.password, salt, function(err, hash){
                             if(err){
@@ -272,8 +231,7 @@ app.patch('/users/:email', function(req,res){
                         })
                     })
                 }
-                // update user's list of projects
-                if(req.body.projects){
+                if(req.body.projects){             // update user's list of projects
                     user.projects = req.body.projects;
                     user.save().then(user => {
                         res.status(200).send({'user':user});
@@ -283,19 +241,15 @@ app.patch('/users/:email', function(req,res){
                 return res.status(400).send("cannot find user");
             }
         }).catch((err)=>res.send({'err':err}))    
-});
+    }
+);
 
-
-//@route    POST api/users
-//@desc     Register new user
-//@access   Public 
+// register new user
 app.post('/users', function(req, res){
     const{name,userId,email,password, projects} = req.body;
-    //Validation
-    if(!name || !userId || !email || !password){
+    if(!name || !userId || !email || !password){        // validate user credentials
         return res.status(400).json({msg: 'Please enter all fields'});
     }
-
     User.findOne({email})
         .then(user =>{
             if(user){
@@ -353,9 +307,10 @@ app.post('/users', function(req, res){
                 })
             }
         }).catch((err)=>res.send({'err':err}))    
-});
+    }
+);
 
-// Save notes
+// save notes
 app.post('/addNotes', function(req, res) {
     let notes = new Notes(req.body);
     notes.save()
@@ -365,9 +320,8 @@ app.post('/addNotes', function(req, res) {
         .catch(err => {
             res.status(400).send('adding new notes failed');
         });
-});
-
-// app.use("/api", router);
+    }
+);
 
 // launch our backend into a port
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`));

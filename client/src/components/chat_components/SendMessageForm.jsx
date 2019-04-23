@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
-
 import 'bulma/css/bulma.css'
 
+// class containing display for sending message form
 class SendMessageForm extends Component{
-
     constructor(){
         super()
         this.state = {
@@ -13,14 +12,14 @@ class SendMessageForm extends Component{
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-
+    // function to update state when message is sent
     onChangeMessage(e){
         this.setState({
             message: e.target.value
         })
     }
 
-
+    // function to send message when user submits
     onSubmit(e){
         e.preventDefault()
         this.props.sendMessage(this.state.message)
@@ -29,12 +28,10 @@ class SendMessageForm extends Component{
         })
     }
 
-
-
     render(){
         return(
             <form className = "field"
-            onSubmit = {this.onSubmit}>
+                onSubmit = {this.onSubmit}>
                 <div className = "control">
                     <input className = "input"
                     onChange = {this.onChangeMessage}

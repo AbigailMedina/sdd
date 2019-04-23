@@ -65,7 +65,6 @@ class CreateProject extends Component {
 					</div>
                 </div>
             </div>
-
 		)
 	}
 }

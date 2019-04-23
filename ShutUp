@@ -1,0 +1,23 @@
+#!/bin/bash
+
+case "$1" in
+start)
+    echo $(date -u) >> backend.log
+    echo $(date -u) >> client.log
+    nodemon backend/server.js >> backend.log 2>&1 &
+    npm run client >> client.log 2>&1 &
+    ;;
+stop)
+    killall nodemon &> /dev/null
+    killall node &> /dev/null
+    pkill -f "localhost:3000"
+    ;;
+restart)
+    $0 stop
+    $0 start
+    ;;
+*)
+    echo "Usage: $0 {start|stop|restart}"
+esac
+
+exit 0

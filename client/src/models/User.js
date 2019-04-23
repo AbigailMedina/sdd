@@ -3,7 +3,6 @@ import Project from './Project';
 
 // class containing model for a user
 export default class User {
-  
   constructor(data) {
     if(!data){
       this.name = "defaultUser"
@@ -22,7 +21,6 @@ export default class User {
   // function to remove the user from a project
   onRemoveProject(removeMe) {
     return new Promise((resolve,reject) => {
-
       axios.get(`http://localhost:5000/projects/${removeMe._id}`).then(response => {
         const project = new Project(response.data.project)
 
@@ -32,11 +30,10 @@ export default class User {
         project.update(newCollaboratorArray);       // Update project's list of users
         this.update(newProjectArray)                // Update user's list of projects
         resolve(newProjectArray);
-        }).catch( error =>{
-            reject(error)
-        })
-    
+      }).catch( error =>{
+        reject(error)
       })
+    })
   }
 
   // function to update user's email
@@ -47,10 +44,10 @@ export default class User {
           this.email = response.data.user.email
           resolve(response.data.user.email);
         })
-        .catch( error =>{
-          reject("patch error on update user email");
-        })      
-      })
+      .catch( error =>{
+        reject("patch error on update user email");
+      })      
+    })
   }
 
   // function to update user's password
@@ -60,10 +57,10 @@ export default class User {
         response => {
           resolve(response);
         })
-        .catch( error =>{
-          reject("patch error on update user password");
-        })      
-      })    
+      .catch( error =>{
+        reject("patch error on update user password");
+      })      
+    })    
   }
 
   // function to update a user's list of projects
@@ -74,10 +71,9 @@ export default class User {
           this.projects = response.data.user.projects
           resolve(response);
         })
-        .catch( error =>{
-          reject("patch error on update user projects");
-        })      
-      })
+      .catch( error =>{
+        reject("patch error on update user projects");
+      })      
+    })
   }
-
 }

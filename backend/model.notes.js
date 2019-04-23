@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// schema for notes object
 let Notes = new Schema({
     date: {
         type: String,

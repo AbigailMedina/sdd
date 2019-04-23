@@ -9,21 +9,18 @@ class Sidebar extends Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	    	projects:[],
-	    	userId:"medina2"		//SHOULD WE BE HARDCODING THIS USER?
+	    	projects:[]
 	    }
 	}
 
   	componentDidMount(props) {
-  		const uri2 = "http://localhost:5000"
+  		const uri2 = "http://localhost:5000"		// get projects for current user
   		axios.get(uri2+'/users/'+this.props.user._id+'/projects').then(response => {
-                this.setState({projects: Array.isArray(response.data.projects) ? response.data.projects : [response.data.projects]});
-                console.log(`${this.props.user._id}'s projects:`,response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-
+            this.setState({projects: Array.isArray(response.data.projects) ? response.data.projects : [response.data.projects]});
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
     }
 
     // function to display specific user's projects
@@ -31,7 +28,7 @@ class Sidebar extends Component {
 		const content = this.state.projects
 		.map((project) => 
 			({
-		        icon: 'icon-class-name',
+		    	icon: 'icon-class-name',
 		        label: project.name,
 		        content: [		// display links to project specific pages
 		            {

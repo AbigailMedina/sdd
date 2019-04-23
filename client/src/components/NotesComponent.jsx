@@ -4,6 +4,7 @@ import axios from 'axios';
 import Project from '../models/Project';
 import Notes from '../models/Notes';
 
+// class containing information about creating and displaying notes
 class NotesComponent extends Component {
 	constructor(props) {
     	super(props);
@@ -18,25 +19,27 @@ class NotesComponent extends Component {
   	componentDidMount(props) {
   		const { match: { params } } = this.props;
   		axios.get(`http://localhost:5000/projects/${params.id}`).then(response => {
-        this.project = new Project(response.data.project);
+        this.project = new Project(response.data.project);      // get current project for user
       })
       .catch(function (error) {
         console.log(error);
       })
     }
 
+    // function to add notes input
   	addInput(e) {
   		this.setState({text:e.target.value})
-      this.notes.update(this.state)
+      this.notes.update(this.state)   // update notes content within notes object
   	}
 
+    // function to store notes within current project
   	storeNotes(e) {
       e.preventDefault();
       this.notes.update(this.state)  
-      if (this.state.text!=="") {
+      if (this.state.text!=="") {     // only add notes if actual text was inputted
         this.project.updateNotes(this.notes)
       }
-      this.setState({text:""})
+      this.setState({text:""})    // reset state to take more notes
       
   	}
 
@@ -49,7 +52,13 @@ class NotesComponent extends Component {
 			</div>
 				<form className="field">
 					<div class="control">
-						<textarea class="textarea" type="text" value={this.state.text} onChange={this.addInput} placeholder="Take notes during the meeting" rows="15"></textarea>
+						<textarea class="textarea" 
+              type="text" 
+              value={this.state.text} 
+              onChange={this.addInput} 
+              placeholder="Take notes during the meeting" 
+              rows="15">
+            </textarea>
 						<div class="buttons is-centered">
 							<button className="button is-info" onClick={this.storeNotes}>Save</button>
               {this.project ?
