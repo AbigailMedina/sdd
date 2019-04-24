@@ -61,8 +61,8 @@ class LoginPage extends Component {
     return (
       <div className="columns is-centered" style={{marginTop: 80 }}>
         <form className="column is-half "onSubmit = {this.onSubmit.bind(this)}>
-          <h2 class="title is-2">Log In</h2>
-          {this.state.loginError? <div class="help is-danger">Incorrect Username or Password</div>:<div></div>}
+          <h2 className="title is-2">Log In</h2>
+          {this.state.loginError? <div className="help is-danger">Incorrect Username or Password</div>:<div></div>}
           <div className="field">
             <label className="label">Username</label>
             <div className="control">

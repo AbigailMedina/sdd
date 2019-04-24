@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './css/navbar.css'
+import PropTypes from 'prop-types'
 
 // class containing links to components displayed in the navigation bar
 class Navbar extends Component {
@@ -18,13 +19,13 @@ class Navbar extends Component {
   	// function to render links within navbar
   	render() {
 	    return (
-			<div class = 'navbar' id = "nb">		
-				<div class = 'pages level'>
+			<div className = 'navbar' id = "nb">		
+				<div className = 'pages level'>
 					<div>
 						<Link class="name"to={'/'}>Home</Link>
 					</div>
 					{ this.state.loggedIn ?
-						<div class="loggedin">
+						<div className="loggedin">
 							<Link to={`/settings/${this.props.userId}`}>Settings</Link>
 							<Link to={'/login'} onClick={this.handleLogoutClick} >Logout</Link>
 						</div>:
@@ -35,5 +36,7 @@ class Navbar extends Component {
 		)
 	}
 }
-
+Navbar.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 export default Navbar;
