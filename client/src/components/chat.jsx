@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import {ChatManager, TokenProvider} from '@pusher/chatkit-client/react-native'
-import {tokenUrl,instanceLocator} from './config/config.js'
 import MessageList from './chat_components/MessageList'
 import SendMessageForm from './chat_components/SendMessageForm'
 import './style.css'
 import 'bulma/css/bulma.css'
 import Sidebar from './sidebar';
 
+import {instanceLocator, secretKey, tokenUrl} from '../config.js'
 class Chat extends Component {
 	constructor(props) {
 	    super(props);

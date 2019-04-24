@@ -1,4 +1,4 @@
-const key = require("../config.js");
+const keys = require("../config.js");
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -31,8 +31,8 @@ const cors = require('cors');
 app.use(cors());
 
 const chatkit = new Chatkit.default({
-    instanceLocator: 'v1:us1:1ac58f9f-8dfe-4f8f-bdcf-95ea233fe7f6',
-    key: 'ff9ae820-8f89-4a87-820c-131d94b4fe7a:gZnsTHSgDMZ8s6tZGqEgILemkDImFRk+aSuliOCRjeU='
+    instanceLocator : keys[1],
+    key: keys[2]
 })
 
 // get list of projects
@@ -70,9 +70,68 @@ app.patch('/projects/:id', function(req, res, next) {
     let id = req.params.id;
     Project.findById(id, function(err, project) {
         if (req.body.collaborators) {                   // update collaborators
+            var diff_collaborator = []
+            if (project.collaborators.length > req.body.collaborators.length){ // Remove from chatkit group
+                diff_collaborator = project.collaborators.slice(0);
+                for(i =0; i < project.collaborators.length; i++){
+                    for(j = 0; j< req.body.collaborators.length; j++){
+                        if(project.collaborators[i] == req.body.collaborators[j]){
+                            diff_collaborator.splice(i, i+1)
+                            break;
+                        }
+                    }
+                }
+                User.findOne({email: diff_collaborator[0]})
+                .then(user => {
+                    var room_to_remove_from;
+                    chatkit.getUserRooms({
+                        userId: user.userId
+                    }).then((res) =>{
+                        for(i = 0; i < res.length;i++){
+                            if(res[i].name == project.name){
+                                room_to_remove_from = res[i].id
+                            }
+                        }
+                        chatkit.removeUsersFromRoom({
+                            roomId: room_to_remove_from,
+                            userIds: [user.userId]
+                        })
+                    }).catch((error) =>{
+                        console.log(error)
+                    })
+                }) 
+            }
+            else{ // Added a collaborator
+                User.findOne({email: project.collaborators[0]}) // Find user to get the room Id from
+                    .then(user => {
+                        var room_to_add_to;
+                        chatkit.getUserRooms({
+                            userId: user.userId
+                        }).then((res) =>{
+                            for(i = 0; i < res.length;i++){
+                                if(res[i].name == project.name){
+                                    room_to_add_to = res[i].id
+                                    break;
+                                }
+                            }
+                            User.findOne({email: req.body.collaborators[req.body.collaborators.length -1]}) //Find user to add to the chat room
+                            .then(user => {
+                                chatkit.addUsersToRoom({
+                                    roomId : room_to_add_to,
+                                    userIds : [user.userId]
+                                })
+                            }).catch(error =>{
+                                console.log(error)
+                            })
+                        }).catch((error) =>{
+                            console.log(error)
+                        })
+                    })
+            }
+            
             project.collaborators = req.body.collaborators;
 
-            var api_key = key;                              // send email when user is added
+            var api_key = keys[0];                              // send email when user is added
             var domain = 'sandbox0fc3639d3b344baba0780170dc5faff2.mailgun.org';
             var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
             var data = {
@@ -89,9 +148,27 @@ app.patch('/projects/:id', function(req, res, next) {
             project.notes=req.body.notes;
         }
         if (req.body.name) {                // update project name
+            const old_name = project.name;
+            chatkit.getRooms({ })// Retrieve room id from chatkit
+                .then(rooms =>{
+                    var room_to_change;
+                    for (i = 0; i < rooms.length; i++){
+                        if(rooms[i].name == old_name){
+                            room_to_change = rooms[i].id
+                            break;
+                        }
+                    }
+                    chatkit.updateRoom({
+                        id: room_to_change,
+                        name: req.body.name
+                    }).catch(error =>{
+                        console.log(error)
+                    })
+                })
             oldName = project.name;
             project.name=req.body.name;
             collabs = project.collaborators;
+            
             for(email of collabs) {
                 User.findOne({email}).then(user => {        // update new project name for each user
                     if(user){
