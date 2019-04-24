@@ -9,9 +9,10 @@ class NotesComponent extends Component {
 	constructor(props) {
     	super(props);
     	this.project=null;
-      const today=new Date()
-    	this.state={text:"", date: today.getMonth()+"/"+today.getDate()+"/"+today.getFullYear()}
-      this.notes=new Notes(this.state)
+      this.today=new Date()
+      console.log(this.today.getMonth())
+    	this.state={text: '', date: (this.today.getMonth()+1)+"/"+this.today.getDate()+"/"+this.today.getFullYear()}
+      this.notes=new Notes(this.state);
     	this.addInput=this.addInput.bind(this)
     	this.storeNotes=this.storeNotes.bind(this)
   	}
@@ -24,6 +25,9 @@ class NotesComponent extends Component {
       .catch(function (error) {
         console.log(error);
       })
+      
+
+
     }
 
     // function to add notes input

@@ -67,7 +67,7 @@ app.patch('/projects/:id', function(req, res, next) {
             project.collaborators = req.body.collaborators;
 
             var api_key = key;                              // send email when user is added
-            var domain = 'sandbox0fc3639d3b344baba0780170dc5faff2.mailgun.org';
+            var domain = 'sandbox16702acd92154321a7dd605d1c1aefb6.mailgun.org';
             var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
             var data = {
                 from: 'PEAKE <teampeakepeake@gmail.com>',
