@@ -11,7 +11,7 @@ class OldNotesPage extends Component {
 	    this.id=null
   	}
 
-  	componentDidMount(props) {
+  	componentDidMount() {
   		const { match: { params } } = this.props;
   		const uri2 = "http://localhost:5000"		// currently using local host to connect to database and get all notes
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
@@ -27,15 +27,15 @@ class OldNotesPage extends Component {
   	render() {
     	return (
     		<div style={{marginTop:"100px", marginBottom:"70px"}}>
-    		<h2 class="center">Past Notes from Meetings</h2>
-    			<div class="columns is-centered">	
-    				<div class="column is-two-thirds">
+    		<h2 className="center">Past Notes from Meetings</h2>
+    			<div className="columns is-centered">	
+    				<div className="column is-two-thirds">
     				<button className="button is-info" onClick={()=> {window.location.href='#/meeting/'+this.id }}> Go back </button>
     					{this.state.notes.map((note) => {
     						const newNote= new Notes(note)
     						if (newNote) {
     							return (
-    								<div class="box" style={{textAlign:"left"}}>
+    								<div className="box" style={{textAlign:"left"}}>
         								<p>Taken on {newNote.date}:</p>
         								<pre>{newNote.text}</pre>
         							</div>
