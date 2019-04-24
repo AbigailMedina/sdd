@@ -4,12 +4,13 @@ import './style.css'
 import Sidebar from './sidebar';
 import User from '../models/User';
 import 'bulma/css/bulma.css'
+import PropTypes from 'prop-types'
 
 // class containing information about user settings for a specific user
 class UserSettings extends Component {
 	constructor(props) {
-		const user = null;
-	    super(props);
+	  	super(props);
+	    this.user = null;
 	    this.state = {		// initializing state for current user
 	    	name:null,
 	    	email:null,
@@ -20,7 +21,7 @@ class UserSettings extends Component {
 	    }
 	}
 
-	componentDidMount(props) {
+	componentDidMount() {
 		const { match: { params } } = this.props;
 		axios.get(`http://localhost:5000/users/${params.id}`).then(response => {
 			this.user = new User(response.data.user);		// get information from database for this user
@@ -44,7 +45,7 @@ class UserSettings extends Component {
 		}
 		content = this.state.projects.map((project) => {
 		return(
-			<div className="field has-addons">
+			<div key={project._id} className="field has-addons">
 				<li className = "level" key={project}>{project.name}
 					<div className="column is-one-quarter">
 					    <button className="button is-danger" onClick={() =>{
@@ -97,7 +98,6 @@ class UserSettings extends Component {
 	// function to update user's information
 	updateUser(newArray) {
 		const { match: { params } } = this.props;
-		console.log("in usersettings updateUser. updating with newArray:", newArray)
 		this.user.update(params.id,newArray).then((response) => {
 			this.setState({
 				name:response.data.user.name,
@@ -111,15 +111,15 @@ class UserSettings extends Component {
 	render() {
 		const projects = this.showProjects.bind(this);
 	  	return (
-	    	<div class="groupsettings columns">
-	    		<div class="column is-one-quarter level">
+	    	<div className="groupsettings columns">
+	    		<div className="column is-one-quarter level">
 	    			<Sidebar user={this.props.user}/>
 	    		</div>
 	    		<div className="column is-three-quarters" style={{marginTop:"100px"}}>
-	    			<h2 class="title is-2">User Settings for {this.state.name}</h2>
+	    			<h2 className="title is-2">User Settings for {this.state.name}</h2>
 					<label className="label">Projects you're a member of</label>	
 					<span>{projects()}</span>	
-					<br></br>
+					<br/>
 					<label className="label">Email Address</label>
 					<div className="field is-grouped">
 						<div className="control">
@@ -168,5 +168,7 @@ class UserSettings extends Component {
 	    )
   	}	
 }
-
+UserSettings.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 export default UserSettings;

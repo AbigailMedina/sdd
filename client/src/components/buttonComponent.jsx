@@ -9,7 +9,7 @@ class ButtonComponent extends Component {
     this.addInput=this.addInput.bind(this)
   }
 
-  componentDidMount(props) {
+  componentDidMount() {
     this.button = new Button();
   }
   
@@ -28,13 +28,13 @@ class ButtonComponent extends Component {
 
   render() {
     return (
-      <div class="center" style={{maxWidth:"400px"}}>
+      <div className="center" style={{maxWidth:"400px"}}>
         <h4>Slide agression bar to determine intensity of "Shut Up!" message</h4>
         <div>
-          <input id="sliderWithValue" class="slider has-output is-fullwidth" min="0" max="100" onChange={this.addInput} value={this.state.level} step="25" type="range"/>
-          <output for="sliderWithValue"> {this.state.level}</output><br/>
+          <input id="sliderWithValue" className="slider has-output is-fullwidth" min="0" max="100" onChange={this.addInput} value={this.state.level} step="25" type="range"/>
+          <output htmlFor="sliderWithValue"> {this.state.level}</output><br/>
           <button type="button" onClick = {this.doShutUp.bind(this)} className="button is-white">
-            <img src={require("../photos/button.png")} alt="button" width="100" height="100"/>
+            <img src="button.png" alt="button" width="100" height="100"/>
           </button>
         </div>
       </div>

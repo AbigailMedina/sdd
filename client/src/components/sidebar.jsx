@@ -3,6 +3,8 @@ import './style.css'
 import MetisMenu from 'react-metismenu';
 import axios from 'axios';
 import 'bulma/css/bulma.css'
+import PropTypes from 'prop-types'
+
 
 // class displaying current projects for a specific user on the sidebar
 class Sidebar extends Component {
@@ -13,9 +15,10 @@ class Sidebar extends Component {
 	    }
 	}
 
-  	componentDidMount(props) {
+  	componentDidMount() {
   		const uri2 = "http://localhost:5000"		// get projects for current user
-  		axios.get(uri2+'/users/'+this.props.user._id+'/projects').then(response => {
+  		const user = this.props.user;
+  		axios.get(uri2+'/users/'+user._id+'/projects').then(response => {
             this.setState({projects: Array.isArray(response.data.projects) ? response.data.projects : [response.data.projects]});
         })
         .catch(function (error) {
@@ -61,11 +64,11 @@ class Sidebar extends Component {
   		const content = this.content();
 	    return (
 	    	<div className="sidebar">
-		    	<div class="content">
+		    	<div className="content">
 		    		<link rel="stylesheet" 
 		    			type="text/css" 
 		    			href="https://cdn.rawgit.com/alpertuna/react-metismenu/master/dist/react-metismenu-standart.min.css" />
-					<div class="sidebar">
+					<div className="sidebar">
 						<MetisMenu content={content} activeLinkFromLocation/>
 					</div>
 		    	</div>
@@ -73,5 +76,7 @@ class Sidebar extends Component {
 	    )
   	}
 }
-
+Sidebar.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 export default Sidebar;

@@ -59,7 +59,7 @@ class SignUp extends Component{
         }//TODO: call new User here instead of plain JSON object
         
         const uri2 = "http://localhost:5000"        // currently using local host to connect to database
-        axios.post(uri2+'/users', newUser).then(res =>{console.log("res:data", res.data)})
+        axios.post(uri2+'/users', newUser)
         
         this.setState({     // reset state for next new user
             name: '',
@@ -73,7 +73,7 @@ class SignUp extends Component{
         return (
             <div className="columns is-centered" style={{marginTop: 80 }}>
                 <form className="column is-half " onSubmit = {this.onSubmit}>
-                    <h2 class="title is-2">Sign Up</h2>
+                    <h2 className="title is-2">Sign Up</h2>
                     <div className="field">
                         <label className="label">Name</label>
                         <div className="control">

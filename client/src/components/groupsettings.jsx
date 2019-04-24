@@ -18,7 +18,7 @@ class GroupSettings extends Component {
 	    }
 	}
 
-	componentDidMount(props) {
+	componentDidMount() {
   		const { match: { params } } = this.props;
   		const uri2 = "http://localhost:5000"		// currently using local host to connect to database
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
@@ -53,7 +53,7 @@ class GroupSettings extends Component {
     	}
     	content = this.state.collaborators.map((collaborator) => {
 		return(
-			<div class="field has-addons">
+			<div key={collaborator.email} className="field has-addons">
 				<li className = "level" key={collaborator}>{collaborator}
 					<div className="column is-one-quarter">
 					    <button className="button is-danger" onClick={() =>{
@@ -103,12 +103,12 @@ class GroupSettings extends Component {
 	render() {
 		const collaborators = this.showCollaborators.bind(this);
 	  	return (
-	    	<div class="groupsettings columns">
-	    		<div class="column is-one-quarter level">
+	    	<div className="groupsettings columns">
+	    		<div className="column is-one-quarter level">
 	    			<Sidebar user={this.props.user}/>
 	    		</div>
 	    		<div className="column is-three-quarters" style={{marginTop:"100px"}}>
-	    			<h2 class="title is-2">Group Settings for {this.state.projectName}</h2>
+	    			<h2 className="title is-2">Group Settings for {this.state.projectName}</h2>
 					<label className="label">Collaborator Emails</label>
 					<span>{collaborators()}</span>					
 					<div className="field is-grouped">
