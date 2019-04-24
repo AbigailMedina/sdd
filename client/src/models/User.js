@@ -44,7 +44,7 @@ export default class User {
           this.email = response.data.user.email
           resolve(response.data.user.email);
         })
-      .catch( error =>{
+      .catch( () =>{
         reject("patch error on update user email");
       })      
     })
@@ -57,7 +57,7 @@ export default class User {
         response => {
           resolve(response);
         })
-      .catch( error =>{
+      .catch( () =>{
         reject("patch error on update user password");
       })      
     })    
@@ -71,7 +71,7 @@ export default class User {
           this.projects = response.data.user.projects
           resolve(response);
         })
-      .catch( error =>{
+      .catch( () =>{
         reject("patch error on update user projects");
       })      
     })

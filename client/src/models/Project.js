@@ -39,7 +39,7 @@ export default class Project {
           this.update(newCollaboratorArray)     // add collaborator to project
           resolve(newCollaboratorArray);
         }
-      }).catch( error =>{reject("user get error onAddCollaborator")})
+      }).catch( () =>{reject("user get error onAddCollaborator")})
     })
   }
 
@@ -58,7 +58,7 @@ export default class Project {
           reject(error)
       })
     })
-  };
+  }
 
   // function to update name of project
   onChangeName(newName) {
@@ -82,7 +82,7 @@ export default class Project {
           this.collaborators = newCollaboratorArray
           resolve(response);
         })
-      .catch(function (error) {
+      .catch(function () {
         reject("patch error on update project")
       })
     })
@@ -107,7 +107,7 @@ export default class Project {
                 this.notes=response.data.project.notes      // currently referencing local host for database
                 resolve(response);
               })
-            .catch(function (error) {
+            .catch(function () {
               reject("patch error on update project")
             })
             break
@@ -121,7 +121,7 @@ export default class Project {
               this.notes=response.data.project.notes
               resolve(response);
             })
-          .catch(function (error) {
+          .catch(function () {
             reject("patch error on update project")
           })
         }

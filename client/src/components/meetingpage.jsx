@@ -16,7 +16,7 @@ class MeetingPage extends Component {
 		}
 	}
 
-	componentDidMount(props) {
+	componentDidMount() {
   		const { match: { params } } = this.props;
   		const uri2 = "http://localhost:5000"			// get current project from database
   		axios.get(`${uri2}/projects/${params.id}`).then(response => {
@@ -38,16 +38,16 @@ class MeetingPage extends Component {
   	render() {
   		const content = this.state.project;
 	    return (
-	    	<div class="columns" >
-	    		<div class="column is-one-quarter level">
+	    	<div className="columns" >
+	    		<div className="column is-one-quarter level">
 	    			<Sidebar user={this.props.user}/>
 	    		</div>
-	    		<div class="column is-one-quarter level" style = {{marginTop:"100px"}}>
+	    		<div className="column is-one-quarter level" style = {{marginTop:"100px"}}>
 	    			<label className="label">{content}</label>
 					<TimerComponent	/><br/>
 					<ButtonComponent />
 	    		</div>
-	    		<div class="column is-one-third level" style = {{marginTop:"100px"}}>
+	    		<div className="column is-one-third level" style = {{marginTop:"100px"}}>
 					<NotesComponent	{...this.props}/>
 				</div>
 	    	</div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import PropTypes from 'prop-types'
 
 // class containing information about creating a project
 class CreateProject extends Component {
@@ -40,7 +41,7 @@ class CreateProject extends Component {
 	}
 
 	// function to go back if user wants to cancel
-	cancel(e){
+	cancel(){
 		window.location.href = "#/";
 	}
 	
@@ -68,5 +69,7 @@ class CreateProject extends Component {
 		)
 	}
 }
-
+CreateProject.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 export default CreateProject;
