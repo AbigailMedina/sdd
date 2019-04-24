@@ -1,4 +1,4 @@
-const key = require("./config.js");
+const key = require("../config.js");
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
