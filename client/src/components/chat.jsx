@@ -66,7 +66,8 @@ class Chat extends Component {
     // function to get project name and set project id
 	fetchProjectName(props){
 		const { match: { params } } = props;
-		axios.get(`${this.uri2}/projects/${params.id}`).then(response => {
+		const uri2 = "http://localhost:5000"
+		axios.get(`${uri2}/projects/${params.id}`).then(response => {
             this.setState({
 				project:response.data.project.name,
 				id : params.id})
@@ -78,7 +79,10 @@ class Chat extends Component {
 
 	// function to check if project id is still the same
 	componentDidUpdate(prevProps){
+		console.log(prevProps.match.params.id)
+		console.log(this.props.match.params.id)
 		if (prevProps.match.params.id !== this.props.match.params.id){
+			
 			this.fetchProjectName(this.props)
 			this.createChatManager();		// call function to create chat manager
 		}
